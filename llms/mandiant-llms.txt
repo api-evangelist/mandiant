@@ -1,0 +1,32 @@
+# Mandiant
+
+> Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense company. Its Mandiant Advantage platform exposes several authenticated REST APIs, documented at docs.mandiant.com, that serve threat intelligence, digital threat monitoring, external attack surface data, and security validation results. Mandiant's frontline threat data also powers Google Threat Intelligence alongside VirusTotal. APIs authenticate with an API key and secret exchanged for a short-lived bearer access token.
+
+## APIs
+
+- [Mandiant Threat Intelligence API v3](https://docs.mandiant.com/home/mati-threat-intelligence-api-v3): Indicators of compromise, finished intelligence reports, threat actors, malware families, vulnerabilities and campaigns. Base URL: https://api.intelligence.mandiant.com
+- [Digital Threat Monitoring API](https://docs.mandiant.com/home/digital-threat-monitoring-api): Exposed credentials, leaked data, and brand / deep-and-dark-web threat monitoring. Base URL: https://api.intelligence.mandiant.com
+- [Attack Surface Management API](https://docs.mandiant.com): External asset discovery and attack-surface inventory.
+- [Security Validation (MSV) API](https://docs.mandiant.com): Automated testing and validation of security controls.
+
+## Docs
+
+- [Developer Documentation Portal](https://docs.mandiant.com): Central documentation for all Mandiant Advantage APIs.
+- [Threat Intelligence API v3 Reference](https://docs.mandiant.com/home/mati-threat-intelligence-api-v3): Endpoints, pagination, and public previews.
+
+## Artifacts
+
+- [Authentication profile](authentication/mandiant-authentication.yml): API key + secret exchanged for a bearer access token (OAuth2 client-credentials style).
+- [Conventions](conventions/mandiant-conventions.yml): Auth style, pagination, versioning, and rate-limit signaling.
+- [Lifecycle](lifecycle/mandiant-lifecycle.yml): URI-path versioning (v3); no public status page.
+
+## Company
+
+- [Mandiant on Google Cloud](https://cloud.google.com/security/consulting/mandiant-services): Threat intelligence, incident response, security validation, attack surface management, and managed defense.
+- [Blog — Google / Mandiant Threat Intelligence](https://cloud.google.com/blog/topics/threat-intelligence): Frontline investigations and research from Mandiant and the Google Threat Intelligence Group.
+- [GitHub](https://github.com/mandiant): Open-source security research and tooling (capa, FLARE VM, Commando VM, and more).
+
+## Notes
+
+- Mandiant publishes no public OpenAPI specification; all APIs are access-controlled and require a Mandiant Advantage subscription.
+- No first-party API client SDK was found on npm, PyPI, or the Mandiant GitHub organization (its 104 public repos are incident-response and malware-analysis tooling, not API clients).

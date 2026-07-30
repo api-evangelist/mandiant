@@ -1,0 +1,40 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+docs: https://docs.mandiant.com
+authentication:
+  style: bearer-token
+  detail: >-
+    API key ID + secret exchanged for a short-lived OAuth2 client-credentials
+    bearer access token, sent on the Authorization: Bearer header. See
+    authentication/mandiant-authentication.yml.
+pagination:
+  style: cursor
+  detail: >-
+    The Threat Intelligence API v3 documents endpoint pagination (an "Endpoint
+    Pagination" reference is published in docs.mandiant.com). Large collections
+    (indicators, reports) are returned in pages; exact parameter names are
+    documented per endpoint. The Digital Threat Monitoring API documents "API
+    Limits and Quotas".
+  docs: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+idempotency:
+  supported: unknown
+  detail: >-
+    No documented idempotency-key mechanism was found on the public
+    documentation. Not asserted.
+rate_limiting:
+  detail: >-
+    Rate limits / quotas are documented per API (e.g. the Digital Threat
+    Monitoring API "API Limits and Quotas" page). Exact limits are not published
+    openly and vary by subscription.
+  docs: https://docs.mandiant.com/home/digital-threat-monitoring-api
+error_envelope:
+  detail: >-
+    No public OpenAPI specification or machine-readable error registry was found;
+    error semantics are documented in prose in docs.mandiant.com.
+versioning:
+  detail: URI-path major versioning (v3). See lifecycle/mandiant-lifecycle.yml.
+notes: >-
+  Mandiant publishes no public OpenAPI document, so these conventions are
+  captured from the public developer documentation rather than derived from a
+  spec.

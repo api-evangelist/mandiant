@@ -1,0 +1,67 @@
+generated: '2026-07-20'
+method: searched
+source: probe of /.well-known/ across Mandiant hosts
+hosts:
+- host: https://docs.mandiant.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.intelligence.mandiant.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.mandiant.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: soft-404 (returns text/html SPA catch-all, not a genuine RFC 9116 security.txt)
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: soft-404 (returns text/html, not JSON OIDC metadata)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: soft-404 (returns text/html)
+  - path: /.well-known/api-catalog
+    status: 200
+    note: soft-404 (returns text/html)
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: soft-404 (returns text/html)
+- host: https://advantage.mandiant.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: soft-404 (returns text/html SPA catch-all, not a genuine document)
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: soft-404 (returns text/html)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: soft-404 (returns text/html)
+  - path: /.well-known/api-catalog
+    status: 200
+    note: soft-404 (returns text/html)
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: soft-404 (returns text/html)
+result: >-
+  No genuine /.well-known/ discovery documents were found. The api and docs hosts
+  return real 404s; the marketing/platform hosts return a 200 text/html SPA
+  catch-all for every path (soft-404), so none represent a real security.txt,
+  OIDC, OAuth-authorization-server, api-catalog or ai-plugin document.

@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.mandiant.com
+docs: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+versioning:
+  scheme: uri-path
+  current: v3
+  notes: >-
+    The Mandiant Advantage Threat Intelligence API is versioned in the URI path
+    (v3 is the current documented major version). The Security Validation (MSV)
+    API is versioned per product release (on-premise 4.x and SaaS 5.x trains
+    documented in docs.mandiant.com).
+  docs: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+deprecation:
+  notes: >-
+    No public deprecation/sunset policy or RFC 8594 Sunset/Deprecation header
+    support was found on the public documentation. Public previews of API
+    features are documented separately.
+sla:
+  notes: >-
+    Mandiant Advantage is an enterprise product; no public SLA or uptime target
+    was found on the open documentation.
+status_page:
+  found: false
+  notes: >-
+    No public status page was found (status.mandiant.com does not resolve;
+    www.mandiant.com now redirects to Google Cloud). Platform status is handled
+    within Google Cloud / Mandiant Advantage support channels.
+deprecated_operations: []
