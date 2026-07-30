@@ -1,9 +1,31 @@
 aid: mandiant
 name: Mandiant
-description: 'Mandiant is a company surfaced as a portfolio company of kleiner-perkins and added to the
-  API Evangelist network as a stub for enrichment. Sector: security. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense
+  company whose Mandiant Advantage platform exposes several authenticated REST
+  APIs documented at docs.mandiant.com. The Threat Intelligence (MATI) API v3
+  serves indicators, finished intelligence reports, threat actors, malware
+  families, vulnerabilities and campaigns; the Digital Threat Monitoring API
+  surfaces exposed credentials and brand/deep-and-dark-web threats; the Attack
+  Surface Management API inventories an organization's external assets; and the
+  Security Validation (MSV) API drives automated testing of security controls.
+  These APIs authenticate with an API key and secret that is exchanged for a
+  short-lived bearer access token. Mandiant's frontline threat data now also
+  powers Google Threat Intelligence alongside VirusTotal.
 url: https://raw.githubusercontent.com/api-evangelist/mandiant/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://avatars.githubusercontent.com/mandiant
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,13 +34,75 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Security
-apis: []
+- Threat Intelligence
+- Cybersecurity
+- Incident Response
+- Attack Surface Management
+- Vulnerability Intelligence
+- Malware
+- Google Cloud
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 6
+  pass: local-v1
+apis:
+- name: Mandiant Threat Intelligence API v3
+  description: >-
+    The Mandiant Advantage Threat Intelligence (MATI) API v3 provides
+    programmatic access to Mandiant's threat intelligence, including indicators
+    of compromise, finished intelligence reports, threat actors, malware
+    families, vulnerabilities and campaigns. Requests authenticate with a bearer
+    access token obtained by exchanging an API key and secret.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  properties:
+  - type: Documentation
+    url: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  - type: Authentication
+    url: authentication/mandiant-authentication.yml
+- name: Mandiant Digital Threat Monitoring API
+  description: >-
+    The Digital Threat Monitoring API surfaces exposed credentials, leaked data
+    and brand/deep-and-dark-web threats monitored by Mandiant Advantage. It is
+    served from the Mandiant intelligence API host and uses the same bearer-token
+    authentication as the Threat Intelligence API.
+  humanURL: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  baseURL: https://api.intelligence.mandiant.com
+  properties:
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+common:
+- type: DeveloperPortal
+  url: https://docs.mandiant.com
+- type: Documentation
+  url: https://docs.mandiant.com
+- type: APIReference
+  url: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+- type: Blog
+  url: https://cloud.google.com/blog/topics/threat-intelligence
+- type: GitHubOrganization
+  url: https://github.com/mandiant
+- type: Login
+  url: https://advantage.mandiant.com
+- type: Authentication
+  url: authentication/mandiant-authentication.yml
+- type: Lifecycle
+  url: lifecycle/mandiant-lifecycle.yml
+- type: Conventions
+  url: conventions/mandiant-conventions.yml
+- type: WellKnown
+  url: well-known/mandiant-well-known.yml
+- type: DomainSecurity
+  url: security/mandiant-domain-security.yml
+- type: LLMsTxt
+  url: llms/mandiant-llms.txt
