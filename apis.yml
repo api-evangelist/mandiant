@@ -13,6 +13,17 @@ description: >-
   short-lived bearer access token. Mandiant's frontline threat data now also
   powers Google Threat Intelligence alongside VirusTotal.
 url: https://raw.githubusercontent.com/api-evangelist/mandiant/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
