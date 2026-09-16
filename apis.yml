@@ -1,17 +1,13 @@
 aid: mandiant
 name: Mandiant
-description: >-
-  Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense
-  company whose Mandiant Advantage platform exposes several authenticated REST
-  APIs documented at docs.mandiant.com. The Threat Intelligence (MATI) API v3
-  serves indicators, finished intelligence reports, threat actors, malware
-  families, vulnerabilities and campaigns; the Digital Threat Monitoring API
-  surfaces exposed credentials and brand/deep-and-dark-web threats; the Attack
-  Surface Management API inventories an organization's external assets; and the
-  Security Validation (MSV) API drives automated testing of security controls.
-  These APIs authenticate with an API key and secret that is exchanged for a
-  short-lived bearer access token. Mandiant's frontline threat data now also
-  powers Google Threat Intelligence alongside VirusTotal.
+description: Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense company whose
+  Mandiant Advantage platform exposes several authenticated REST APIs documented at docs.mandiant.com.
+  The Threat Intelligence (MATI) API v3 serves indicators, finished intelligence reports, threat actors,
+  malware families, vulnerabilities and campaigns; the Digital Threat Monitoring API surfaces exposed
+  credentials and brand/deep-and-dark-web threats; the Attack Surface Management API inventories an organization's
+  external assets; and the Security Validation (MSV) API drives automated testing of security controls.
+  These APIs authenticate with an API key and secret that is exchanged for a short-lived bearer access
+  token. Mandiant's frontline threat data now also powers Google Threat Intelligence alongside VirusTotal.
 url: https://raw.githubusercontent.com/api-evangelist/mandiant/refs/heads/main/apis.yml
 deliveryModel:
   model: saas
@@ -45,7 +41,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-09-16'
 tags:
 - Company
 - Security
@@ -68,11 +64,9 @@ x-enrichment:
   pass: local-v1
 apis:
 - name: Mandiant Threat Intelligence API v3
-  description: >-
-    The Mandiant Advantage Threat Intelligence (MATI) API v3 provides
-    programmatic access to Mandiant's threat intelligence, including indicators
-    of compromise, finished intelligence reports, threat actors, malware
-    families, vulnerabilities and campaigns. Requests authenticate with a bearer
+  description: The Mandiant Advantage Threat Intelligence (MATI) API v3 provides programmatic access to
+    Mandiant's threat intelligence, including indicators of compromise, finished intelligence reports,
+    threat actors, malware families, vulnerabilities and campaigns. Requests authenticate with a bearer
     access token obtained by exchanging an API key and secret.
   humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
   baseURL: https://api.intelligence.mandiant.com
@@ -82,17 +76,17 @@ apis:
   - type: Authentication
     url: authentication/mandiant-authentication.yml
 - name: Mandiant Digital Threat Monitoring API
-  description: >-
-    The Digital Threat Monitoring API surfaces exposed credentials, leaked data
-    and brand/deep-and-dark-web threats monitored by Mandiant Advantage. It is
-    served from the Mandiant intelligence API host and uses the same bearer-token
-    authentication as the Threat Intelligence API.
+  description: The Digital Threat Monitoring API surfaces exposed credentials, leaked data and brand/deep-and-dark-web
+    threats monitored by Mandiant Advantage. It is served from the Mandiant intelligence API host and
+    uses the same bearer-token authentication as the Threat Intelligence API.
   humanURL: https://docs.mandiant.com/home/digital-threat-monitoring-api
   baseURL: https://api.intelligence.mandiant.com
   properties:
   - type: Documentation
     url: https://docs.mandiant.com/home/digital-threat-monitoring-api
 common:
+- type: Website
+  url: https://mandiant.com
 - type: DeveloperPortal
   url: https://docs.mandiant.com
 - type: Documentation
