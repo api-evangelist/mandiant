@@ -1,0 +1,60 @@
+slug: mandiant
+provider: Mandiant
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Alerts
+  spec_file: mandiant-alerts-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: GET /alerts  get-alerts  List alerts; schemas password_plaintext, email_address, threat_name,
+    md5_hash
+  reason: Digital Threat Monitoring alerts about exposed credentials, hashes and threat names, with triage/bulk-update
+    operations — squarely SOC-style threat detection and response, not business alerting.
+- tag: Alert Analysis
+  spec_file: mandiant-alert-analysis-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: PUT /alerts/{id}/analysis  Update the analysis text on an alert; POST /alerts/{id}/attachments  Upload
+    attachments to an alert's analysis
+  reason: Analyst enrichment of Digital Threat Monitoring alerts with written analysis and supporting
+    evidence files is security alert triage/investigation, i.e. threat detection and response. Not financial-crime
+    alerting — the vendor's alerts concern exposed credentials and threats.
+- tag: Monitors
+  spec_file: mandiant-monitors-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.75
+  evidence: POST /monitors/{id}/backfill 'Asynchronously backfill alerts for the monitor'; GET /monitors/templates
+    'List monitor templates for top DTM use cases'
+  reason: These are Digital Threat Monitoring monitors that generate alerts on new domains and exposed-credential
+    style use cases (PasswordPolicy schema), i.e. configuration of threat detection and alerting. Maps
+    to threat detection and response; some residual ambiguity because several specs contribute operations
+    to the tag.
+- tag: Actions
+  spec_file: mandiant-actions-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.7
+  evidence: POST /manage_sims/actions/{id}/run  Run an action; schemas port_scan_action, file_transfer_action,
+    host_cli_action, dns_query_action
+  reason: Actions are simulated attacker behaviours (port scan, file transfer, host CLI, DNS query) executed
+    by Mandiant Security Validation to test security controls. That is clearly cybersecurity management,
+    but it maps cleanly to no single listed L2 (it is control validation rather than SOC response or vulnerability
+    scanning), so only the L1 is asserted.
