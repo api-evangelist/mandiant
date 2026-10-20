@@ -1,0 +1,1057 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Report Builder API
+  version: '1.0'
+  description: 'Operations tagged Report Builder across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Report Builder
+  description: A collection of API endpoints to help automate report creation
+paths:
+  /report_builder:
+    get:
+      summary: List reports
+      description: List all reports for your organization
+      tags:
+      - Report Builder
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 145
+                name: Internal Servers Pass/Fail Last 2 Weeks
+                organization_id: 1
+                time_range:
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: week
+                filter_rules:
+                  operator: or
+                  conditions:
+                  - operator: and
+                    conditions:
+                    - match_object: zone
+                      match_field: id
+                      operator: in
+                      value:
+                      - 2
+                created_at: '2020-10-21T19:52:26.921Z'
+                updated_at: '2020-10-21T19:52:26.921Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 272
+                  builder_report_id: 145
+                  panel_id: 8
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.925Z'
+                  updated_at: '2020-10-21T19:52:26.925Z'
+                  uid: null
+                  children:
+                  - id: 293
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 2
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.926Z'
+                    updated_at: '2020-10-21T19:52:26.926Z'
+                    uid: null
+                  - id: 294
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.929Z'
+                    updated_at: '2020-10-21T19:52:26.929Z'
+                    uid: null
+                  - id: 295
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.931Z'
+                    updated_at: '2020-10-21T19:52:26.931Z'
+                    uid: null
+                - id: 273
+                  builder_report_id: 145
+                  panel_id: 10
+                  organization_id: null
+                  order: 1
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.932Z'
+                  updated_at: '2020-10-21T19:52:26.932Z'
+                  uid: null
+                  children: []
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: getReportBuilder
+      x-operation-id-source: derived
+    post:
+      summary: Create report
+      description: Create a new report
+      tags:
+      - Report Builder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/builder_report_wrapped'
+            example:
+              builder_report:
+                name: Internal Servers Pass/Fail Last 2 Weeks
+                time_range:
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: week
+                filter_rules:
+                  operator: or
+                  conditions:
+                  - operator: and
+                    conditions:
+                    - match_object: zone
+                      match_field: id
+                      operator: in
+                      value:
+                      - 2
+                report_panels_attributes:
+                - order: 0
+                  panel_id: 8
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  children_attributes:
+                  - order: 2
+                    panel_id: 13
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                  - order: 1
+                    panel_id: 13
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                  - order: 0
+                    panel_id: 13
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                - order: 1
+                  panel_id: 10
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 145
+                name: Internal Servers Pass/Fail Last 2 Weeks
+                organization_id: 1
+                time_range:
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: week
+                filter_rules:
+                  operator: or
+                  conditions:
+                  - operator: and
+                    conditions:
+                    - match_object: zone
+                      match_field: id
+                      operator: in
+                      value:
+                      - 2
+                created_at: '2020-10-21T19:52:26.921Z'
+                updated_at: '2020-10-21T19:52:26.921Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 272
+                  builder_report_id: 145
+                  panel_id: 8
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.925Z'
+                  updated_at: '2020-10-21T19:52:26.925Z'
+                  uid: null
+                  children:
+                  - id: 293
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 2
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.926Z'
+                    updated_at: '2020-10-21T19:52:26.926Z'
+                    uid: null
+                  - id: 294
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.929Z'
+                    updated_at: '2020-10-21T19:52:26.929Z'
+                    uid: null
+                  - id: 295
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.931Z'
+                    updated_at: '2020-10-21T19:52:26.931Z'
+                    uid: null
+                - id: 273
+                  builder_report_id: 145
+                  panel_id: 10
+                  organization_id: null
+                  order: 1
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.932Z'
+                  updated_at: '2020-10-21T19:52:26.932Z'
+                  uid: null
+                  children: []
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: postReportBuilder
+      x-operation-id-source: derived
+  /report_builder/{id}:
+    get:
+      summary: Show report
+      tags:
+      - Report Builder
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 145
+                name: Internal Servers Pass/Fail Last 2 Weeks
+                organization_id: 1
+                time_range:
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: week
+                filter_rules:
+                  operator: or
+                  conditions:
+                  - operator: and
+                    conditions:
+                    - match_object: zone
+                      match_field: id
+                      operator: in
+                      value:
+                      - 2
+                created_at: '2020-10-21T19:52:26.921Z'
+                updated_at: '2020-10-21T19:52:26.921Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 272
+                  builder_report_id: 145
+                  panel_id: 8
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.925Z'
+                  updated_at: '2020-10-21T19:52:26.925Z'
+                  uid: 31d52881-ea9b-4bb3-87ec-560f5ce1e074
+                  children:
+                  - id: 293
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 2
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.926Z'
+                    updated_at: '2020-10-21T19:52:26.926Z'
+                    uid: 3eeff257-a950-4050-a109-5c3df0f67855
+                  - id: 294
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.929Z'
+                    updated_at: '2020-10-21T19:52:26.929Z'
+                    uid: 9ad2eaec-92da-4004-859a-0c99dbbce395
+                  - id: 295
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.931Z'
+                    updated_at: '2020-10-21T19:52:26.931Z'
+                    uid: ee9a2325-3967-49d9-bcff-d4e1ec009e77
+                - id: 273
+                  builder_report_id: 145
+                  panel_id: 10
+                  organization_id: null
+                  order: 1
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.932Z'
+                  updated_at: '2020-10-21T19:52:26.932Z'
+                  uid: 206aea00-9386-4293-8759-4715b56264b8
+                  children: []
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: Not Found
+      operationId: getReportBuilderById
+      x-operation-id-source: derived
+    put:
+      summary: Update report
+      description: 'Note the `"_destroy": true` that is present in the request payload, this will destroy the report_panel with id 118'
+      tags:
+      - Report Builder
+      parameters:
+      - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/builder_report_wrapped'
+            example:
+              builder_report:
+                name: Test report update
+                filter_rules: []
+                report_panels_attributes:
+                - id: 272
+                  order: 0
+                  children_attributes:
+                  - id: 293
+                    order: 1
+                  - id: 294
+                    order: 2
+                - id: 273
+                  order: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 145
+                name: Test report update
+                organization_id: 1
+                time_range:
+                  start: '2020-10-07T21:41:15.834Z'
+                  end: '2020-10-21T21:41:15.834Z'
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: month
+                filter_rules: {}
+                created_at: '2020-10-21T19:52:26.921Z'
+                updated_at: '2020-10-22T14:51:30.795Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 272
+                  builder_report_id: 145
+                  panel_id: 8
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.925Z'
+                  updated_at: '2020-10-21T19:52:26.925Z'
+                  uid: 31d52881-ea9b-4bb3-87ec-560f5ce1e074
+                  children:
+                  - id: 295
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.931Z'
+                    updated_at: '2020-10-21T19:52:26.931Z'
+                    uid: ee9a2325-3967-49d9-bcff-d4e1ec009e77
+                  - id: 293
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.926Z'
+                    updated_at: '2020-10-22T14:52:56.533Z'
+                    uid: 3eeff257-a950-4050-a109-5c3df0f67855
+                  - id: 294
+                    report_panel_id: 272
+                    panel_id: 13
+                    organization_id: null
+                    order: 2
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-21T19:52:26.929Z'
+                    updated_at: '2020-10-22T14:52:56.536Z'
+                    uid: 9ad2eaec-92da-4004-859a-0c99dbbce395
+                - id: 273
+                  builder_report_id: 145
+                  panel_id: 10
+                  organization_id: null
+                  order: 1
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-21T19:52:26.932Z'
+                  updated_at: '2020-10-21T19:52:26.932Z'
+                  uid: 206aea00-9386-4293-8759-4715b56264b8
+                  children: []
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                order_not_unique:
+                  description: Panels cannot have the same order
+                  value:
+                    status: error
+                    errors:
+                      report_panels.children:
+                      - order: must be unique
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: putReportBuilderById
+      x-operation-id-source: derived
+    delete:
+      summary: Delete report
+      tags:
+      - Report Builder
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              example: null
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          description: Not Found
+      operationId: deleteReportBuilderById
+      x-operation-id-source: derived
+  /report_builder/{id}/clone:
+    post:
+      summary: Clone a report
+      tags:
+      - Report Builder
+      parameters:
+      - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: The name to give the newly cloned report
+            example:
+              name: My cloned report
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 149
+                name: My cloned report
+                organization_id: 1
+                time_range:
+                  start: '2020-10-07T21:41:15.834Z'
+                  end: '2020-10-21T21:41:15.834Z'
+                  rangeType: rel
+                  relBackCount: 2
+                  relUnit: month
+                filter_rules: {}
+                created_at: '2020-10-22T15:40:52.428Z'
+                updated_at: '2020-10-22T15:40:52.428Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 280
+                  builder_report_id: 149
+                  panel_id: 8
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-22T15:40:52.430Z'
+                  updated_at: '2020-10-22T15:40:52.430Z'
+                  uid: 31d52881-ea9b-4bb3-87ec-560f5ce1e074
+                  children:
+                  - id: 305
+                    report_panel_id: 280
+                    panel_id: 13
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T15:40:52.431Z'
+                    updated_at: '2020-10-22T15:40:52.431Z'
+                    uid: ee9a2325-3967-49d9-bcff-d4e1ec009e77
+                  - id: 306
+                    report_panel_id: 280
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config:
+                      valueType: failed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T15:40:52.432Z'
+                    updated_at: '2020-10-22T15:40:52.432Z'
+                    uid: 3eeff257-a950-4050-a109-5c3df0f67855
+                  - id: 307
+                    report_panel_id: 280
+                    panel_id: 13
+                    organization_id: null
+                    order: 2
+                    config:
+                      valueType: passed
+                      showPercent: true
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T15:40:52.434Z'
+                    updated_at: '2020-10-22T15:40:52.434Z'
+                    uid: 9ad2eaec-92da-4004-859a-0c99dbbce395
+                - id: 281
+                  builder_report_id: 149
+                  panel_id: 10
+                  organization_id: null
+                  order: 1
+                  config:
+                    columns:
+                    - - actions
+                      - vid
+                    - - actions
+                      - name
+                    - - job_actions
+                      - actors
+                      - both_actors
+                    - - job_actions
+                      - passed
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-22T15:40:52.437Z'
+                  updated_at: '2020-10-22T15:40:52.437Z'
+                  uid: 206aea00-9386-4293-8759-4715b56264b8
+                  children: []
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                missing_name:
+                  description: Missing name param
+                  value:
+                    status: error
+                    errors:
+                      name:
+                      - is missing
+                wrong_organization:
+                  description: Wrong organization
+                  value:
+                    status: error
+                    errors:
+                      organization_id:
+                      - cannot clone a report from a different organization
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: postReportBuilderByIdClone
+      x-operation-id-source: derived
+  /report_builder/{id}/export:
+    get:
+      summary: Export a report
+      tags:
+      - Report Builder
+      parameters:
+      - name: id
+        in: path
+        description: The unique ID of the report to export.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                version: '1.0'
+                builder_report:
+                  name: Internal Servers Pass/Fail Last 2 Weeks
+                  time_range:
+                    start: '2020-10-07T21:41:15.834Z'
+                    end: '2020-10-21T21:41:15.834Z'
+                    rangeType: rel
+                    relBackCount: 2
+                    relUnit: month
+                  filter_rules: {}
+                  system_report: false
+                  report_panels_attributes:
+                  - order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    children_attributes:
+                    - order: 0
+                      config: {}
+                      time_range: {}
+                      filter_rules: {}
+                      panel:
+                        key: SingleStat
+                        library: report_builder
+                    - order: 1
+                      config:
+                        valueType: failed
+                        showPercent: true
+                      time_range: {}
+                      filter_rules: {}
+                      panel:
+                        key: SingleStat
+                        library: report_builder
+                    - order: 2
+                      config:
+                        valueType: passed
+                        showPercent: true
+                      time_range: {}
+                      filter_rules: {}
+                      panel:
+                        key: SingleStat
+                        library: report_builder
+                    panel:
+                      key: ThreeColumnContainer
+                      library: report_builder
+                  - order: 1
+                    config:
+                      columns:
+                      - - actions
+                        - vid
+                      - - actions
+                        - name
+                      - - job_actions
+                        - actors
+                        - both_actors
+                      - - job_actions
+                        - passed
+                    time_range: {}
+                    filter_rules: {}
+                    panel:
+                      key: JobDataTable
+                      library: report_builder
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: getReportBuilderByIdExport
+      x-operation-id-source: derived
+  /report_builder/import:
+    post:
+      summary: Import a report
+      description: If the import is successful, the API will return a JSON representation of the report that was imported.
+      tags:
+      - Report Builder
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                import_file:
+                  description: The file to upload (usually ends in `.vbr`)
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 150
+                name: clone
+                organization_id: 1
+                time_range:
+                  start: '2020-07-30T21:04:00Z'
+                  end: '2020-08-20T21:04:00Z'
+                  rangeType: abs
+                  relBackCount: 2
+                  relUnit: month
+                filter_rules: {}
+                created_at: '2020-10-22T16:24:30.453Z'
+                updated_at: '2020-10-22T16:24:30.453Z'
+                system_report: false
+                created_by:
+                  id: 1
+                  first_name: Default
+                  last_name: Admin
+                  email: admin@verodin.com
+                report_panels:
+                - id: 282
+                  builder_report_id: 150
+                  panel_id: 7
+                  organization_id: null
+                  order: 0
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-22T16:24:30.456Z'
+                  updated_at: '2020-10-22T16:24:30.456Z'
+                  uid: 0c9eadc5-ac78-4102-9a33-f5cc0107aeb4
+                  children: []
+                - id: 283
+                  builder_report_id: 150
+                  panel_id: 8
+                  organization_id: null
+                  order: 1
+                  config: {}
+                  time_range: {}
+                  filter_rules: {}
+                  created_at: '2020-10-22T16:24:30.457Z'
+                  updated_at: '2020-10-22T16:24:30.457Z'
+                  uid: cb74ecab-736b-4b9b-89eb-975731b0e9dd
+                  children:
+                  - id: 308
+                    report_panel_id: 283
+                    panel_id: 13
+                    organization_id: null
+                    order: 1
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T16:24:30.458Z'
+                    updated_at: '2020-10-22T16:24:30.458Z'
+                    uid: 1758d3ab-cbb3-4ca4-bedc-ac64f9661ac6
+                  - id: 309
+                    report_panel_id: 283
+                    panel_id: 12
+                    organization_id: null
+                    order: 0
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T16:24:30.459Z'
+                    updated_at: '2020-10-22T16:24:30.459Z'
+                    uid: 431aa52c-6fcd-4a96-a889-7cb018a77004
+                  - id: 310
+                    report_panel_id: 283
+                    panel_id: 11
+                    organization_id: null
+                    order: 2
+                    config: {}
+                    time_range: {}
+                    filter_rules: {}
+                    created_at: '2020-10-22T16:24:30.460Z'
+                    updated_at: '2020-10-22T16:24:30.460Z'
+                    uid: 26c7780e-5109-4297-ac25-6c3d78618bc5
+        '403':
+          $ref: '#/components/responses/403'
+      operationId: postReportBuilderImport
+      x-operation-id-source: derived
+components:
+  schemas:
+    builder_report:
+      type: object
+      required:
+      - name
+      - time_range
+      properties:
+        name:
+          description: Name of the report
+          type: string
+        time_range:
+          $ref: '#/components/schemas/time_range'
+        filter_rules:
+          $ref: '#/components/schemas/filter_rules'
+        report_panels_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              order:
+                description: Order of the panels
+                type: integer
+              panel_id:
+                description: ID of the UI panel to use (Stat, Bar chart, etc.)
+                type: integer
+              config:
+                description: Config for the UI panel. Varies between panels
+                type: object
+              time_range:
+                $ref: '#/components/schemas/time_range'
+              filter_rules:
+                $ref: '#/components/schemas/filter_rules'
+              children_attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    order:
+                      type: integer
+                    panel_id:
+                      type: integer
+                    config:
+                      type: object
+                    time_range:
+                      $ref: '#/components/schemas/time_range'
+                    filter_rules:
+                      $ref: '#/components/schemas/filter_rules'
+    builder_report_wrapped:
+      type: object
+      properties:
+        builder_report:
+          $ref: '#/components/schemas/builder_report'
+    filter_rules:
+      description: Filter rules to use for the data source
+      type: object
+      properties:
+        operator:
+          description: How to combine multiple rules
+          type: string
+          enum:
+          - or
+          - and
+        conditions:
+          description: Conditions of the rule
+          type: array
+          items:
+            type: object
+            properties:
+              operator:
+                type: string
+                enum:
+                - or
+                - and
+              conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    operator:
+                      type: string
+                      enum:
+                      - in
+                      - not in
+                    match_object:
+                      type: string
+                      enum:
+                      - action
+                      - job
+                      - evaluation
+                      - sequence
+                      - monitor
+                      - threat_actor
+                      - source_actor
+                      - destination_actor
+                      - actor
+                      - source_zone
+                      - destination_zone
+                      - zone
+                    match_field:
+                      type: string
+                      enum:
+                      - tags
+                      - results
+                      - action_type
+                      - mitre_tactic
+                      - dimensions.stage_of_attack
+                      - dimensions.attack_behavior
+                      - dimensions.os_platform
+                      - controls
+                    value:
+                      type: string
+    time_range:
+      description: Time range to use for the data source
+      type: object
+      required:
+      - rangeType
+      properties:
+        end:
+          description: End date. Only required if `rangeType` is "abs" (absolute)
+          type: string
+        rangeType:
+          description: Describes if the time range is relative or absolute. Only required if `rangeType` is "rel"
+          type: string
+          enum:
+          - rel
+          - abs
+        relBackCount:
+          description: Amount of `relUnit` to go backwards
+          type: integer
+        relUnit:
+          description: Unit to use for relative time ranges. Only required if `rangeType` is "rel"
+          type: string
+          enum:
+          - minute
+          - hour
+          - day
+          - week
+          - month
+          - year
+        start:
+          description: Start date. Only required if `rangeType` is "abs"
+          type: string
+  responses:
+    '403':
+      description: Forbidden. Not permitted to perform action
+      content:
+        application/json:
+          example:
+            error: Not permitted to perform this action
+  parameters:
+    id:
+      name: id
+      description: The ID of the report
+      in: path
+      required: true
+      schema:
+        type: integer
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

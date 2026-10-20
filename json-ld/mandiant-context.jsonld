@@ -1,0 +1,1665 @@
+{
+  "@context": {
+    "@vocab": "https://mandiant.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "mandiant": "https://mandiant.com/schema#",
+    "AggregatedAlertRef": "mandiant:AggregatedAlertRef",
+    "created_at": {
+      "@id": "mandiant:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "doc_type": {
+      "@id": "mandiant:doc_type",
+      "@type": "xsd:string"
+    },
+    "has_analysis": {
+      "@id": "mandiant:has_analysis",
+      "@type": "xsd:boolean"
+    },
+    "id": {
+      "@id": "mandiant:id",
+      "@type": "xsd:string"
+    },
+    "monitor_id": {
+      "@id": "mandiant:monitor_id",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "mandiant:status",
+      "@type": "xsd:string"
+    },
+    "tags": {
+      "@id": "mandiant:tags",
+      "@container": "@list"
+    },
+    "Alert": "mandiant:Alert",
+    "aggregated_added_at": {
+      "@id": "mandiant:aggregated_added_at",
+      "@type": "xsd:dateTime"
+    },
+    "aggregated_alert_count": {
+      "@id": "mandiant:aggregated_alert_count",
+      "@type": "xsd:integer"
+    },
+    "aggregated_alert_count_new": {
+      "@id": "mandiant:aggregated_alert_count_new",
+      "@type": "xsd:integer"
+    },
+    "aggregated_alerts": {
+      "@id": "mandiant:aggregated_alerts",
+      "@container": "@list"
+    },
+    "aggregated_under_id": {
+      "@id": "mandiant:aggregated_under_id",
+      "@type": "xsd:string"
+    },
+    "alert_summary": {
+      "@id": "mandiant:alert_summary",
+      "@type": "xsd:string"
+    },
+    "alert_type": {
+      "@id": "mandiant:alert_type",
+      "@type": "xsd:string"
+    },
+    "analysis": {
+      "@id": "mandiant:analysis",
+      "@type": "xsd:string"
+    },
+    "attachments": {
+      "@id": "mandiant:attachments",
+      "@container": "@list"
+    },
+    "doc": {
+      "@id": "mandiant:doc"
+    },
+    "doc_matches": {
+      "@id": "mandiant:doc_matches",
+      "@container": "@list"
+    },
+    "doc_url": {
+      "@id": "mandiant:doc_url",
+      "@type": "@id"
+    },
+    "email_sent_at": {
+      "@id": "mandiant:email_sent_at",
+      "@type": "xsd:string"
+    },
+    "indicator_attributions": {
+      "@id": "mandiant:indicator_attributions",
+      "@container": "@list"
+    },
+    "indicator_mscore": {
+      "@id": "mandiant:indicator_mscore",
+      "@type": "xsd:integer"
+    },
+    "label_matches": {
+      "@id": "mandiant:label_matches",
+      "@container": "@list"
+    },
+    "labels": {
+      "@id": "mandiant:labels",
+      "@container": "@list"
+    },
+    "labels_url": {
+      "@id": "mandiant:labels_url",
+      "@type": "@id"
+    },
+    "meets_password_policy": {
+      "@id": "mandiant:meets_password_policy",
+      "@type": "xsd:boolean"
+    },
+    "monitor_name": {
+      "@id": "mandiant:monitor_name",
+      "@type": "xsd:string"
+    },
+    "monitor_version": {
+      "@id": "mandiant:monitor_version",
+      "@type": "xsd:integer"
+    },
+    "relevance_class": {
+      "@id": "mandiant:relevance_class",
+      "@type": "xsd:string"
+    },
+    "relevance_probability": {
+      "@id": "mandiant:relevance_probability",
+      "@type": "xsd:decimal"
+    },
+    "title": {
+      "@id": "mandiant:title",
+      "@type": "xsd:string"
+    },
+    "topic_matches": {
+      "@id": "mandiant:topic_matches",
+      "@container": "@list"
+    },
+    "topics": {
+      "@id": "mandiant:topics",
+      "@container": "@list"
+    },
+    "topics_url": {
+      "@id": "mandiant:topics_url",
+      "@type": "@id"
+    },
+    "updated_at": {
+      "@id": "mandiant:updated_at",
+      "@type": "xsd:string"
+    },
+    "AlertAnalysisOp": "mandiant:AlertAnalysisOp",
+    "AlertAuditRecord": "mandiant:AlertAuditRecord",
+    "alert_id": {
+      "@id": "mandiant:alert_id",
+      "@type": "xsd:string"
+    },
+    "history_created_at": {
+      "@id": "mandiant:history_created_at",
+      "@type": "xsd:dateTime"
+    },
+    "operation": {
+      "@id": "mandiant:operation",
+      "@type": "xsd:string"
+    },
+    "previous_status": {
+      "@id": "mandiant:previous_status",
+      "@type": "xsd:string"
+    },
+    "to_status": {
+      "@id": "mandiant:to_status",
+      "@type": "xsd:string"
+    },
+    "user_email": {
+      "@id": "mandiant:user_email",
+      "@type": "xsd:string"
+    },
+    "user_id": {
+      "@id": "mandiant:user_id",
+      "@type": "xsd:string"
+    },
+    "AlertAuditRecords": "mandiant:AlertAuditRecords",
+    "history": {
+      "@id": "mandiant:history",
+      "@container": "@list"
+    },
+    "AlertBulk": "mandiant:AlertBulk",
+    "patch": {
+      "@id": "mandiant:patch",
+      "@container": "@list"
+    },
+    "AlertBulkApplyOp": "mandiant:AlertBulkApplyOp",
+    "add_tags": {
+      "@id": "mandiant:add_tags",
+      "@container": "@list"
+    },
+    "exlcude_ids": {
+      "@id": "mandiant:exlcude_ids",
+      "@container": "@list"
+    },
+    "remove_tags": {
+      "@id": "mandiant:remove_tags",
+      "@container": "@list"
+    },
+    "AlertBulkOp": "mandiant:AlertBulkOp",
+    "Alerts": "mandiant:Alerts",
+    "alerts": {
+      "@id": "mandiant:alerts",
+      "@container": "@list"
+    },
+    "Condition": "mandiant:Condition",
+    "match": {
+      "@id": "mandiant:match",
+      "@container": "@list"
+    },
+    "operator": {
+      "@id": "mandiant:operator",
+      "@type": "xsd:string"
+    },
+    "topic": {
+      "@id": "mandiant:topic",
+      "@type": "xsd:string"
+    },
+    "Doc": "mandiant:Doc",
+    "Doc_match": "mandiant:Doc_match",
+    "locations": {
+      "@id": "mandiant:locations",
+      "@container": "@list"
+    },
+    "match_path": {
+      "@id": "mandiant:match_path",
+      "@type": "xsd:string"
+    },
+    "DocSearchResponse": "mandiant:DocSearchResponse",
+    "docs": {
+      "@id": "mandiant:docs",
+      "@container": "@list"
+    },
+    "timed_out": {
+      "@id": "mandiant:timed_out",
+      "@type": "xsd:boolean"
+    },
+    "total_docs": {
+      "@id": "mandiant:total_docs",
+      "@type": "xsd:integer"
+    },
+    "EmailRecipient": "mandiant:EmailRecipient",
+    "email_address": {
+      "@id": "mandiant:email_address",
+      "@type": "xsd:string"
+    },
+    "verification_sent_at": {
+      "@id": "mandiant:verification_sent_at",
+      "@type": "xsd:dateTime"
+    },
+    "EmailRecipients": "mandiant:EmailRecipients",
+    "recipients": {
+      "@id": "mandiant:recipients",
+      "@container": "@list"
+    },
+    "EmailSetting": "mandiant:EmailSetting",
+    "delivery_times": {
+      "@id": "mandiant:delivery_times",
+      "@container": "@list"
+    },
+    "frequency": {
+      "@id": "mandiant:frequency",
+      "@container": "@list"
+    },
+    "timezone_location": {
+      "@id": "mandiant:timezone_location",
+      "@type": "xsd:string"
+    },
+    "EmailSettings": "mandiant:EmailSettings",
+    "email_settings": {
+      "@id": "mandiant:email_settings",
+      "@container": "@list"
+    },
+    "Entity_location": "mandiant:Entity_location",
+    "element_path": {
+      "@id": "mandiant:element_path",
+      "@type": "xsd:string"
+    },
+    "offsets": {
+      "@id": "mandiant:offsets",
+      "@container": "@list"
+    },
+    "FileAttachment": "mandiant:FileAttachment",
+    "content_type": {
+      "@id": "mandiant:content_type",
+      "@type": "xsd:string"
+    },
+    "created_by_user_id": {
+      "@id": "mandiant:created_by_user_id",
+      "@type": "xsd:string"
+    },
+    "filesize_bytes": {
+      "@id": "mandiant:filesize_bytes",
+      "@type": "xsd:integer"
+    },
+    "name": {
+      "@id": "mandiant:name",
+      "@type": "xsd:string"
+    },
+    "FileAttachments": "mandiant:FileAttachments",
+    "IndicatorAttribution": "mandiant:IndicatorAttribution",
+    "type": {
+      "@id": "mandiant:type",
+      "@type": "xsd:string"
+    },
+    "Label": "mandiant:Label",
+    "classifier": {
+      "@id": "mandiant:classifier",
+      "@type": "xsd:string"
+    },
+    "confidence": {
+      "@id": "mandiant:confidence",
+      "@type": "xsd:integer"
+    },
+    "label": {
+      "@id": "mandiant:label",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "mandiant:version",
+      "@type": "xsd:string"
+    },
+    "Label_match": "mandiant:Label_match",
+    "label_id": {
+      "@id": "mandiant:label_id",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "mandiant:value",
+      "@type": "xsd:string"
+    },
+    "Labels": "mandiant:Labels",
+    "Location": "mandiant:Location",
+    "Monitor": "mandiant:Monitor",
+    "created_by_user_email": {
+      "@id": "mandiant:created_by_user_email",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "mandiant:description",
+      "@type": "xsd:string"
+    },
+    "doc_condition": {
+      "@id": "mandiant:doc_condition",
+      "@type": "@id"
+    },
+    "email_notify_enabled": {
+      "@id": "mandiant:email_notify_enabled",
+      "@type": "xsd:boolean"
+    },
+    "email_notify_immediate": {
+      "@id": "mandiant:email_notify_immediate",
+      "@type": "xsd:boolean"
+    },
+    "enabled": {
+      "@id": "mandiant:enabled",
+      "@type": "xsd:boolean"
+    },
+    "last_updated_by_user_id": {
+      "@id": "mandiant:last_updated_by_user_id",
+      "@type": "xsd:string"
+    },
+    "last_updated_user_email": {
+      "@id": "mandiant:last_updated_user_email",
+      "@type": "xsd:string"
+    },
+    "password_policy": {
+      "@id": "mandiant:password_policy",
+      "@type": "@id"
+    },
+    "template_id": {
+      "@id": "mandiant:template_id",
+      "@type": "xsd:string"
+    },
+    "MonitorBackfillEstimate": "mandiant:MonitorBackfillEstimate",
+    "alert_count": {
+      "@id": "mandiant:alert_count",
+      "@type": "xsd:integer"
+    },
+    "MonitorTemplate": "mandiant:MonitorTemplate",
+    "MonitorTemplates": "mandiant:MonitorTemplates",
+    "templates": {
+      "@id": "mandiant:templates",
+      "@container": "@list"
+    },
+    "Monitors": "mandiant:Monitors",
+    "monitors": {
+      "@id": "mandiant:monitors",
+      "@container": "@list"
+    },
+    "PasswordPolicy": "mandiant:PasswordPolicy",
+    "length_max": {
+      "@id": "mandiant:length_max",
+      "@type": "xsd:integer"
+    },
+    "length_min": {
+      "@id": "mandiant:length_min",
+      "@type": "xsd:integer"
+    },
+    "lowercase_char_count": {
+      "@id": "mandiant:lowercase_char_count",
+      "@type": "xsd:integer"
+    },
+    "lowercase_char_required": {
+      "@id": "mandiant:lowercase_char_required",
+      "@type": "xsd:boolean"
+    },
+    "numbers_count": {
+      "@id": "mandiant:numbers_count",
+      "@type": "xsd:integer"
+    },
+    "numbers_required": {
+      "@id": "mandiant:numbers_required",
+      "@type": "xsd:boolean"
+    },
+    "special_char_count": {
+      "@id": "mandiant:special_char_count",
+      "@type": "xsd:integer"
+    },
+    "special_char_required": {
+      "@id": "mandiant:special_char_required",
+      "@type": "xsd:boolean"
+    },
+    "uppercase_char_count": {
+      "@id": "mandiant:uppercase_char_count",
+      "@type": "xsd:integer"
+    },
+    "uppercase_char_required": {
+      "@id": "mandiant:uppercase_char_required",
+      "@type": "xsd:boolean"
+    },
+    "Response-message": "mandiant:Response-message",
+    "message": {
+      "@id": "mandiant:message",
+      "@type": "xsd:string"
+    },
+    "Topic": "mandiant:Topic",
+    "entity_locations": {
+      "@id": "mandiant:entity_locations",
+      "@container": "@list"
+    },
+    "extractor": {
+      "@id": "mandiant:extractor",
+      "@type": "xsd:string"
+    },
+    "Topic_match": "mandiant:Topic_match",
+    "topic_id": {
+      "@id": "mandiant:topic_id",
+      "@type": "xsd:string"
+    },
+    "Topics": "mandiant:Topics",
+    "VerifiedDomain": "mandiant:VerifiedDomain",
+    "challenge": {
+      "@id": "mandiant:challenge",
+      "@type": "xsd:string"
+    },
+    "created_by": {
+      "@id": "mandiant:created_by",
+      "@type": "xsd:string"
+    },
+    "domain": {
+      "@id": "mandiant:domain",
+      "@type": "xsd:string"
+    },
+    "primary_domain": {
+      "@id": "mandiant:primary_domain",
+      "@type": "xsd:string"
+    },
+    "updated_by": {
+      "@id": "mandiant:updated_by",
+      "@type": "xsd:string"
+    },
+    "updated_by_user_id": {
+      "@id": "mandiant:updated_by_user_id",
+      "@type": "xsd:string"
+    },
+    "verification_checked_at": {
+      "@id": "mandiant:verification_checked_at",
+      "@type": "xsd:dateTime"
+    },
+    "verification_message": {
+      "@id": "mandiant:verification_message",
+      "@type": "xsd:string"
+    },
+    "verification_type": {
+      "@id": "mandiant:verification_type",
+      "@type": "xsd:string"
+    },
+    "VerifiedDomainOp": "mandiant:VerifiedDomainOp",
+    "VerifiedDomainOps": "mandiant:VerifiedDomainOps",
+    "domains": {
+      "@id": "mandiant:domains",
+      "@container": "@list"
+    },
+    "VerifiedDomains": "mandiant:VerifiedDomains",
+    "account_discovery": "mandiant:account_discovery",
+    "__meta": {
+      "@id": "mandiant:__meta"
+    },
+    "service_account": {
+      "@id": "mandiant:service_account",
+      "@type": "@id"
+    },
+    "source_file": {
+      "@id": "mandiant:source_file",
+      "@type": "@id"
+    },
+    "source_threat": {
+      "@id": "mandiant:source_threat",
+      "@type": "@id"
+    },
+    "source_url": {
+      "@id": "mandiant:source_url",
+      "@type": "@id"
+    },
+    "bot": "mandiant:bot",
+    "bot_id": {
+      "@id": "mandiant:bot_id",
+      "@type": "@id"
+    },
+    "botnet_id": {
+      "@id": "mandiant:botnet_id",
+      "@type": "@id"
+    },
+    "controllers": {
+      "@id": "mandiant:controllers",
+      "@container": "@list"
+    },
+    "exfil_locations": {
+      "@id": "mandiant:exfil_locations",
+      "@container": "@list"
+    },
+    "sample_hashes": {
+      "@id": "mandiant:sample_hashes",
+      "@type": "@id"
+    },
+    "channel": "mandiant:channel",
+    "__id": {
+      "@id": "mandiant:__id",
+      "@type": "xsd:string"
+    },
+    "__type": {
+      "@id": "mandiant:__type",
+      "@type": "xsd:string"
+    },
+    "channel_id": {
+      "@id": "mandiant:channel_id",
+      "@type": "xsd:string"
+    },
+    "channel_info": {
+      "@id": "mandiant:channel_info",
+      "@type": "@id"
+    },
+    "channel_url": {
+      "@id": "mandiant:channel_url",
+      "@type": "@id"
+    },
+    "invite_url": {
+      "@id": "mandiant:invite_url",
+      "@type": "@id"
+    },
+    "messenger": {
+      "@id": "mandiant:messenger",
+      "@type": "@id"
+    },
+    "contact": "mandiant:contact",
+    "aim": {
+      "@id": "mandiant:aim",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "mandiant:email",
+      "@type": "@id"
+    },
+    "email_domain": {
+      "@id": "mandiant:email_domain",
+      "@type": "@id"
+    },
+    "email_redacted": {
+      "@id": "mandiant:email_redacted",
+      "@type": "xsd:string"
+    },
+    "fax": {
+      "@id": "mandiant:fax",
+      "@type": "@id"
+    },
+    "geo_location": {
+      "@id": "mandiant:geo_location",
+      "@type": "@id"
+    },
+    "icq": {
+      "@id": "mandiant:icq",
+      "@type": "@id"
+    },
+    "jid": {
+      "@id": "mandiant:jid",
+      "@type": "@id"
+    },
+    "msnm": {
+      "@id": "mandiant:msnm",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "mandiant:phone",
+      "@type": "@id"
+    },
+    "twitter_handle": {
+      "@id": "mandiant:twitter_handle",
+      "@type": "@id"
+    },
+    "website": {
+      "@id": "mandiant:website",
+      "@type": "@id"
+    },
+    "cpu": "mandiant:cpu",
+    "cores": {
+      "@id": "mandiant:cores",
+      "@type": "xsd:integer"
+    },
+    "product": {
+      "@id": "mandiant:product",
+      "@type": "@id"
+    },
+    "data_availability": "mandiant:data_availability",
+    "admin_access_available": {
+      "@id": "mandiant:admin_access_available",
+      "@type": "xsd:boolean"
+    },
+    "cvc_available": {
+      "@id": "mandiant:cvc_available",
+      "@type": "xsd:boolean"
+    },
+    "dob_available": {
+      "@id": "mandiant:dob_available",
+      "@type": "xsd:boolean"
+    },
+    "email_available": {
+      "@id": "mandiant:email_available",
+      "@type": "xsd:boolean"
+    },
+    "geo_location_available": {
+      "@id": "mandiant:geo_location_available",
+      "@type": "xsd:boolean"
+    },
+    "mmn_available": {
+      "@id": "mandiant:mmn_available",
+      "@type": "xsd:boolean"
+    },
+    "name_available": {
+      "@id": "mandiant:name_available",
+      "@type": "xsd:boolean"
+    },
+    "phone_available": {
+      "@id": "mandiant:phone_available",
+      "@type": "xsd:boolean"
+    },
+    "pin_available": {
+      "@id": "mandiant:pin_available",
+      "@type": "xsd:boolean"
+    },
+    "pvki_available": {
+      "@id": "mandiant:pvki_available",
+      "@type": "xsd:boolean"
+    },
+    "pvv_available": {
+      "@id": "mandiant:pvv_available",
+      "@type": "xsd:boolean"
+    },
+    "ssn_available": {
+      "@id": "mandiant:ssn_available",
+      "@type": "xsd:boolean"
+    },
+    "track1_available": {
+      "@id": "mandiant:track1_available",
+      "@type": "xsd:boolean"
+    },
+    "track2_available": {
+      "@id": "mandiant:track2_available",
+      "@type": "xsd:boolean"
+    },
+    "vbv_available": {
+      "@id": "mandiant:vbv_available",
+      "@type": "xsd:boolean"
+    },
+    "dns_rr": "mandiant:dns_rr",
+    "priority": {
+      "@id": "mandiant:priority",
+      "@type": "xsd:integer"
+    },
+    "rdata_domain": {
+      "@id": "mandiant:rdata_domain",
+      "@type": "@id"
+    },
+    "rdata_ipv4": {
+      "@id": "mandiant:rdata_ipv4",
+      "@type": "@id"
+    },
+    "document_analysis": "mandiant:document_analysis",
+    "created": {
+      "@id": "mandiant:created",
+      "@type": "xsd:dateTime"
+    },
+    "creator": {
+      "@id": "mandiant:creator",
+      "@type": "@id"
+    },
+    "file_hashes": {
+      "@id": "mandiant:file_hashes",
+      "@type": "@id"
+    },
+    "filename": {
+      "@id": "mandiant:filename",
+      "@type": "@id"
+    },
+    "language": {
+      "@id": "mandiant:language",
+      "@type": "@id"
+    },
+    "modified": {
+      "@id": "mandiant:modified",
+      "@type": "xsd:dateTime"
+    },
+    "raw_text": {
+      "@id": "mandiant:raw_text",
+      "@type": "xsd:string"
+    },
+    "domain_discovery": "mandiant:domain_discovery",
+    "domain_whois": {
+      "@id": "mandiant:domain_whois",
+      "@type": "@id"
+    },
+    "ingested": {
+      "@id": "mandiant:ingested",
+      "@type": "xsd:dateTime"
+    },
+    "rr": {
+      "@id": "mandiant:rr",
+      "@container": "@list"
+    },
+    "similar_domains": {
+      "@id": "mandiant:similar_domains",
+      "@container": "@list"
+    },
+    "source": {
+      "@id": "mandiant:source",
+      "@type": "xsd:string"
+    },
+    "timestamp": {
+      "@id": "mandiant:timestamp",
+      "@type": "xsd:dateTime"
+    },
+    "drone_discovery": "mandiant:drone_discovery",
+    "host_info": {
+      "@id": "mandiant:host_info",
+      "@type": "@id"
+    },
+    "threat": {
+      "@id": "mandiant:threat",
+      "@type": "@id"
+    },
+    "updated": {
+      "@id": "mandiant:updated",
+      "@type": "xsd:dateTime"
+    },
+    "user_name": {
+      "@id": "mandiant:user_name",
+      "@type": "@id"
+    },
+    "email_analysis": "mandiant:email_analysis",
+    "inet_locations": {
+      "@id": "mandiant:inet_locations",
+      "@container": "@list"
+    },
+    "timestamp_scope": {
+      "@id": "mandiant:timestamp_scope",
+      "@type": "xsd:string"
+    },
+    "email_header": "mandiant:email_header",
+    "file": "mandiant:file",
+    "file_type": {
+      "@id": "mandiant:file_type",
+      "@type": "xsd:string"
+    },
+    "hashes": {
+      "@id": "mandiant:hashes",
+      "@type": "@id"
+    },
+    "mime_type": {
+      "@id": "mandiant:mime_type",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "mandiant:size",
+      "@type": "xsd:integer"
+    },
+    "forum_post": "mandiant:forum_post",
+    "author": {
+      "@id": "mandiant:author",
+      "@type": "@id"
+    },
+    "board": {
+      "@id": "mandiant:board",
+      "@type": "@id"
+    },
+    "body": {
+      "@id": "mandiant:body",
+      "@type": "xsd:string"
+    },
+    "forum": {
+      "@id": "mandiant:forum",
+      "@type": "@id"
+    },
+    "in_reply_to": {
+      "@id": "mandiant:in_reply_to",
+      "@type": "@id"
+    },
+    "message_board": {
+      "@id": "mandiant:message_board",
+      "@type": "@id"
+    },
+    "message_id": {
+      "@id": "mandiant:message_id",
+      "@type": "@id"
+    },
+    "original_id": {
+      "@id": "mandiant:original_id",
+      "@type": "xsd:string"
+    },
+    "post_date": {
+      "@id": "mandiant:post_date",
+      "@type": "xsd:dateTime"
+    },
+    "subject": {
+      "@id": "mandiant:subject",
+      "@type": "xsd:string"
+    },
+    "thread": {
+      "@id": "mandiant:thread",
+      "@type": "@id"
+    },
+    "geo_shape": "mandiant:geo_shape",
+    "coordinates": {
+      "@id": "mandiant:coordinates",
+      "@container": "@list"
+    },
+    "hard_disk": "mandiant:hard_disk",
+    "host_access": "mandiant:host_access",
+    "http_cookie": "mandiant:http_cookie",
+    "identity": "mandiant:identity",
+    "dob": {
+      "@id": "mandiant:dob",
+      "@type": "xsd:dateTime"
+    },
+    "dob_format": {
+      "@id": "mandiant:dob_format",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "mandiant:first_name",
+      "@type": "@id"
+    },
+    "last_name": {
+      "@id": "mandiant:last_name",
+      "@type": "@id"
+    },
+    "mmn": {
+      "@id": "mandiant:mmn",
+      "@type": "xsd:string"
+    },
+    "ssn": {
+      "@id": "mandiant:ssn",
+      "@type": "xsd:string"
+    },
+    "inet_location": "mandiant:inet_location",
+    "ips_v4": {
+      "@id": "mandiant:ips_v4",
+      "@container": "@list"
+    },
+    "ips_v6": {
+      "@id": "mandiant:ips_v6",
+      "@container": "@list"
+    },
+    "path": {
+      "@id": "mandiant:path",
+      "@type": "@id"
+    },
+    "port": {
+      "@id": "mandiant:port",
+      "@type": "@id"
+    },
+    "protocol": {
+      "@id": "mandiant:protocol",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "mandiant:url",
+      "@type": "@id"
+    },
+    "message_thread": "mandiant:message_thread",
+    "mime_part": "mandiant:mime_part",
+    "nested_tweet": "mandiant:nested_tweet",
+    "display_text_range": {
+      "@id": "mandiant:display_text_range",
+      "@container": "@list"
+    },
+    "id_str": {
+      "@id": "mandiant:id_str",
+      "@type": "@id"
+    },
+    "is_quote": {
+      "@id": "mandiant:is_quote",
+      "@type": "xsd:boolean"
+    },
+    "place": {
+      "@id": "mandiant:place",
+      "@type": "@id"
+    },
+    "possibly_sensitive": {
+      "@id": "mandiant:possibly_sensitive",
+      "@type": "xsd:boolean"
+    },
+    "quote_count": {
+      "@id": "mandiant:quote_count",
+      "@type": "xsd:integer"
+    },
+    "quotes": {
+      "@id": "mandiant:quotes",
+      "@type": "@id"
+    },
+    "recipient": {
+      "@id": "mandiant:recipient",
+      "@type": "@id"
+    },
+    "reply_count": {
+      "@id": "mandiant:reply_count",
+      "@type": "xsd:integer"
+    },
+    "retweet_count": {
+      "@id": "mandiant:retweet_count",
+      "@type": "xsd:integer"
+    },
+    "tweet_hashtags": {
+      "@id": "mandiant:tweet_hashtags",
+      "@container": "@list"
+    },
+    "tweet_media": {
+      "@id": "mandiant:tweet_media",
+      "@container": "@list"
+    },
+    "tweet_symbols": {
+      "@id": "mandiant:tweet_symbols",
+      "@container": "@list"
+    },
+    "tweet_urls": {
+      "@id": "mandiant:tweet_urls",
+      "@container": "@list"
+    },
+    "tweet_user_mentions": {
+      "@id": "mandiant:tweet_user_mentions",
+      "@container": "@list"
+    },
+    "network_info": "mandiant:network_info",
+    "ad_domain": {
+      "@id": "mandiant:ad_domain",
+      "@type": "@id"
+    },
+    "blacklisted_by": {
+      "@id": "mandiant:blacklisted_by",
+      "@container": "@list"
+    },
+    "download_bw": {
+      "@id": "mandiant:download_bw",
+      "@type": "xsd:decimal"
+    },
+    "host_name": {
+      "@id": "mandiant:host_name",
+      "@type": "xsd:string"
+    },
+    "ipv4": {
+      "@id": "mandiant:ipv4",
+      "@type": "@id"
+    },
+    "ipv6": {
+      "@id": "mandiant:ipv6",
+      "@type": "@id"
+    },
+    "is_proxy": {
+      "@id": "mandiant:is_proxy",
+      "@type": "xsd:boolean"
+    },
+    "isp": {
+      "@id": "mandiant:isp",
+      "@type": "@id"
+    },
+    "partial_ipv4": {
+      "@id": "mandiant:partial_ipv4",
+      "@type": "@id"
+    },
+    "upload_bw": {
+      "@id": "mandiant:upload_bw",
+      "@type": "xsd:decimal"
+    },
+    "password": "mandiant:password",
+    "encrypted_text": {
+      "@id": "mandiant:encrypted_text",
+      "@type": "xsd:string"
+    },
+    "encryption_algorithm": {
+      "@id": "mandiant:encryption_algorithm",
+      "@type": "xsd:string"
+    },
+    "plain_text": {
+      "@id": "mandiant:plain_text",
+      "@type": "@id"
+    },
+    "paste": "mandiant:paste",
+    "collection_ts": {
+      "@id": "mandiant:collection_ts",
+      "@type": "xsd:dateTime"
+    },
+    "paste_id": {
+      "@id": "mandiant:paste_id",
+      "@type": "xsd:string"
+    },
+    "service": {
+      "@id": "mandiant:service",
+      "@type": "@id"
+    },
+    "source_location": {
+      "@id": "mandiant:source_location",
+      "@type": "@id"
+    },
+    "payment_card": "mandiant:payment_card",
+    "brand": {
+      "@id": "mandiant:brand",
+      "@type": "@id"
+    },
+    "expiry_date": {
+      "@id": "mandiant:expiry_date",
+      "@type": "xsd:dateTime"
+    },
+    "issuer": {
+      "@id": "mandiant:issuer",
+      "@type": "@id"
+    },
+    "owner": {
+      "@id": "mandiant:owner",
+      "@type": "@id"
+    },
+    "partial_number_prefix": {
+      "@id": "mandiant:partial_number_prefix",
+      "@type": "@id"
+    },
+    "partial_number_suffix": {
+      "@id": "mandiant:partial_number_suffix",
+      "@type": "xsd:string"
+    },
+    "service_code": {
+      "@id": "mandiant:service_code",
+      "@type": "xsd:string"
+    },
+    "vbv": {
+      "@id": "mandiant:vbv",
+      "@type": "xsd:string"
+    },
+    "product_batch": "mandiant:product_batch",
+    "release_date": {
+      "@id": "mandiant:release_date",
+      "@type": "xsd:dateTime"
+    },
+    "profile": "mandiant:profile",
+    "telegram": {
+      "@id": "mandiant:telegram",
+      "@type": "@id"
+    },
+    "twitter": {
+      "@id": "mandiant:twitter",
+      "@type": "@id"
+    },
+    "security_question": "mandiant:security_question",
+    "answer": {
+      "@id": "mandiant:answer",
+      "@type": "xsd:string"
+    },
+    "question": {
+      "@id": "mandiant:question",
+      "@type": "xsd:string"
+    },
+    "service_account_info": "mandiant:service_account_info",
+    "balance": {
+      "@id": "mandiant:balance",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "mandiant:currency",
+      "@type": "xsd:string"
+    },
+    "last_transaction_ts": {
+      "@id": "mandiant:last_transaction_ts",
+      "@type": "xsd:dateTime"
+    },
+    "linked_payment_method_description": {
+      "@id": "mandiant:linked_payment_method_description",
+      "@type": "xsd:string"
+    },
+    "points": {
+      "@id": "mandiant:points",
+      "@type": "xsd:integer"
+    },
+    "shop_listing": "mandiant:shop_listing",
+    "batch": {
+      "@id": "mandiant:batch",
+      "@type": "@id"
+    },
+    "is_verified": {
+      "@id": "mandiant:is_verified",
+      "@type": "xsd:boolean"
+    },
+    "item_qty": {
+      "@id": "mandiant:item_qty",
+      "@type": "xsd:integer"
+    },
+    "item_sold": {
+      "@id": "mandiant:item_sold",
+      "@type": "xsd:integer"
+    },
+    "item_type": {
+      "@id": "mandiant:item_type",
+      "@type": "xsd:string"
+    },
+    "listing_id": {
+      "@id": "mandiant:listing_id",
+      "@type": "xsd:string"
+    },
+    "listing_url": {
+      "@id": "mandiant:listing_url",
+      "@type": "@id"
+    },
+    "price": {
+      "@id": "mandiant:price",
+      "@type": "xsd:decimal"
+    },
+    "publish_ts": {
+      "@id": "mandiant:publish_ts",
+      "@type": "xsd:dateTime"
+    },
+    "seller": {
+      "@id": "mandiant:seller",
+      "@type": "@id"
+    },
+    "shop": {
+      "@id": "mandiant:shop",
+      "@type": "@id"
+    },
+    "verification_ts": {
+      "@id": "mandiant:verification_ts",
+      "@type": "xsd:dateTime"
+    },
+    "street_address": "mandiant:street_address",
+    "number": {
+      "@id": "mandiant:number",
+      "@type": "xsd:integer"
+    },
+    "street": {
+      "@id": "mandiant:street",
+      "@type": "@id"
+    },
+    "tag": "mandiant:tag",
+    "location_point": {
+      "@id": "mandiant:location_point",
+      "@type": "@id"
+    },
+    "telegram_profile": "mandiant:telegram_profile",
+    "tweet": "mandiant:tweet",
+    "quoted_status": {
+      "@id": "mandiant:quoted_status",
+      "@type": "@id"
+    },
+    "retweeted": {
+      "@id": "mandiant:retweeted",
+      "@type": "@id"
+    },
+    "retweeted_status": {
+      "@id": "mandiant:retweeted_status",
+      "@type": "@id"
+    },
+    "twitter_entity_hashtag": "mandiant:twitter_entity_hashtag",
+    "hashtag": {
+      "@id": "mandiant:hashtag",
+      "@type": "@id"
+    },
+    "indices": {
+      "@id": "mandiant:indices",
+      "@container": "@list"
+    },
+    "twitter_entity_media": "mandiant:twitter_entity_media",
+    "display_location": {
+      "@id": "mandiant:display_location",
+      "@type": "@id"
+    },
+    "expanded_location": {
+      "@id": "mandiant:expanded_location",
+      "@type": "@id"
+    },
+    "media_id_str": {
+      "@id": "mandiant:media_id_str",
+      "@type": "xsd:string"
+    },
+    "media_location": {
+      "@id": "mandiant:media_location",
+      "@type": "@id"
+    },
+    "media_type": {
+      "@id": "mandiant:media_type",
+      "@type": "xsd:string"
+    },
+    "source_status_id_str": {
+      "@id": "mandiant:source_status_id_str",
+      "@type": "@id"
+    },
+    "twitter_entity_mention": "mandiant:twitter_entity_mention",
+    "mentioned_user": {
+      "@id": "mandiant:mentioned_user",
+      "@type": "@id"
+    },
+    "twitter_entity_symbol": "mandiant:twitter_entity_symbol",
+    "text": {
+      "@id": "mandiant:text",
+      "@type": "xsd:string"
+    },
+    "twitter_entity_url": "mandiant:twitter_entity_url",
+    "twitter_profile": "mandiant:twitter_profile",
+    "followers_count": {
+      "@id": "mandiant:followers_count",
+      "@type": "xsd:integer"
+    },
+    "profile_background_location": {
+      "@id": "mandiant:profile_background_location",
+      "@type": "@id"
+    },
+    "profile_banner_location": {
+      "@id": "mandiant:profile_banner_location",
+      "@type": "@id"
+    },
+    "profile_image_location": {
+      "@id": "mandiant:profile_image_location",
+      "@type": "@id"
+    },
+    "protected": {
+      "@id": "mandiant:protected",
+      "@type": "xsd:boolean"
+    },
+    "statuses_count": {
+      "@id": "mandiant:statuses_count",
+      "@type": "xsd:integer"
+    },
+    "user_location": {
+      "@id": "mandiant:user_location",
+      "@type": "xsd:string"
+    },
+    "verified": {
+      "@id": "mandiant:verified",
+      "@type": "xsd:boolean"
+    },
+    "web_content_publish": "mandiant:web_content_publish",
+    "__task_id": {
+      "@id": "mandiant:__task_id",
+      "@type": "xsd:string"
+    },
+    "links": {
+      "@id": "mandiant:links",
+      "@container": "@list"
+    },
+    "screenshot_files": {
+      "@id": "mandiant:screenshot_files",
+      "@container": "@list"
+    },
+    "action_user_profile": "mandiant:action_user_profile",
+    "username": {
+      "@id": "mandiant:username",
+      "@type": "xsd:string"
+    },
+    "user_type": {
+      "@id": "mandiant:user_type",
+      "@type": "xsd:string"
+    },
+    "friendly_name": {
+      "@id": "mandiant:friendly_name",
+      "@type": "xsd:string"
+    },
+    "action_user_profile_wrapped": "mandiant:action_user_profile_wrapped",
+    "action_common": "mandiant:action_common",
+    "desc": {
+      "@id": "mandiant:desc",
+      "@type": "xsd:string"
+    },
+    "file_transfer_action_attributes": "mandiant:file_transfer_action_attributes",
+    "file_transfer_library_id": {
+      "@id": "mandiant:file_transfer_library_id",
+      "@type": "xsd:integer"
+    },
+    "compare_transfer": {
+      "@id": "mandiant:compare_transfer"
+    },
+    "keep_after_compare": {
+      "@id": "mandiant:keep_after_compare"
+    },
+    "content_encoding": {
+      "@id": "mandiant:content_encoding",
+      "@type": "xsd:string"
+    },
+    "method": {
+      "@id": "mandiant:method",
+      "@type": "xsd:string"
+    },
+    "app_layer": {
+      "@id": "mandiant:app_layer",
+      "@type": "xsd:string"
+    },
+    "target_port": {
+      "@id": "mandiant:target_port",
+      "@type": "xsd:integer"
+    },
+    "tunnel_cidr": {
+      "@id": "mandiant:tunnel_cidr",
+      "@type": "xsd:string"
+    },
+    "tunnel_protocol": {
+      "@id": "mandiant:tunnel_protocol",
+      "@type": "xsd:string"
+    },
+    "dns_domain": {
+      "@id": "mandiant:dns_domain"
+    },
+    "dns_server_ip": {
+      "@id": "mandiant:dns_server_ip"
+    },
+    "file_transfer_action": "mandiant:file_transfer_action",
+    "action_type": {
+      "@id": "mandiant:action_type",
+      "@type": "xsd:string"
+    },
+    "cloud_action_attributes": "mandiant:cloud_action_attributes",
+    "scripts": {
+      "@id": "mandiant:scripts"
+    },
+    "inputs_attributes": {
+      "@id": "mandiant:inputs_attributes",
+      "@container": "@list"
+    },
+    "outputs_attributes": {
+      "@id": "mandiant:outputs_attributes",
+      "@container": "@list"
+    },
+    "cloud_action_file_transfer_libraries": {
+      "@id": "mandiant:cloud_action_file_transfer_libraries"
+    },
+    "cloud_action": "mandiant:cloud_action",
+    "dns_query_action_attributes": "mandiant:dns_query_action_attributes",
+    "query_type": {
+      "@id": "mandiant:query_type",
+      "@type": "xsd:string"
+    },
+    "dns_query_action": "mandiant:dns_query_action",
+    "trees": {
+      "@id": "mandiant:trees"
+    },
+    "host_cli_action_attributes": "mandiant:host_cli_action_attributes",
+    "shell": {
+      "@id": "mandiant:shell",
+      "@type": "xsd:string"
+    },
+    "delivery_wait_time": {
+      "@id": "mandiant:delivery_wait_time",
+      "@type": "xsd:integer"
+    },
+    "monitor_connections": {
+      "@id": "mandiant:monitor_connections",
+      "@type": "xsd:string"
+    },
+    "delivery_failed_result": {
+      "@id": "mandiant:delivery_failed_result",
+      "@type": "xsd:string"
+    },
+    "destination_exists_result": {
+      "@id": "mandiant:destination_exists_result",
+      "@type": "xsd:string"
+    },
+    "host_cli_action_steps_attributes": {
+      "@id": "mandiant:host_cli_action_steps_attributes",
+      "@container": "@list"
+    },
+    "host_cli_action": "mandiant:host_cli_action",
+    "action_wrapped": "mandiant:action_wrapped",
+    "sim_action": {
+      "@id": "mandiant:sim_action",
+      "@type": "@id"
+    },
+    "action_wrapped_with_core_updates": "mandiant:action_wrapped_with_core_updates",
+    "core_updates": {
+      "@id": "mandiant:core_updates",
+      "@type": "xsd:boolean"
+    },
+    "generic_action": "mandiant:generic_action",
+    "attack_node_id_1": {
+      "@id": "mandiant:attack_node_id_1",
+      "@type": "xsd:string"
+    },
+    "target_node_id_1": {
+      "@id": "mandiant:target_node_id_1",
+      "@type": "xsd:string"
+    },
+    "host_cli_with_user_profile": "mandiant:host_cli_with_user_profile",
+    "action_user_profile_id": {
+      "@id": "mandiant:action_user_profile_id"
+    },
+    "run_action-cloud_action": "mandiant:run_action-cloud_action",
+    "cloud_profile_ids": {
+      "@id": "mandiant:cloud_profile_ids"
+    },
+    "port_scan_action": "mandiant:port_scan_action",
+    "port_scan_mgmt_interface_1": {
+      "@id": "mandiant:port_scan_mgmt_interface_1",
+      "@type": "xsd:string"
+    },
+    "port_scan_sim_interface_1": {
+      "@id": "mandiant:port_scan_sim_interface_1",
+      "@type": "xsd:string"
+    },
+    "port_scan_monitor_interface_1": {
+      "@id": "mandiant:port_scan_monitor_interface_1",
+      "@type": "xsd:string"
+    },
+    "port_scan_both_directions_1": {
+      "@id": "mandiant:port_scan_both_directions_1",
+      "@type": "xsd:string"
+    },
+    "sleep_action": "mandiant:sleep_action",
+    "alert_format": "mandiant:alert_format",
+    "syslog_severity": {
+      "@id": "mandiant:syslog_severity",
+      "@type": "xsd:string"
+    },
+    "from_address": {
+      "@id": "mandiant:from_address",
+      "@type": "xsd:string"
+    },
+    "alert_format_wrapped": "mandiant:alert_format_wrapped",
+    "alert_profile": "mandiant:alert_profile",
+    "alert_format_ids": {
+      "@id": "mandiant:alert_format_ids",
+      "@container": "@list"
+    },
+    "max_alerts": {
+      "@id": "mandiant:max_alerts",
+      "@type": "xsd:integer"
+    },
+    "max_alerts_interval": {
+      "@id": "mandiant:max_alerts_interval",
+      "@type": "xsd:string"
+    },
+    "monitor_def_ids": {
+      "@id": "mandiant:monitor_def_ids"
+    },
+    "alert_profile_wrapped": "mandiant:alert_profile_wrapped",
+    "api_user": "mandiant:api_user",
+    "api_user_wrapped": "mandiant:api_user_wrapped",
+    "cloud_profile": "mandiant:cloud_profile",
+    "auth_type": {
+      "@id": "mandiant:auth_type",
+      "@type": "xsd:string"
+    },
+    "options": {
+      "@id": "mandiant:options"
+    },
+    "disabled": {
+      "@id": "mandiant:disabled",
+      "@type": "xsd:boolean"
+    },
+    "cloud_profile_wrapped": "mandiant:cloud_profile_wrapped",
+    "create_bulk_job": "mandiant:create_bulk_job",
+    "source_actor_tags": {
+      "@id": "mandiant:source_actor_tags",
+      "@type": "xsd:string"
+    },
+    "destination_actor_tags": {
+      "@id": "mandiant:destination_actor_tags",
+      "@type": "xsd:string"
+    },
+    "tag_combination_strategy": {
+      "@id": "mandiant:tag_combination_strategy",
+      "@type": "xsd:string"
+    },
+    "run_time_params": {
+      "@id": "mandiant:run_time_params",
+      "@container": "@list"
+    },
+    "dns_server": "mandiant:dns_server",
+    "ip_address": {
+      "@id": "mandiant:ip_address",
+      "@type": "xsd:string"
+    },
+    "dns_server_wrapped": "mandiant:dns_server_wrapped",
+    "email_profile": "mandiant:email_profile",
+    "account_password": {
+      "@id": "mandiant:account_password",
+      "@type": "xsd:string"
+    },
+    "account_username": {
+      "@id": "mandiant:account_username",
+      "@type": "xsd:string"
+    },
+    "associated_node_ids": {
+      "@id": "mandiant:associated_node_ids"
+    },
+    "server_address": {
+      "@id": "mandiant:server_address",
+      "@type": "xsd:string"
+    },
+    "server_port": {
+      "@id": "mandiant:server_port",
+      "@type": "xsd:integer"
+    },
+    "server_smtp_port": {
+      "@id": "mandiant:server_smtp_port",
+      "@type": "xsd:integer"
+    },
+    "server_type": {
+      "@id": "mandiant:server_type",
+      "@type": "xsd:string"
+    },
+    "email_profile_wrapped": "mandiant:email_profile_wrapped",
+    "email_rule": "mandiant:email_rule",
+    "regex": {
+      "@id": "mandiant:regex",
+      "@type": "xsd:string"
+    },
+    "rule_type": {
+      "@id": "mandiant:rule_type",
+      "@type": "xsd:string"
+    },
+    "search_area": {
+      "@id": "mandiant:search_area",
+      "@type": "xsd:string"
+    },
+    "email_rule_wrapped": "mandiant:email_rule_wrapped",
+    "file_library_object": "mandiant:file_library_object",
+    "orig_file_name": {
+      "@id": "mandiant:orig_file_name",
+      "@type": "xsd:string"
+    },
+    "file_location": {
+      "@id": "mandiant:file_location",
+      "@type": "xsd:string"
+    },
+    "filesize": {
+      "@id": "mandiant:filesize",
+      "@type": "xsd:integer"
+    },
+    "file_notes": {
+      "@id": "mandiant:file_notes",
+      "@type": "xsd:string"
+    },
+    "file_restrictions": {
+      "@id": "mandiant:file_restrictions",
+      "@type": "xsd:string"
+    },
+    "related_actions": {
+      "@id": "mandiant:related_actions",
+      "@container": "@list"
+    },
+    "verodin_tags": {
+      "@id": "mandiant:verodin_tags",
+      "@container": "@list"
+    },
+    "user_tags": {
+      "@id": "mandiant:user_tags",
+      "@container": "@list"
+    },
+    "integration_type": "mandiant:integration_type",
+    "run_job": "mandiant:run_job",
+    "sim_id": {
+      "@id": "mandiant:sim_id",
+      "@type": "xsd:integer"
+    },
+    "schedule_run_now_selector": {
+      "@id": "mandiant:schedule_run_now_selector",
+      "@type": "xsd:string"
+    },
+    "schedule_job_datetime": {
+      "@id": "mandiant:schedule_job_datetime",
+      "@type": "xsd:string"
+    },
+    "job_name": {
+      "@id": "mandiant:job_name",
+      "@type": "xsd:string"
+    },
+    "repeat_job_selector": {
+      "@id": "mandiant:repeat_job_selector",
+      "@type": "xsd:string"
+    },
+    "repeat_job_period_number": {
+      "@id": "mandiant:repeat_job_period_number",
+      "@type": "xsd:integer"
+    },
+    "repeat_job_period_type": {
+      "@id": "mandiant:repeat_job_period_type",
+      "@type": "xsd:string"
+    },
+    "repeat_job_times_selector": {
+      "@id": "mandiant:repeat_job_times_selector",
+      "@type": "xsd:string"
+    },
+    "repeat_job_count": {
+      "@id": "mandiant:repeat_job_count",
+      "@type": "xsd:integer"
+    },
+    "repeat_job_period_number_1": {
+      "@id": "mandiant:repeat_job_period_number_1",
+      "@type": "xsd:integer"
+    },
+    "repeat_job_period_type_1": {
+      "@id": "mandiant:repeat_job_period_type_1",
+      "@type": "xsd:string"
+    },
+    "repeat_job_times_selector_1": {
+      "@id": "mandiant:repeat_job_times_selector_1",
+      "@type": "xsd:string"
+    },
+    "repeat_job_count_1": {
+      "@id": "mandiant:repeat_job_count_1",
+      "@type": "xsd:integer"
+    },
+    "monitor_def": "mandiant:monitor_def",
+    "monitor_group_id": {
+      "@id": "mandiant:monitor_group_id",
+      "@type": "xsd:integer"
+    },
+    "monitor": "mandiant:monitor",
+    "action_id": {
+      "@id": "mandiant:action_id",
+      "@type": "xsd:integer"
+    },
+    "simulation_id": {
+      "@id": "mandiant:simulation_id",
+      "@type": "xsd:integer"
+    },
+    "monitor_def_datetime": {
+      "@id": "mandiant:monitor_def_datetime",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Mandiant API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Mandiant's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-20) from openapi/mandiant-asm-openapi.yml, openapi/mandiant-dtm-openapi.yml, openapi/mandiant-ma-sv-openapi.yml.",
+  "dcterms:created": "2026-10-20",
+  "dcterms:source": [
+    "openapi/mandiant-asm-openapi.yml",
+    "openapi/mandiant-dtm-openapi.yml",
+    "openapi/mandiant-ma-sv-openapi.yml",
+    "openapi/mandiant-msv-openapi.yml"
+  ]
+}

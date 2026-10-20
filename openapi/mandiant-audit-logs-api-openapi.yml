@@ -1,0 +1,327 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Audit Logs API
+  version: '1.0'
+  description: 'Operations tagged Audit Logs across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Audit Logs
+  description: 'The Validation Platform Director has a consolidated audit log that tracks Validation Platform activity. As a general overview, the type of data in the Audit log is captured below. Each record is categorized using a Section and Action Type.
+
+
+    For a list of Section and Action Type values, see Audit Log Record Categorization. Some of the types of data it captures includes:
+
+
+    * Security Content changes: Creating, Updating, and Deleting Actions, Sequences, Evaluations, Files
+
+    * Director changes: Updating admin settings; updating network devices; adding, updating, removing notifications
+
+    * Instructions sent to the Actors: Check time sync, check version
+
+    * User Access: Login, Logout, Authentication failures
+
+    * Running Jobs
+
+    * Integrations: Adding, updating, removing Integrations
+
+    * User Actions: Users accessing reports'
+paths:
+  /audit_logs/table_data:
+    get:
+      summary: List audit log entries
+      description: 'List audit log entries, filterable using the parameters listed below.
+
+
+        To map header names to numbers used in the `col` and `filterList` params, refer to the `headers` portion of the response. For example, `filterList[0]` would refer to the ID header, while `filterList[4]` would refer to Action Type.'
+      tags:
+      - Audit Logs
+      parameters:
+      - name: page
+        in: query
+        description: The page, starting from 0
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        description: How many results to return in a page
+        schema:
+          type: integer
+          default: 50
+      - name: col
+        in: query
+        description: 'Specify which header column to sort by.
+
+
+          For example, to sort by the date/time the entry occurred you can specify `col[1]=0` to sort in chronological order or `col[1]=1` to sort in reverse chronological order (using the Timestamp column)
+
+          '
+        schema:
+          type: object
+      - name: filterList
+        in: query
+        description: "Specify which columns to filter by. Multiple filters can be used and will be combined using AND logic.\n\nHere's an example of filtering by `section` and `action_type` to show failed logins:\n```\n  \"filterList\": {\n    \"3\": \"sessions\",\n    \"4\": \"login_failure\"\n  }\n```\n\nAn exhaustive list of sections and action_types are available at https://docs.mandiant.com/home/msv-audit-log-record-categorization\n\nMore examples and use cases are available in the Request and Response examples.\n"
+        schema:
+          type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                last_5_logs:
+                  summary: Last 5 logs
+                  value:
+                    headers:
+                    - ID
+                    - Timestamp
+                    - Ran By
+                    - Section
+                    - Action Type
+                    - Message
+                    headerRef:
+                    - id
+                    - created_at
+                    - email
+                    - section
+                    - action
+                    - message
+                    total_rows: 3355
+                    filtered_rows: 3355
+                    rows:
+                    - id: 3348
+                      created_at: '2023-04-27 08:08:12'
+                      email: admin@verodin.com
+                      section: jobs
+                      action: show
+                      message: ''
+                    - id: 3347
+                      created_at: '2023-04-27 08:08:10'
+                      email: admin@verodin.com
+                      section: actions
+                      action: run
+                      message: admin@verodin.com ran job 13443
+                    - id: 3346
+                      created_at: '2023-04-27 06:53:02'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: run_test
+                      message: ''
+                    - id: 3345
+                      created_at: '2023-04-27 06:52:40'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: update
+                      message: 'ID: 7'
+                    - id: 3344
+                      created_at: '2023-04-27 06:51:11'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: update
+                      message: 'ID: 7'
+                failed_logins:
+                  summary: Last 5 failed logins
+                  value:
+                    headers:
+                    - ID
+                    - Timestamp
+                    - Ran By
+                    - Section
+                    - Action Type
+                    - Message
+                    headerRef:
+                    - id
+                    - created_at
+                    - email
+                    - section
+                    - action
+                    - message
+                    total_rows: 3355
+                    filtered_rows: 41
+                    rows:
+                    - id: 3397
+                      created_at: '2023-05-08 17:47:46'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user test@asdf.com
+                    - id: 3249
+                      created_at: '2023-04-14 19:35:18'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 3247
+                      created_at: '2023-04-14 19:35:07'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 3224
+                      created_at: '2023-04-14 13:04:20'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@
+                    - id: 2807
+                      created_at: '2023-02-22 15:20:17'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                failed_logins_for_user:
+                  summary: Last 5 failed logins for specific user
+                  value:
+                    headers:
+                    - ID
+                    - Timestamp
+                    - Ran By
+                    - Section
+                    - Action Type
+                    - Message
+                    headerRef:
+                    - id
+                    - created_at
+                    - email
+                    - section
+                    - action
+                    - message
+                    total_rows: 3355
+                    filtered_rows: 35
+                    rows:
+                    - id: 3249
+                      created_at: '2023-04-14 19:35:18'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 3247
+                      created_at: '2023-04-14 19:35:07'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 2807
+                      created_at: '2023-02-22 15:20:17'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 2643
+                      created_at: '2023-02-06 15:45:32'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                    - id: 2641
+                      created_at: '2023-02-06 15:45:23'
+                      email: unknown
+                      section: sessions
+                      action: login_failure
+                      message: Login failure for user admin@verodin.com
+                successful_logins:
+                  summary: Successful logins
+                  value:
+                    headers:
+                    - ID
+                    - Timestamp
+                    - Ran By
+                    - Section
+                    - Action Type
+                    - Message
+                    headerRef:
+                    - id
+                    - created_at
+                    - email
+                    - section
+                    - action
+                    - message
+                    total_rows: 3355
+                    filtered_rows: 75
+                    rows:
+                    - id: 3402
+                      created_at: '2023-05-10 11:51:13'
+                      email: admin@verodin.com
+                      section: sessions
+                      action: login
+                      message: User admin@verodin.com successfully logged in
+                    - id: 3398
+                      created_at: '2023-05-08 17:50:58'
+                      email: admin@verodin.com
+                      section: sessions
+                      action: login
+                      message: User admin@verodin.com successfully logged in
+                    - id: 3391
+                      created_at: '2023-05-08 17:36:42'
+                      email: admin@verodin.com
+                      section: sessions
+                      action: login
+                      message: User admin@verodin.com successfully logged in
+                    - id: 3373
+                      created_at: '2023-05-02 17:53:38'
+                      email: admin@verodin.com
+                      section: sessions
+                      action: login
+                      message: User admin@verodin.com successfully logged in
+                    - id: 3371
+                      created_at: '2023-05-02 17:42:00'
+                      email: admin@verodin.com
+                      section: sessions
+                      action: login
+                      message: User admin@verodin.com successfully logged in
+                filter_user_actions:
+                  summary: Filter actions by user
+                  value:
+                    headers:
+                    - ID
+                    - Timestamp
+                    - Ran By
+                    - Section
+                    - Action Type
+                    - Message
+                    headerRef:
+                    - id
+                    - created_at
+                    - email
+                    - section
+                    - action
+                    - message
+                    total_rows: 3355
+                    filtered_rows: 3355
+                    rows:
+                    - id: 3348
+                      created_at: '2023-04-27 08:08:12'
+                      email: admin@verodin.com
+                      section: jobs
+                      action: show
+                      message: ''
+                    - id: 3347
+                      created_at: '2023-04-27 08:08:10'
+                      email: admin@verodin.com
+                      section: actions
+                      action: run
+                      message: admin@verodin.com ran job 13443
+                    - id: 3346
+                      created_at: '2023-04-27 06:53:02'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: run_test
+                      message: ''
+                    - id: 3345
+                      created_at: '2023-04-27 06:52:40'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: update
+                      message: 'ID: 7'
+                    - id: 3344
+                      created_at: '2023-04-27 06:51:11'
+                      email: admin@verodin.com
+                      section: integrations
+                      action: update
+                      message: 'ID: 7'
+      operationId: getAuditLogsTableData
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

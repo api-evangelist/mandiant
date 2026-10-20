@@ -1,0 +1,1013 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Email Settings API
+  version: '1.0'
+  contact: {}
+  description: 'Operations tagged Email Settings across 2 of this provider''s published API definitions: mandiant-dtm-openapi.yml, mandiant-dtm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.intelligence.mandiant.com/v4/dtm
+security:
+- My_API_Key: []
+tags:
+- name: Email Settings
+paths:
+  /settings/email:
+    get:
+      description: List email settings for your organization.
+      operationId: list-settings-email
+      parameters:
+      - description: The accept type
+        in: header
+        name: Acccept
+        required: true
+        schema:
+          enum:
+          - application/json
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                list-email-settings:
+                  value:
+                    email_settings:
+                    - created_at: '2022-01-20T17:29:20.205Z'
+                      delivery_times:
+                      - 00:00
+                      - 00:30
+                      - 01:00
+                      - 01:30
+                      - 02:00
+                      - 02:30
+                      - 03:00
+                      - 03:30
+                      - 04:00
+                      - 04:30
+                      - 05:00
+                      - 05:30
+                      - 06:00
+                      - 06:30
+                      - 07:00
+                      - 07:30
+                      - 08:00
+                      - 08:30
+                      - 09:00
+                      - 09:30
+                      - '10:00'
+                      - '10:30'
+                      - '11:00'
+                      - '11:30'
+                      - '12:00'
+                      - '12:30'
+                      - '13:00'
+                      - '13:30'
+                      - '14:00'
+                      - '14:30'
+                      - '15:00'
+                      - '15:30'
+                      - '16:00'
+                      - '16:30'
+                      - '17:00'
+                      - '17:30'
+                      - '18:00'
+                      - '18:30'
+                      - '19:00'
+                      - '19:30'
+                      - '20:00'
+                      - '20:30'
+                      - '21:00'
+                      - '21:30'
+                      - '22:00'
+                      - '22:30'
+                      - '23:00'
+                      - '23:30'
+                      frequency:
+                      - sunday
+                      - monday
+                      - tuesday
+                      - wednesday
+                      - thursday
+                      - friday
+                      - saturday
+                      id: c7kpns36fv7ll65ekbog
+                      recipients:
+                      - email_address: username1@mydomain.com
+                        status: verified
+                        verification_sent_at: '2022-01-20T17:29:20.205Z'
+                      - email_address: username2@mydomain.com
+                        status: invalid
+                        verification_sent_at: '2022-01-20T17:29:20.205Z'
+                      timezone_location: America/Denver
+                      updated_at: '2022-01-20T17:30:00.013Z'
+              schema:
+                $ref: '#/components/schemas/EmailSettings'
+          description: OK
+          headers:
+            Content-Type:
+              description: Response content type
+              schema:
+                enum:
+                - application/json
+                type: string
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: List email settings
+      tags:
+      - Email Settings
+    post:
+      description: Create email settings for your organization. Note that only 1 email setting per organization is allowed.
+      operationId: post-settings-email
+      parameters:
+      - description: Request content type
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              create-email-setting:
+                value:
+                  delivery_times:
+                  - 00:00
+                  - 00:30
+                  - 01:00
+                  - 01:30
+                  - 02:00
+                  - 02:30
+                  - 03:00
+                  - 03:30
+                  - 04:00
+                  - 04:30
+                  - 05:00
+                  - 05:30
+                  - 06:00
+                  - 06:30
+                  - 07:00
+                  - 07:30
+                  - 08:00
+                  - 08:30
+                  - 09:00
+                  - 09:30
+                  - '10:00'
+                  - '10:30'
+                  - '11:00'
+                  - '11:30'
+                  - '12:00'
+                  - '12:30'
+                  - '13:00'
+                  - '13:30'
+                  - '14:00'
+                  - '14:30'
+                  - '15:00'
+                  - '15:30'
+                  - '16:00'
+                  - '16:30'
+                  - '17:00'
+                  - '17:30'
+                  - '18:00'
+                  - '18:30'
+                  - '19:00'
+                  - '19:30'
+                  - '20:00'
+                  - '20:30'
+                  - '21:00'
+                  - '21:30'
+                  - '22:00'
+                  - '22:30'
+                  - '23:00'
+                  - '23:30'
+                  frequency:
+                  - sunday
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  recipients:
+                  - email_address: username1@yourdomain.com
+                  - email_address: username2@yourdomain.com
+                  timezone_location: America/Denver
+            schema:
+              $ref: '#/components/schemas/EmailSetting'
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                email-setting-response:
+                  value:
+                    created_at: '2022-01-20T17:29:20.205Z'
+                    delivery_times:
+                    - 00:00
+                    - 00:30
+                    - 01:00
+                    - 01:30
+                    - 02:00
+                    - 02:30
+                    - 03:00
+                    - 03:30
+                    - 04:00
+                    - 04:30
+                    - 05:00
+                    - 05:30
+                    - 06:00
+                    - 06:30
+                    - 07:00
+                    - 07:30
+                    - 08:00
+                    - 08:30
+                    - 09:00
+                    - 09:30
+                    - '10:00'
+                    - '10:30'
+                    - '11:00'
+                    - '11:30'
+                    - '12:00'
+                    - '12:30'
+                    - '13:00'
+                    - '13:30'
+                    - '14:00'
+                    - '14:30'
+                    - '15:00'
+                    - '15:30'
+                    - '16:00'
+                    - '16:30'
+                    - '17:00'
+                    - '17:30'
+                    - '18:00'
+                    - '18:30'
+                    - '19:00'
+                    - '19:30'
+                    - '20:00'
+                    - '20:30'
+                    - '21:00'
+                    - '21:30'
+                    - '22:00'
+                    - '22:30'
+                    - '23:00'
+                    - '23:30'
+                    frequency:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    id: c7kpns36fv7ll65ekbog
+                    recipients:
+                    - email_address: username1@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    - email_address: username2@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    timezone_location: America/Denver
+                    updated_at: '2022-01-20T17:29:20.205Z'
+              schema:
+                $ref: '#/components/schemas/EmailSetting'
+          description: OK
+          headers:
+            Content-Type:
+              description: Response content type
+              schema:
+                enum:
+                - application/json
+                type: string
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: bad request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Create email settings
+      tags:
+      - Email Settings
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /settings/email/{id}:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    delete:
+      description: Delete existing email settings by ID.
+      operationId: delete-settings-email-id
+      responses:
+        '204':
+          description: No Content
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: not found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Delete email settings
+      tags:
+      - Email Settings
+    get:
+      description: Get email settings by ID.
+      operationId: get-settings-email-id
+      parameters:
+      - description: Accept type
+        in: header
+        name: Accept
+        required: true
+        schema:
+          enum:
+          - application/json
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                get-email-setting:
+                  value:
+                    created_at: '2022-01-20T17:29:20.205Z'
+                    delivery_times:
+                    - 00:00
+                    - 00:30
+                    - 01:00
+                    - 01:30
+                    - 02:00
+                    - 02:30
+                    - 03:00
+                    - 03:30
+                    - 04:00
+                    - 04:30
+                    - 05:00
+                    - 05:30
+                    - 06:00
+                    - 06:30
+                    - 07:00
+                    - 07:30
+                    - 08:00
+                    - 08:30
+                    - 09:00
+                    - 09:30
+                    - '10:00'
+                    - '10:30'
+                    - '11:00'
+                    - '11:30'
+                    - '12:00'
+                    - '12:30'
+                    - '13:00'
+                    - '13:30'
+                    - '14:00'
+                    - '14:30'
+                    - '15:00'
+                    - '15:30'
+                    - '16:00'
+                    - '16:30'
+                    - '17:00'
+                    - '17:30'
+                    - '18:00'
+                    - '18:30'
+                    - '19:00'
+                    - '19:30'
+                    - '20:00'
+                    - '20:30'
+                    - '21:00'
+                    - '21:30'
+                    - '22:00'
+                    - '22:30'
+                    - '23:00'
+                    - '23:30'
+                    frequency:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    id: c7kpns36fv7ll65ekbog
+                    recipients:
+                    - email_address: username1@yourdomain.com
+                      status: verified
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    - email_address: username2@yourdomain.com
+                      status: invalid
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    timezone_location: America/Denver
+                    updated_at: '2022-01-20T17:30:00.013Z'
+              schema:
+                $ref: '#/components/schemas/EmailSetting'
+          description: OK
+          headers:
+            Content-Type:
+              description: Response content type
+              schema:
+                enum:
+                - application/json
+                type: string
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: not found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Fetch an email setting
+      tags:
+      - Email Settings
+    patch:
+      description: Update existing email settings for the properties given in the request body. All other properties remain unchanged.
+      operationId: patch-settings-email-id
+      parameters:
+      - description: Accept type
+        in: header
+        name: Accept
+        schema:
+          enum:
+          - application/json
+          type: string
+      - description: Request content type
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          enum:
+          - application/json
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              patch-email-setting:
+                value:
+                  delivery_times:
+                  - 00:00
+                  - 00:30
+                  - 01:00
+                  - 01:30
+                  - 02:00
+                  - 02:30
+                  - 03:00
+                  - 03:30
+                  - 04:00
+                  - 04:30
+                  - 05:00
+                  - 05:30
+                  - 06:00
+                  - 06:30
+                  - 07:00
+                  - 07:30
+                  - 08:00
+                  - 08:30
+                  - 09:00
+                  - 09:30
+                  - '10:00'
+                  - '10:30'
+                  - '11:00'
+                  - '11:30'
+                  - '12:00'
+                  - '12:30'
+                  - '13:00'
+                  - '13:30'
+                  - '14:00'
+                  - '14:30'
+                  - '15:00'
+                  - '15:30'
+                  - '16:00'
+                  - '16:30'
+                  - '17:00'
+                  - '17:30'
+                  - '18:00'
+                  - '18:30'
+                  - '19:00'
+                  - '19:30'
+                  - '20:00'
+                  - '20:30'
+                  - '21:00'
+                  - '21:30'
+                  - '22:00'
+                  - '22:30'
+                  - '23:00'
+                  - '23:30'
+                  frequency:
+                  - sunday
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+            schema:
+              $ref: '#/components/schemas/EmailSetting'
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                patch-response:
+                  value:
+                    created_at: '2022-01-20T17:29:20.205Z'
+                    delivery_times:
+                    - 00:00
+                    - 00:30
+                    - 01:00
+                    - 01:30
+                    - 02:00
+                    - 02:30
+                    - 03:00
+                    - 03:30
+                    - 04:00
+                    - 04:30
+                    - 05:00
+                    - 05:30
+                    - 06:00
+                    - 06:30
+                    - 07:00
+                    - 07:30
+                    - 08:00
+                    - 08:30
+                    - 09:00
+                    - 09:30
+                    - '10:00'
+                    - '10:30'
+                    - '11:00'
+                    - '11:30'
+                    - '12:00'
+                    - '12:30'
+                    - '13:00'
+                    - '13:30'
+                    - '14:00'
+                    - '14:30'
+                    - '15:00'
+                    - '15:30'
+                    - '16:00'
+                    - '16:30'
+                    - '17:00'
+                    - '17:30'
+                    - '18:00'
+                    - '18:30'
+                    - '19:00'
+                    - '19:30'
+                    - '20:00'
+                    - '20:30'
+                    - '21:00'
+                    - '21:30'
+                    - '22:00'
+                    - '22:30'
+                    - '23:00'
+                    - '23:30'
+                    frequency:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    id: c7kpns36fv7ll65ekbog
+                    recipients:
+                    - email_address: username1@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    - email_address: username2@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    timezone_location: America/Denver
+                    updated_at: '2022-01-20T17:39:10.205Z'
+              schema:
+                $ref: '#/components/schemas/EmailSetting'
+          description: OK
+          headers:
+            Content-Type:
+              description: Response content type
+              schema:
+                enum:
+                - application/json
+                type: string
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: bad request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Update email settings
+      tags:
+      - Email Settings
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /settings/email/{id}/reverify:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    post:
+      description: Reverify existing email settings recipients by setting their status to "pending" and resending the email address verification email. This can be used if existing recipients did not verify their email address before the verify link expired in thier verification email.
+      operationId: post-settings-email-id-reverify
+      parameters:
+      - description: Request content type
+        in: header
+        name: Content-Type
+        schema:
+          enum:
+          - application/json
+          type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              reverify:
+                value:
+                  recipients:
+                  - user@example.com
+            schema:
+              $ref: '#/components/schemas/EmailRecipients'
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                reverify-response:
+                  value:
+                    created_at: '2022-01-20T17:29:20.205Z'
+                    delivery_times:
+                    - 00:00
+                    - 00:30
+                    - 01:00
+                    - 01:30
+                    - 02:00
+                    - 02:30
+                    - 03:00
+                    - 03:30
+                    - 04:00
+                    - 04:30
+                    - 05:00
+                    - 05:30
+                    - 06:00
+                    - 06:30
+                    - 07:00
+                    - 07:30
+                    - 08:00
+                    - 08:30
+                    - 09:00
+                    - 09:30
+                    - '10:00'
+                    - '10:30'
+                    - '11:00'
+                    - '11:30'
+                    - '12:00'
+                    - '12:30'
+                    - '13:00'
+                    - '13:30'
+                    - '14:00'
+                    - '14:30'
+                    - '15:00'
+                    - '15:30'
+                    - '16:00'
+                    - '16:30'
+                    - '17:00'
+                    - '17:30'
+                    - '18:00'
+                    - '18:30'
+                    - '19:00'
+                    - '19:30'
+                    - '20:00'
+                    - '20:30'
+                    - '21:00'
+                    - '21:30'
+                    - '22:00'
+                    - '22:30'
+                    - '23:00'
+                    - '23:30'
+                    frequency:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    id: c7kpns36fv7ll65ekbog
+                    recipients:
+                    - email_address: username1@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    - email_address: username2@yourdomain.com
+                      status: pending
+                      verification_sent_at: '2022-01-20T17:29:20.205Z'
+                    timezone_location: America/Denver
+                    updated_at: '2022-01-20T17:30:00.013Z'
+              schema:
+                $ref: '#/components/schemas/EmailSetting'
+          description: OK
+          headers:
+            Content-Type:
+              description: Response content type
+              schema:
+                enum:
+                - application/json
+                type: string
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: bad request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-server-error:
+                  value:
+                    message: internal server error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Reverify one or more email recipients
+      tags:
+      - Email Settings
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+components:
+  schemas:
+    EmailRecipient:
+      description: An email recipient.
+      properties:
+        email_address:
+          description: The email address of the recipient.
+          format: email
+          type: string
+        status:
+          description: The status of the email address verification.
+          enum:
+          - invalid
+          - pending
+          - verified
+          - expired
+          readOnly: true
+          type: string
+        verification_sent_at:
+          description: The timestamp an email verification was sent at for this email address.
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - email_address
+      title: Email Recipient
+      type: object
+    EmailSetting:
+      description: Email notification settings.
+      properties:
+        created_at:
+          description: The timestamp this email setting was created.
+          format: date-time
+          readOnly: true
+          type: string
+        delivery_times:
+          description: The delivery times specified for scheduled emails.
+          items:
+            enum:
+            - 00:00
+            - 00:30
+            - 01:00
+            - 01:30
+            - 02:00
+            - 02:30
+            - 03:00
+            - 03:30
+            - 04:00
+            - 04:30
+            - 05:00
+            - 05:30
+            - 06:00
+            - 06:30
+            - 07:00
+            - 07:30
+            - 08:00
+            - 08:30
+            - 09:00
+            - 09:30
+            - '10:00'
+            - '10:30'
+            - '11:00'
+            - '11:30'
+            - '12:00'
+            - '12:30'
+            - '13:00'
+            - '13:30'
+            - '14:00'
+            - '14:30'
+            - '15:00'
+            - '15:30'
+            - '16:00'
+            - '16:30'
+            - '17:00'
+            - '17:30'
+            - '18:00'
+            - '18:30'
+            - '19:00'
+            - '19:30'
+            - '20:00'
+            - '20:30'
+            - '21:00'
+            - '21:30'
+            - '22:00'
+            - '22:30'
+            - '23:00'
+            - '23:30'
+            type: string
+          type: array
+        frequency:
+          description: The frequency at which scheduled emails are delivered.
+          items:
+            enum:
+            - sunday
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            type: string
+          type: array
+        id:
+          description: The ID of the email settings.
+          readOnly: true
+          type: string
+        recipients:
+          description: The recipients to receive emails.
+          items:
+            $ref: '#/components/schemas/EmailRecipient'
+          type: array
+        timezone_location:
+          description: The timezone location to use for scheduled emails.
+          type: string
+        updated_at:
+          description: The timestamp this email setting was last updated.
+          format: date-time
+          readOnly: true
+          type: string
+      title: Email Setting
+      type: object
+    Response-message:
+      description: Error response message.
+      properties:
+        message:
+          description: The response message.
+          type: string
+      title: Error Response
+      type: object
+    EmailRecipients:
+      description: A list of email recipients.
+      properties:
+        recipients:
+          description: The list of email addresses for receipients.
+          items:
+            format: email
+            type: string
+          type: array
+      required:
+      - recipients
+      title: Email Recipients
+      type: object
+    EmailSettings:
+      description: List of email settings.
+      properties:
+        email_settings:
+          description: The list of email settings.
+          items:
+            $ref: '#/components/schemas/EmailSetting'
+          type: array
+      title: Email Settings
+      type: object
+  securitySchemes:
+    My_API_Key:
+      scheme: bearer
+      type: http
+x-refined-from:
+- mandiant-dtm-openapi.yml
+- mandiant-dtm-openapi.yml

@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Mitre ATT&CK Dashboard API
+  version: '1.0'
+  description: 'Operations tagged Mitre ATT&CK Dashboard across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Mitre ATT&CK Dashboard
+  description: ActionProfiles are statistical actions based on a metatag.
+paths:
+  /action_profiles/show:
+    get:
+      summary: List profiles for metatag actions
+      tags:
+      - Mitre ATT&CK Dashboard
+      parameters:
+      - name: dateRange
+        in: query
+        description: 'Job Action time range for results, of the format `2019-08-27 04:18:42 PM UTC to 2019-09-27 04:18:42 PM UTC`
+
+          '
+        schema:
+          type: string
+      - name: zones
+        in: query
+        description: List of Security Zones to include in the results
+        schema:
+          type: array
+          items:
+            type: string
+      - name: category
+        in: query
+        description: String matching the Mitre ATT&CK Technique name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                zones:
+                - Desktop Users
+                - DMZ
+                times:
+                  end_time: '2019-11-18T19:49:32+00:00'
+                  start_time: '2019-10-20T19:49:32+00:00'
+                breakdown:
+                - name: T1078
+                  statistics:
+                  - tag: T1078
+                    sectech:
+                      name: Windows Defender AV
+                      id: 36
+                      security_technology_id: 15
+                      sectech_type: endpoint
+                      tooltip: 'Endpoint Product: Windows Defender AV
+
+                        Actors: example-actor (192.168.20.22) '
+                      icon: /images/logos/1/windows_defender_logo.png
+                    blocked: 1
+                    missed: 0
+                    blocked_vids:
+                    - last_job_action_id: 13374
+                      last_run_time: '2019-11-18T15:51:41Z'
+                      id: 3566
+                      vid: A104-057
+                    missed_vids: []
+                    vids:
+                    - A104-057
+                sectech:
+                - tooltip: 'Endpoint Product: Windows Defender AV (1 product)'
+                  sectech_type: endpoint
+                  icon: /images/logos/1/windows_defender_logo.png
+                completed:
+                  missed: 1
+                  blocked: 1
+                name: Defense Evasion
+      operationId: getActionProfilesShow
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

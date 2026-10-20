@@ -1,0 +1,646 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Event Filter Rules API
+  version: '1.0'
+  description: 'Operations tagged Event Filter Rules across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Event Filter Rules
+  description: 'The suppressed event filter rule API endpoints interact with the rules governing an event matching a Job Action.
+
+
+    An suppressing or dropping EventFilterRule will prevent an Integration event from having a normal relationship with a Job Action. A suppressed or dropped event will not contribute
+
+    to the prevented/alerted/detected/missed set of statistics for a Job Action. The event''s relationship will be considered suppressed or
+
+    dropped depending on the rule configuration and the global Director settings.
+
+
+    A kept EventFilterRule will override suppressing or dropping rules depending on the numerical priority. This can be used to establish "normal" or expected
+
+    event matching behavior. For example, a priority 5 rule to suppress all events from Host CLI actions can be overridden by a priority 3 rule
+
+    to keep all events from a particular Integration.
+
+
+    A Suppressing or Dropping EventFilterRule differ from a normal IntegrationEventFilter in the way the event and the Job Action relate to each other.
+
+    * Events that are Suppressed or Dropped via EventFilterRules and not by IntegrationEventFilters will not contribute any statistics to the Job Action, the event will not be considered a "real" event for the Job Action, and
+
+    the only record that the event has any relationship at all to the Job Action is that there will be a SuppressedEvent/DroppedEvent object created and attached to the Job Action
+
+    afterward.
+
+    * Events that are altered by the IntegrationEventFilter and not by EventFilterRules will still be considered "real" events attached to the Job Action, however the event
+
+    cannot be considered "detected" by the Job Action.
+
+    * Events that are eligible to be Suppressed or Dropped by an EventFilterRule but also eligible to be altered by an IntegrationEventFilter will be Suppressed or Dropped only.
+
+    The event will not be linked to the Job Action and therefore will not be considered detected (or prevented or missed or anything)'
+paths:
+  /event_filter_rules.json:
+    get:
+      summary: List all Event Filter Rules on the Director
+      tags:
+      - Event Filter Rules
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 19
+                organization_id: 1
+                priority: 20
+                determination: keep
+                match_count: null
+                created_at: '2021-07-29T17:25:09.297Z'
+                updated_at: '2021-07-29T17:25:09.297Z'
+                disabled: false
+                override_settings: null
+                paused: false
+                created_by:
+                  full_name: null
+                  id: null
+                filter_conditions:
+                - id: 25
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.299Z'
+                  updated_at: '2021-07-29T20:52:01.060Z'
+                  operator: in
+                  value:
+                  - A101-204
+                - id: 26
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.300Z'
+                  updated_at: '2021-07-29T20:52:01.123Z'
+                  operator: in
+                  value:
+                  - A101-205
+      operationId: getEventFilterRulesJson
+      x-operation-id-source: derived
+    post:
+      summary: Create a new Event Filter Rule in the Director
+      tags:
+      - Event Filter Rules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_filter_rule_create_payload'
+            examples:
+              clone_and_update:
+                summary: Example Event Filter Rule Creation
+                value:
+                  priority: 128
+                  determination: suppress
+                  filter_condition_attributes:
+                  - match_object: SimAction
+                    match_field: vid
+                    operator: in
+                    match_value: A101-104
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 28
+                organization_id: 1
+                priority: 124
+                determination: suppress
+                match_count: null
+                created_at: '2021-09-09T20:57:09.185Z'
+                updated_at: '2021-09-09T20:57:09.185Z'
+                disabled: false
+                override_settings: false
+                paused: false
+                created_by:
+                  full_name: Default Admin
+                  id: 1
+                filter_conditions:
+                - id: 38
+                  organization_id: 1
+                  event_filter_rule_id: 31
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-09-09T20:57:09.187Z'
+                  updated_at: '2021-09-09T20:57:09.187Z'
+                  operator: in
+                  value:
+                  - A101-104
+      operationId: postEventFilterRulesJson
+      x-operation-id-source: derived
+  /event_filter_rules/{id}.json:
+    parameters:
+    - name: id
+      in: path
+      description: The unique ID of the event filter rule.
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List all Event Filter Rules on the Director for a given Job Action
+      tags:
+      - Event Filter Rules
+      parameters:
+      - name: id
+        in: query
+        description: 'The unique Job Action ID used to pull associated Event Filter Rule information
+
+          '
+        schema:
+          oneOf:
+          - type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 19
+                organization_id: 1
+                priority: 20
+                determination: keep
+                match_count: null
+                created_at: '2021-07-29T17:25:09.297Z'
+                updated_at: '2021-07-29T17:25:09.297Z'
+                disabled: false
+                override_settings: null
+                paused: false
+                created_by:
+                  full_name: null
+                  id: null
+                filter_conditions:
+                - id: 25
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.299Z'
+                  updated_at: '2021-07-29T20:52:01.060Z'
+                  operator: in
+                  value:
+                  - A101-204
+                - id: 26
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.300Z'
+                  updated_at: '2021-07-29T20:52:01.123Z'
+                  operator: in
+                  value:
+                  - A101-205
+      operationId: getEventFilterRules{id}Json
+      x-operation-id-source: derived
+    put:
+      summary: Clone and alter an existing Event Filter Rule in the Director
+      tags:
+      - Event Filter Rules
+      parameters:
+      - name: id
+        in: query
+        description: "The id of the existing Event Filter Rule that will be cloned.  This process will change the clone based on the provided request parameters,\nfilling in other values with the pre-existing values in the original rule.  Then the original rule will be disabled and the cloned\nrule will be enabled. \n\nThis process is designed to preserve the original rule in order to properly attribute historic Job Action event processing decisions.\n"
+        schema:
+          oneOf:
+          - type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_filter_rule_create_payload'
+            examples:
+              clone_and_update:
+                summary: Example Event Filter Rule Creation
+                value:
+                  id: 28
+                  priority: 128
+                  determination: suppress
+                  filter_condition_attributes:
+                  - match_object: SimAction
+                    match_field: vid
+                    operator: in
+                    match_value:
+                    - A101-104
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 31
+                organization_id: 1
+                priority: 124
+                determination: suppress
+                match_count: null
+                created_at: '2021-09-09T20:57:09.185Z'
+                updated_at: '2021-09-09T20:57:09.185Z'
+                disabled: false
+                override_settings: false
+                paused: false
+                created_by:
+                  full_name: Default Admin
+                  id: 1
+                filter_conditions:
+                - id: 38
+                  organization_id: 1
+                  event_filter_rule_id: 31
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-09-09T20:57:09.187Z'
+                  updated_at: '2021-09-09T20:57:09.187Z'
+                  operator: in
+                  value:
+                  - A101-104
+      operationId: putEventFilterRules{id}Json
+      x-operation-id-source: derived
+    delete:
+      summary: Disable an Event Filter Rule so it no longer applies to the Director
+      tags:
+      - Event Filter Rules
+      parameters:
+      - name: id
+        in: query
+        description: "The existing Event Filter Rule that will be disabled.  Disabling rules permits an audit of historical event attribution going forward \nwhile also stopping those rules from being exercised in the future.  If we were to delete the rule, then understanding why an event\nwas suppressed, dropped, or kept would be more difficult later on.\n"
+        schema:
+          oneOf:
+          - type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 31
+      operationId: deleteEventFilterRules{id}Json
+      x-operation-id-source: derived
+  /event_filter_rules/action/{action_vid}.json:
+    get:
+      summary: List all Event Filter Rules on the Director related to an Action
+      tags:
+      - Event Filter Rules
+      parameters:
+      - name: action_vid
+        in: path
+        description: The unique identifier (VID) of the action.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 19
+                organization_id: 1
+                priority: 20
+                determination: keep
+                match_count: null
+                created_at: '2021-07-29T17:25:09.297Z'
+                updated_at: '2021-07-29T17:25:09.297Z'
+                disabled: false
+                override_settings: null
+                paused: false
+                created_by:
+                  full_name: null
+                  id: null
+                filter_conditions:
+                - id: 25
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.299Z'
+                  updated_at: '2021-07-29T20:52:01.060Z'
+                  operator: in
+                  value:
+                  - A101-204
+                - id: 26
+                  organization_id: 1
+                  event_filter_rule_id: 19
+                  match_object: SimAction
+                  match_field: vid
+                  created_at: '2021-07-29T17:25:09.300Z'
+                  updated_at: '2021-07-29T20:52:01.123Z'
+                  operator: in
+                  value:
+                  - A101-205
+      operationId: getEventFilterRulesAction{actionVid}Json
+      x-operation-id-source: derived
+  /event_filter_rules/rule_options.json:
+    get:
+      summary: Show all existing parameter value options for an Event Filter Rule
+      tags:
+      - Event Filter Rules
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - match_object: SimAction
+                label: Action
+                match_fields:
+                - match_field: vid
+                  label: VID
+                  operators:
+                  - in
+                  - not_in
+                  selector_type: typeahead
+                  options:
+                  - A104-388
+                  - A104-515
+                  - A100-989
+                  - A104-325
+                  - A101-420
+                  - A100-548
+                  - A104-659
+                  - A101-502
+                  - A101-632
+                - match_field: action_type
+                  label: Action Type
+                  operators:
+                  - in
+                  - not_in
+                  selector_type: typeahead
+                  options:
+                  - name: Captive DNS
+                    value: captive_dns
+                  - name: Captive IOC PCAP
+                    value: captive_ioc_pcap
+                  - name: Captive IOC URL
+                    value: captive_ioc_url
+                  - name: DNS
+                    value: dns
+                  - name: Email
+                    value: email
+                  - name: File
+                    value: file
+                  - name: File Transfer
+                    value: file_transfer
+                  - name: Hex
+                    value: hex
+                  - name: Host CLI
+                    value: host_cli
+                  - name: PCAP
+                    value: pcap
+                  - name: Port Scan
+                    value: port_scan
+                  - name: Socket
+                    value: socket
+                  - name: Website
+                    value: website
+              - match_object: Integration
+                label: Integration
+                match_fields:
+                - match_field: id
+                  label: Host
+                  operators:
+                  - in
+                  - not_in
+                  selector_type: typeahead
+                  options:
+                  - name: Elasticsearch - 10.12.10.190
+                    value: 1
+                  - name: FireEye Endpoint Security - 172.21.31.7
+                    value: 2
+                - match_field: type
+                  label: Product
+                  operators:
+                  - in
+                  - not_in
+                  selector_type: typeahead
+                  options:
+                  - name: Elasticsearch
+                    value: ElasticSearchServer
+                  - name: FireEye Endpoint Security
+                    value: FireeyehxIntegration
+              - match_object: IntegrationEvent
+                label: Event
+                match_fields:
+                - match_field: action
+                  label: Action
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: cloud_request_id
+                  label: Cloud Request ID
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: computer
+                  label: Computer
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: description
+                  label: Description
+                  selector_type: textarea_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  - starts_with
+                  - ends_with
+                  options: null
+                - match_field: dest_ip
+                  label: Destination IP
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: dest_port
+                  label: Destination Port
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: email_recipient
+                  label: Email Recipient
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  options: null
+                - match_field: email_sender
+                  label: Email Sender
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  options: null
+                - match_field: email_subject
+                  label: Email Subject
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  options: null
+                - match_field: event_source
+                  label: Event Source
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  options: null
+                - match_field: filehashes
+                  label: File Hashes
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: host
+                  label: Host
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: raw_event
+                  label: Raw Event
+                  selector_type: textarea_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  - starts_with
+                  - ends_with
+                  options: null
+                - match_field: sid
+                  label: SID
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: src_ip
+                  label: Source IP
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: src_port
+                  label: Source Port
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  options: null
+                - match_field: url
+                  label: URL
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  - starts_with
+                  - ends_with
+                  options: null
+                - match_field: user
+                  label: User
+                  selector_type: text_list
+                  operators:
+                  - in
+                  - not_in
+                  - contains
+                  - not_contains
+                  options: null
+      operationId: getEventFilterRulesRuleOptionsJson
+      x-operation-id-source: derived
+components:
+  schemas:
+    event_filter_rule_base:
+      type: object
+      properties:
+        priority:
+          type: integer
+          description: Priority of rule.  A lower number marks the rule as a greater relative priority - for example, a priority 2 rule will be executed over a priority 5 rule.
+        determination:
+          type: string
+          enum:
+          - drop
+          - suppress
+          - keep
+          description: "The effect of an event matching a rule.\n\n**Drop** will prevent saving the event for reference to this Job Action (the event may be saved if it matches another Job Action).  The event \nUUID will be added to a record of dropped event information and added to the Job Action, but the event itself will not be related to the Job Action.\n\n**Suppress** will save the event but will not relate the event to the Job Action.  The data about the relationship between the event\nand the Job Action will be saved and stored.  Suppressed Events can be converted back to Job Action events at a later date.\n\n**Keep** determinations will force the event to be related to the Job Action, overriding the Suppress and Drop rules of numerically\nhigher-priority rules.  For instance, a Keep rule with priority 5 will persist an event, even if that event would normally\nbe Suppressed with a rule that has a priority of 7.  A suppress rule with a priority of 3 would still suppress the event.\n"
+        override_settings:
+          type: boolean
+          description: "When true, the rule's determination will override the global determination of rule activity.  This only impacts rules involving **Suppress** or **Drop**.\n\nFor example, if the Director is set to globally **Suppress** all non-**Keep** rules, but you know you want to update the rule to \nforce a **Drop** of matching events, this parameter should be set to `true`.\n\nConversely, if you want to update the rule to follow the Director global guidelines, you can pass this parameter with the `false` value.\n"
+        filter_condition_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              match_object:
+                type: string
+                enum:
+                - SimAction
+                - Integration
+                - IntegrationEvent
+                description: The type of object that the rule will look to match
+              match_field:
+                type: string
+                description: 'The attribute on the match_object that will be called for evaluation.  The list of effective fields can be obtained from `/event_filter_rules/rule_options.json`
+
+
+                  For the SimAction, this includes **vid** and **action_type**.
+
+                  For the Integration, this includes **id** and **type**.
+
+                  For the IntegrationEvent, this includes many of the attributes of an IntegrationEvent, excluding time-related attributes.
+
+                  '
+              operator:
+                type: string
+                enum:
+                - in
+                - not_in
+                - contains
+                - not_contains
+                description: The match type for the rule value when comparing with the match_object and match_field.  **in** and **not_in** will match for an array match_field response, while **contains** and **not_contains** are designed to perform comparisons for a string match_field response.
+              match_value:
+                type: string
+                description: 'The target value for rule matching.
+
+
+                  For example, a filter condition with match_object of "SimAction", match_field of "vid", operator of "not_in", and match_value of "A100-100" will
+
+                  match all SimActions other than the SimAction with a VID of A100-100.
+
+                  '
+    event_filter_rule_create_payload:
+      allOf:
+      - $ref: '#/components/schemas/event_filter_rule_base'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

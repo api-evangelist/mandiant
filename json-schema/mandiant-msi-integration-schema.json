@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-msi-integration-schema.json",
+  "title": "msi_integration",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-msv-openapi.yml#/components/schemas/msi_integration",
+  "type": "object",
+  "properties": {
+    "integration": {
+      "type": "object",
+      "required": [
+        "name",
+        "organization_id",
+        "config"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": "integer"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "description": "Integration type",
+          "enum": [
+            "alertlogic",
+            "alien-vault",
+            "anomali-security-analytics",
+            "arcsight",
+            "att-usm-anywhere",
+            "aws-cloudtrail",
+            "aws-cloudwatch",
+            "aws-guardduty",
+            "azure-log-analytics",
+            "azure-sentinel",
+            "better-stack-logs",
+            "carbon-black-protection",
+            "carbon-black-psc",
+            "carbon-black-response",
+            "checkpoint",
+            "cisco-amp",
+            "cisco-firepower",
+            "clickhouse",
+            "crowdstrike-logscale",
+            "crowdstrike-next-gen-siem-search",
+            "crowdstrike",
+            "cybereason",
+            "cylance",
+            "darktrace",
+            "devo",
+            "duo",
+            "elasticsearch",
+            "endgame",
+            "exabeam-analytics",
+            "exabeam-cloud",
+            "exabeam-datalake",
+            "extrahop-enterprise",
+            "extrahop-reveal360",
+            "f5-threat-stack",
+            "fortianalyzer",
+            "google-bigquery",
+            "google-chronicle-backstory",
+            "google-cloud-logging",
+            "graylog",
+            "iboss",
+            "juniper-jsa",
+            "logrhythm-cloud",
+            "logrhythm-elastic",
+            "logrhythm-sql",
+            "logzilla",
+            "ms-defender-atp",
+            "ms-graph-security",
+            "netskope",
+            "opensearch",
+            "palo-alto-cortex-xdr",
+            "palo-alto-cortex-xsiam",
+            "palo-alto",
+            "qradar",
+            "rapid7-insightidr",
+            "rsa-netwitness-logs-and-packets",
+            "rsa-netwitness-respond",
+            "secureworks-taegis-xdr",
+            "security-onion-elk",
+            "security-onion-elsa",
+            "securonix",
+            "sentinelone",
+            "snowflake",
+            "sophos-cloud",
+            "splunk",
+            "sql",
+            "sumologic",
+            "symantec-dlp",
+            "symantec-ep",
+            "symantec-es",
+            "tanium-threat-response",
+            "tipping-point",
+            "trellix-edr-threats",
+            "trellix-email-security-cloud",
+            "trellix-endpoint-security",
+            "trellix-enterprise-security-manager",
+            "trellix-epolicy-orchestrator",
+            "trellix-helix",
+            "trellix-ips",
+            "trellix-network-dlp",
+            "trellix-network-security",
+            "trend-micro-trend-vision-one",
+            "vmware-appdefense"
+          ]
+        },
+        "brand_name": {
+          "type": "string"
+        },
+        "msi_version": {
+          "type": "string",
+          "description": "MSI version of Integration",
+          "enum": [
+            "v1",
+            "v2"
+          ]
+        },
+        "node_id": {
+          "type": "integer"
+        },
+        "discovery_enabled": {
+          "type": "boolean"
+        },
+        "query_min_back": {
+          "type": "integer"
+        },
+        "delay_time": {
+          "type": "integer"
+        },
+        "query_frequency": {
+          "type": "integer"
+        },
+        "save_suspect_events": {
+          "type": "boolean"
+        },
+        "query_results_limit": {
+          "type": "integer"
+        },
+        "correlation_query_enabled": {
+          "type": "boolean"
+        },
+        "correlation_query": {
+          "type": "string"
+        },
+        "correlation_query_frequency": {
+          "type": "integer"
+        },
+        "config": {
+          "type": "object",
+          "required": [
+            "conn_config",
+            "meta_config",
+            "runtime_config"
+          ],
+          "properties": {
+            "conn_config": {
+              "type": "object"
+            },
+            "meta_config": {
+              "type": "object"
+            },
+            "runtime_config": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

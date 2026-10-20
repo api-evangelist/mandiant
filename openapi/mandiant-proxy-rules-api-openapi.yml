@@ -1,0 +1,225 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Proxy Rules API
+  version: '1.0'
+  description: 'Operations tagged Proxy Rules across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Proxy Rules
+  description: Proxy Rules specify proxies to use for MSV traffic.
+paths:
+  /settings/proxy_comms:
+    get:
+      summary: List proxy comms
+      tags:
+      - Proxy Rules
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 1
+                organization_id: 75
+                name: elwin
+                proxy_type: http
+                auth_username: rodger
+                proxy_certificate_id: null
+                proxy_ip: 115.157.237.11
+                proxy_port: '8888'
+                disabled: false
+                created_at: '2020-02-10T15:18:28.407Z'
+                updated_at: '2020-02-10T15:18:28.407Z'
+                kerberos_domain_controller: null
+                kerberos_realm: null
+                user_agent: null
+                ntlm_config_file: null
+                ntlm_config_file_contents: null
+                transparent: null
+                saml_options_username_name: null
+                saml_options_final_username_name: null
+                saml_options_final_password_name: null
+                saml_options_private_ips: null
+                action_user_profile_id: null
+                description: null
+              - id: 2
+                organization_id: 75
+                name: benjamin.kilback
+                proxy_type: http
+                auth_username: lavonne.schaden
+                proxy_certificate_id: null
+                proxy_ip: 39.227.52.155
+                proxy_port: '8888'
+                disabled: false
+                created_at: '2020-02-10T15:18:28.435Z'
+                updated_at: '2020-02-10T15:18:28.435Z'
+                kerberos_domain_controller: null
+                kerberos_realm: null
+                user_agent: null
+                ntlm_config_file: null
+                ntlm_config_file_contents: null
+                transparent: null
+                saml_options_username_name: null
+                saml_options_final_username_name: null
+                saml_options_final_password_name: null
+                saml_options_private_ips: null
+                action_user_profile_id: null
+                description: null
+      operationId: getSettingsProxyComms
+      x-operation-id-source: derived
+    post:
+      summary: Create a proxy comm
+      tags:
+      - Proxy Rules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/proxy_comm_wrapped'
+            example:
+              proxy_comm:
+                name: Example Proxy Rule
+                proxy_ip: 66.232.125.125
+                proxy_port: 3128
+                proxy_type: http
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 4
+                organization_id: 77
+                name: Example Proxy Rule
+                proxy_type: http
+                auth_username: null
+                auth_password: null
+                proxy_certificate_id: null
+                proxy_ip: 66.232.125.125
+                proxy_port: '3128'
+                disabled: false
+                created_at: '2020-02-10T15:18:54.830Z'
+                updated_at: '2020-02-10T15:18:54.830Z'
+                kerberos_domain_controller: null
+                kerberos_realm: null
+                user_agent: null
+                ntlm_config_file: null
+                ntlm_config_file_contents: null
+                transparent: null
+                saml_options_username_name: null
+                saml_options_final_username_name: null
+                saml_options_final_password_name: null
+                saml_options_private_ips: null
+                action_user_profile_id: null
+                description: null
+      operationId: postSettingsProxyComms
+      x-operation-id-source: derived
+  /settings/proxy_comms/{id}:
+    get:
+      summary: Show a proxy comm
+      tags:
+      - Proxy Rules
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 3
+                organization_id: 76
+                name: toney
+                proxy_type: http
+                auth_username: ellis.bednar
+                proxy_certificate_id: null
+                proxy_ip: 140.165.113.31
+                proxy_port: '8888'
+                disabled: false
+                created_at: '2020-02-10T15:18:41.788Z'
+                updated_at: '2020-02-10T15:18:41.788Z'
+                kerberos_domain_controller: null
+                kerberos_realm: null
+                user_agent: null
+                ntlm_config_file: null
+                ntlm_config_file_contents: null
+                transparent: null
+                saml_options_username_name: null
+                saml_options_final_username_name: null
+                saml_options_final_password_name: null
+                saml_options_private_ips: null
+                action_user_profile_id: null
+                description: null
+      operationId: getSettingsProxyCommsById
+      x-operation-id-source: derived
+components:
+  schemas:
+    proxy_comm:
+      type: object
+      required:
+      - name
+      - proxy_ip
+      - proxy_port
+      - proxy_type
+      properties:
+        name:
+          type: string
+        proxy_ip:
+          type: string
+          description: Proxy IP address, must be a valid IP address or domain name
+        proxy_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+        proxy_type:
+          type: string
+          enum:
+          - http
+          - http_auth
+          - http_https_auto
+          - http_https_auto_auth
+          - http_kerberos
+          - http_ntlm
+          - https
+          - https_auth
+          - ssl_mitm
+          - socks
+          - socks_auth
+        auth_username:
+          type: string
+          description: 'Proxy username, only required if proxy uses authentication
+
+            '
+        auth_password:
+          type: string
+          description: 'Proxy password, only required if proxy uses authentication
+
+            '
+        kerberos_domain_controller:
+          type: string
+          description: 'Kerberos domain controller. Only required if proxy_type is `http_kerberos`. Must be a valid IP address.
+
+            '
+        kerberos_realm:
+          type: string
+          description: 'Kerberos realm.  Only required if proxy_type is `http_kerberos`.
+
+            '
+        proxy_fqdn:
+          type: string
+          description: 'Fully qualified domain name for proxy.  Only required if proxy_type is `http_kerberos`.
+
+            '
+    proxy_comm_wrapped:
+      type: object
+      properties:
+        proxy_comm:
+          $ref: '#/components/schemas/proxy_comm'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

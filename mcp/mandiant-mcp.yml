@@ -1,0 +1,217 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/mandiant-asm-openapi.yml
+- openapi/mandiant-dtm-openapi.yml
+- openapi/mandiant-ma-sv-openapi.yml
+- openapi/mandiant-msv-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: No MCP server was found. The pre-flight posted tools/list to /mcp on api.intelligence.mandiant.com, api.mandiant.com, api.google.com, docs.mandiant.com;
+  verdict absent. Candidate tools below are derived from the 229 operation(s) in the provider's own OpenAPI (40 listed); they describe what a
+  server WOULD expose, not one that exists.
+tools:
+- name: get_v1_projects
+  operationId: GET /api/v1/projects
+  method: GET
+  path: /api/v1/projects
+  description: Index
+- name: get_alerts
+  operationId: get-alerts
+  method: GET
+  path: /alerts
+  description: List alerts
+- name: get_audit_logs_table_data
+  operationId: GET /audit_logs/table_data
+  method: GET
+  path: /audit_logs/table_data
+  description: List audit log entries
+- name: get_msi_integrations
+  operationId: GET /msi_integrations
+  method: GET
+  path: /msi_integrations
+  description: List Active MSI integrations. Each type of MSI Integration will have a different configuration.
+- name: create_v1_projects
+  operationId: POST /api/v1/projects
+  method: POST
+  path: /api/v1/projects
+  description: Create
+- name: get_alerts_id
+  operationId: get-alerts-id
+  method: GET
+  path: /alerts/{id}
+  description: Get an existing alert by its ID
+- name: get_action_profiles_show
+  operationId: GET /action_profiles/show
+  method: GET
+  path: /action_profiles/show
+  description: List profiles for metatag actions
+- name: create_msi_integrations
+  operationId: POST /msi_integrations
+  method: POST
+  path: /msi_integrations
+  description: Creates a new MSI Integration
+- name: delete_v1_projects
+  operationId: DELETE /api/v1/projects/{uuid}
+  method: DELETE
+  path: /api/v1/projects/{uuid}
+  description: Delete
+- name: patch_alerts_id
+  operationId: patch-alerts-id
+  method: PATCH
+  path: /alerts/{id}
+  description: Update field(s) of an alert
+- name: get_action_user_profiles
+  operationId: GET /action_user_profiles
+  method: GET
+  path: /action_user_profiles
+  description: List action user profiles
+- name: update_msi_integrations
+  operationId: PUT /msi_integrations/{id}
+  method: PUT
+  path: /msi_integrations/{id}
+  description: Update an existing MSI integration
+- name: get_v1_user_collections
+  operationId: GET /api/v1/user_collections
+  method: GET
+  path: /api/v1/user_collections
+  description: Index
+- name: get_agg_child_alerts
+  operationId: get-agg-child-alerts
+  method: GET
+  path: /alerts/{id}/aggregates
+  description: List child alerts for a given aggregated alert bucket
+- name: create_action_user_profiles
+  operationId: POST /action_user_profiles
+  method: POST
+  path: /action_user_profiles
+  description: Create an action user profile
+- name: delete_msi_integrations
+  operationId: DELETE /msi_integrations/{id}
+  method: DELETE
+  path: /msi_integrations/{id}
+  description: Remove an existing MSI integration
+- name: create_v1_user_collections
+  operationId: POST /api/v1/user_collections
+  method: POST
+  path: /api/v1/user_collections
+  description: Create
+- name: put_alert_analysis
+  operationId: put-alert-analysis
+  method: PUT
+  path: /alerts/{id}/analysis
+  description: Update the analysis text on an alert
+- name: update_action_user_profiles
+  operationId: PUT /action_user_profiles/{id}
+  method: PUT
+  path: /action_user_profiles/{id}
+  description: Update an action user profile
+- name: create_msi_integrations_run_test_query
+  operationId: POST /msi_integrations/{id}/run_test_query
+  method: POST
+  path: /msi_integrations/{id}/run_test_query
+  description: Run a Test Query for an MSI Integration
+- name: delete_v1_user_collections
+  operationId: DELETE /api/v1/user_collections/{uuid}
+  method: DELETE
+  path: /api/v1/user_collections/{uuid}
+  description: Delete
+- name: get_alert_analysis_attachments
+  operationId: get-alert-analysis-attachments
+  method: GET
+  path: /alerts/{id}/attachments
+  description: List the file attachments for the alert
+- name: delete_action_user_profiles
+  operationId: DELETE /action_user_profiles/{id}
+  method: DELETE
+  path: /action_user_profiles/{id}
+  description: Destroy an action user profile
+- name: get_msi_integrations_config_health
+  operationId: GET /msi_integrations/{id}/config_health
+  method: GET
+  path: /msi_integrations/{id}/config_health
+  description: Checks the MSI Integration configuration
+- name: update_user_collections_archive
+  operationId: PATCH /api/v1/user_collections/{uuid}/archive
+  method: PATCH
+  path: /api/v1/user_collections/{uuid}/archive
+  description: Archive
+- name: post_alert_analysis_attachment
+  operationId: post-alert-analysis-attachment
+  method: POST
+  path: /alerts/{id}/attachments
+  description: Upload attachments to an alert's analysis
+- name: get_manage_sims_actions
+  operationId: GET /manage_sims/actions
+  method: GET
+  path: /manage_sims/actions
+  description: List actions
+- name: get_msi_integrations_readme
+  operationId: GET /msi_integrations/{type}/readme
+  method: GET
+  path: /msi_integrations/{type}/readme
+  description: Returns the readme for the MSI Integration
+- name: update_user_collections_unarchive
+  operationId: PATCH /api/v1/user_collections/{uuid}/unarchive
+  method: PATCH
+  path: /api/v1/user_collections/{uuid}/unarchive
+  description: Unarchive
+- name: delete_alert_attachment
+  operationId: delete-alert-attachment
+  method: DELETE
+  path: /alerts/{id}/attachments/{attachment_id}
+  description: Delete a file attachment from an alert
+- name: create_manage_sims_actions
+  operationId: POST /manage_sims/actions
+  method: POST
+  path: /manage_sims/actions
+  description: Create a new Action
+- name: get_msi_integrations_changelog
+  operationId: GET /msi_integrations/{type}/changelog
+  method: GET
+  path: /msi_integrations/{type}/changelog
+  description: Returns the changelog for the MSI Integration
+- name: get_collections_collection_runs
+  operationId: GET /api/v1/collections/{collection_uuid}/collection_runs
+  method: GET
+  path: /api/v1/collections/{collection_uuid}/collection_runs
+  description: Index
+- name: download_alert_analysis_attachment
+  operationId: download-alert-analysis-attachment
+  method: GET
+  path: /alerts/{id}/attachments/{attachment_id}/download
+  description: Download a file attachment from an alert
+- name: update_manage_sims_actions
+  operationId: PUT /manage_sims/actions/{id}.json
+  method: PUT
+  path: /manage_sims/actions/{id}.json
+  description: Update an existing Action
+- name: get_msi_integrations_spec
+  operationId: GET /msi_integrations/spec/{type}
+  method: GET
+  path: /msi_integrations/spec/{type}
+  description: Returns the JSON schema for the MSI Integration
+- name: create_collections_collection_runs
+  operationId: POST /api/v1/collections/{collection_uuid}/collection_runs
+  method: POST
+  path: /api/v1/collections/{collection_uuid}/collection_runs
+  description: Create
+- name: get_alert_audit
+  operationId: get-alert-audit
+  method: GET
+  path: /alerts/{id}/audit
+  description: List audit records for a given alert
+- name: create_actions_run
+  operationId: POST /manage_sims/actions/{id}/run
+  method: POST
+  path: /manage_sims/actions/{id}/run
+  description: Run an action
+- name: get_suppressed_events_job_action_details_{id}
+  operationId: GET /suppressed_events/job_action_details_{id}
+  method: GET
+  path: /suppressed_events/job_action_details_{id}
+  description: Show the suppressed and dropped events for a given Job Action

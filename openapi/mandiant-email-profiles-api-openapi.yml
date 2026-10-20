@@ -1,0 +1,225 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Email Profiles API
+  version: '1.0'
+  description: 'Operations tagged Email Profiles across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Email Profiles
+  description: Email Profiles provide the valid email addresses and email servers that are used to send files for email file transfer actions.
+paths:
+  /settings/email_profiles:
+    get:
+      summary: List email profiles
+      tags:
+      - Email Profiles
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 3
+                organization_id: 20
+                server_address: mail.example.com
+                account_username: teresa@borer.info
+                status: active
+                created_at: '2020-02-10T15:13:09.650Z'
+                updated_at: '2020-02-10T15:13:09.650Z'
+                server_port: 24473
+                server_type: pop3
+                server_smtp_port: '47309'
+                node_status: {}
+                server_smtp_address: 42.84.230.173
+                server_smtp_ssl: null
+                server_smtp_auth: true
+                email_address: testing@verodin.com
+                server_smtp_auth_type: plain
+                server_smtp_tls: null
+                detailed_status: null
+                detailed_node_status: {}
+                server_auth_required: true
+                server_auth_type: plain
+                skip_verification: false
+                send_manual_verification: false
+                verification_uuid: null
+                associated_node_ids:
+                - 51
+                - 52
+              - id: 2
+                organization_id: 20
+                server_address: mail.verodin.com
+                account_username: testing@verodin.com
+                status: active
+                created_at: '2020-02-10T15:13:09.433Z'
+                updated_at: '2020-02-10T15:13:09.433Z'
+                server_port: 41874
+                server_type: pop3
+                server_smtp_port: '58694'
+                node_status: {}
+                server_smtp_address: 218.157.113.52
+                server_smtp_ssl: null
+                server_smtp_auth: true
+                email_address: testing@verodin.com
+                server_smtp_auth_type: plain
+                server_smtp_tls: null
+                detailed_status: null
+                detailed_node_status: {}
+                server_auth_required: true
+                server_auth_type: plain
+                skip_verification: false
+                send_manual_verification: false
+                verification_uuid: null
+                associated_node_ids:
+                - 49
+                - 50
+      operationId: getSettingsEmailProfiles
+      x-operation-id-source: derived
+    post:
+      summary: Create an email profile
+      tags:
+      - Email Profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/email_profile_wrapped'
+            example:
+              email_profile:
+                account_password: password
+                account_username: erich_corkery@funk.name
+                email_address: erich_corkery@funk.name
+                server_address: 137.91.71.33
+                server_smtp_address: 152.100.17.233
+                server_port: 143
+                server_smtp_port: 25
+                server_type: imap
+                associated_nodes_ids:
+                - 2
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 1
+                organization_id: 19
+                server_address: 137.91.71.33
+                account_username: erich_corkery@funk.name
+                status: unverified
+                created_at: '2020-02-10T15:12:55.527Z'
+                updated_at: '2020-02-10T15:12:55.527Z'
+                server_port: 143
+                account_password: password
+                server_type: imap
+                server_smtp_port: '25'
+                node_status:
+                  '45': unverified
+                server_smtp_address: 152.100.17.233
+                server_smtp_ssl: null
+                server_smtp_auth: null
+                email_address: erich_corkery@funk.name
+                server_smtp_auth_type: null
+                server_smtp_tls: null
+                detailed_status: null
+                detailed_node_status: {}
+                server_auth_required: true
+                server_auth_type: null
+                skip_verification: false
+                send_manual_verification: false
+                verification_uuid: null
+      operationId: postSettingsEmailProfiles
+      x-operation-id-source: derived
+  /settings/email_profiles/{id}:
+    get:
+      summary: Show an email profile
+      tags:
+      - Email Profiles
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the email profile to lookup.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 4
+                organization_id: 29
+                server_address: mail.verodin.com
+                account_username: testing@verodin.com
+                status: active
+                created_at: '2020-02-10T15:13:22.924Z'
+                updated_at: '2020-02-10T15:13:22.924Z'
+                server_port: 52591
+                server_type: pop3
+                server_smtp_port: '7536'
+                node_status: {}
+                server_smtp_address: 86.160.59.26
+                server_smtp_ssl: null
+                server_smtp_auth: true
+                email_address: testing@verodin.com
+                server_smtp_auth_type: plain
+                server_smtp_tls: null
+                detailed_status: null
+                detailed_node_status: {}
+                server_auth_required: true
+                server_auth_type: plain
+                skip_verification: false
+                send_manual_verification: false
+                verification_uuid: null
+                associated_node_ids:
+                - 56
+                - 57
+      operationId: getSettingsEmailProfilesById
+      x-operation-id-source: derived
+components:
+  schemas:
+    email_profile:
+      type: object
+      properties:
+        account_password:
+          type: string
+          description: Password for email account
+        account_username:
+          type: string
+          description: Valid email address for profile
+        associated_node_ids:
+          description: 'IDs for actors to be associated with this Email Profile. Must be an array of integers.
+
+            '
+        server_address:
+          type: string
+          description: Hostname or IP address of email server.
+        server_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Port to use for the incoming email server
+        server_smtp_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Port to use for the SMTP server
+        server_type:
+          type: string
+          enum:
+          - pop3
+          - pop3_ssl
+          - imap
+          - imap_ssl
+          - imap_starttls
+          description: String indicating type of incoming email server
+    email_profile_wrapped:
+      type: object
+      properties:
+        email_profile:
+          $ref: '#/components/schemas/email_profile'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

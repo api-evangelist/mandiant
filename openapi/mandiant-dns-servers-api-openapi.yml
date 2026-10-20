@@ -1,0 +1,140 @@
+openapi: 3.2.0
+info:
+  title: Mandiant DNS Servers API
+  version: '1.0'
+  description: 'Operations tagged DNS Servers across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: DNS Servers
+  description: DNS Servers provide addresses for actors to use as DNS servers in DNS query actions. Individual DNS query actions can specify one of the available DNS servers.
+paths:
+  /settings/dns_servers:
+    get:
+      summary: List DNS servers
+      tags:
+      - DNS Servers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 3
+                ip_address: 8.8.8.8
+                desc: Test DNS Server
+                organization_id: 17
+                created_at: '2020-02-10T15:12:27.034Z'
+                updated_at: '2020-02-10T15:12:27.034Z'
+              - id: 4
+                ip_address: 8.8.4.4
+                desc: Test DNS Server
+                organization_id: 17
+                created_at: '2020-02-10T15:12:27.036Z'
+                updated_at: '2020-02-10T15:12:27.036Z'
+      operationId: getSettingsDnsServers
+      x-operation-id-source: derived
+    post:
+      summary: Create a DNS server
+      tags:
+      - DNS Servers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dns_server_wrapped'
+            example:
+              dns_server:
+                ip_address: 42.20.187.100
+                desc: Example DNS server description
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 1
+                ip_address: 42.20.187.100
+                desc: Example DNS server description
+                organization_id: 15
+                created_at: '2020-02-10T15:12:01.664Z'
+                updated_at: '2020-02-10T15:12:01.664Z'
+      operationId: postSettingsDnsServers
+      x-operation-id-source: derived
+  /settings/dns_servers/{id}:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: The ID of the DNS server to lookup.
+    get:
+      summary: Show a DNS server
+      tags:
+      - DNS Servers
+      responses:
+        '200':
+          description: No Content
+          content:
+            application/json:
+              example:
+                id: 5
+                ip_address: 8.8.8.8
+                desc: Test DNS Server
+                organization_id: 18
+                created_at: '2020-02-10T15:12:40.385Z'
+                updated_at: '2020-02-10T15:12:40.385Z'
+      operationId: getSettingsDnsServersById
+      x-operation-id-source: derived
+    put:
+      summary: Update an existing DNS server
+      tags:
+      - DNS Servers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dns_server_wrapped'
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              example: null
+      operationId: putSettingsDnsServersById
+      x-operation-id-source: derived
+    delete:
+      summary: Destroy a DNS server
+      tags:
+      - DNS Servers
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              example: null
+      operationId: deleteSettingsDnsServersById
+      x-operation-id-source: derived
+components:
+  schemas:
+    dns_server_wrapped:
+      type: object
+      properties:
+        dns_server:
+          $ref: '#/components/schemas/dns_server'
+    dns_server:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        desc:
+          type: string
+          description: Description of DNS Server
+        ip_address:
+          type: string
+          description: IP Address of DNS Server
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

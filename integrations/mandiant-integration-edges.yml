@@ -1,9 +1,19 @@
-generated: '2026-10-14'
+generated: '2026-10-20'
 method: searched
-checked:
-- palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
 source:
 - palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
+- https://zapier.com/apps/mandiant/integrations
+- https://n8n.io/integrations/mandiant/
+- https://composio.dev/toolkits/mandiant
+- https://monid.ai/tools/mandiant
+checked:
+- palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
+- https://composio.dev/toolkits/mandiant
+- https://monid.ai/tools/mandiant
+- https://n8n.io/integrations/mandiant/
+- https://zapier.com/apps/mandiant/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: Palo Alto Networks (own)
   partner: palo-alto-networks
@@ -26,3 +36,4 @@ edges:
   category: Vulnerability Management
   badges:
   - support:partner
+templates: []

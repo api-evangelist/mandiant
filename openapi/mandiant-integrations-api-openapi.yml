@@ -1,0 +1,1241 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Integrations API
+  version: '1.0'
+  description: 'Operations tagged Integrations across 6 of this provider''s published API definitions: mandiant-asm-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-asm-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://{{base_url}}
+tags:
+- name: Integrations
+  description: Add your integration(s) here. Once added you can associate them to a collection within the Integrations Collections section.
+paths:
+  /api/v1/projects/{uuid}/integrations:
+    post:
+      tags:
+      - Integrations
+      summary: Create
+      description: 'Attack Surface Management currently supports the following integrations, Use the samples in the post body:
+
+
+        _**GCP**_:
+
+
+        ``` json
+
+        {
+
+        "name": "Test GCP Integration",
+
+        "secrets": {
+
+        "service_account_email": "Email.Address@Service-Account-here.com"
+
+        },
+
+        "type": "GcpCredential"
+
+        }
+
+
+        ```
+
+
+        **Jira:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test JIRA Integration",
+
+        "secrets": {
+
+        "jira_api_key": "APIKEYHERE",
+
+        "host": "hostname.com",
+
+        "username": "Email.Address@here.com"
+
+        },
+
+        "type": "jira"
+
+        }
+
+
+        ```
+
+
+        **Azure:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test Azure Integration",
+
+        "secrets": {
+
+        "tenant_id": "TenantIdhere"
+
+        },
+
+        "type": "azure"
+
+        }
+
+
+        ```
+
+
+        **Github:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test github Integration",
+
+        "secrets": {
+
+        "github_access_token": "TokenHere"
+
+        },
+
+        "type": "github"
+
+        }
+
+
+        ```
+
+
+        **Akamai:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test akamai Integration",
+
+        "secrets": {
+
+        "client_secret": "SecretHere",
+
+        "host": "hosthere.com",
+
+        "access_token": "AccessTokenHere",
+
+        "client_token": "ClientTokenHere"
+
+        },
+
+        "type": "akamai"
+
+        }
+
+
+        ```
+
+
+        **Godaddy:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test godaddy Integration",
+
+        "secrets": {
+
+        "api_key": "KeyHere",
+
+        "api_secret": "SecretHere"
+
+        },
+
+        "type": "godaddy"
+
+        }
+
+
+        ```
+
+
+        **Cloudflare:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test cloudflare Integration",
+
+        "secrets": {
+
+        "cloudflare_api_key": "APIKeyHere"
+
+        },
+
+        "type": "cloudflare"
+
+        }
+
+
+        ```
+
+
+        **AWS Roles:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test AwsCredential Integration",
+
+        "secrets": {
+
+        "aws_role_arn": "RoleHere"
+
+        },
+
+        "type": "AwsCredential"
+
+        }
+
+
+        ```
+
+
+        **AWS Keys:**
+
+
+        ``` json
+
+        {
+
+        "name": "Test AwsCredential Integration",
+
+        "secrets": {
+
+        "aws_access_key_id": "KeyHere",
+
+        "aws_secret_access_key": "SecretHere",
+
+        },
+
+        "type": "AwsCredential"
+
+        }
+
+
+        ```'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Test JIRA Integration
+                secrets:
+                  jira_api_key: APIKEYHERE
+                  host: hostname.com
+                  username: Email.Address@here.com
+                type: jira
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 'Required: uuid from {{base_url}}/api/v1/projects'
+        example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: postApiV1ProjectsByUuidIntegrations
+      x-operation-id-source: derived
+    get:
+      tags:
+      - Integrations
+      summary: Index
+      description: List all integrations configured for the project.
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 'Required: uuid from {{base_url}}/api/v1/projects'
+        example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:55:58 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=6RFtbjtxrFDWfaT6eJav0ILuL1NSITgAsTBtkDvHH%2F9PsY976wx0Gbbidu0oeyxV0z%2F97%2Bb2QYTHl2pcgs2Co4UXRWgqxrUHcK%2B0UIzIlGzhp8ArDF%2FCHqplLVoxbP3gLg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 7481745a1af286fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                - id: 180
+                  uuid: 8bc49144-7704-4381-994c-2e7ada9fee98
+                  name: Github Integration 1
+                  description: ''
+                  type: github
+                  created_at: '2022-09-06T23:38:10.751Z'
+                  updated_at: '2022-09-06T00:00:00.000Z'
+                  user_email: Email not found or token is missing email access permissions.
+                - id: 183
+                  uuid: f38fc0fa-a7e2-4501-89de-9e590659a68a
+                  name: Test github Integration
+                  description: ''
+                  type: github
+                  created_at: '2022-09-07T16:11:06.609Z'
+                  updated_at: '2022-09-07T00:00:00.000Z'
+                  user_email: Email not found or token is missing email access permissions.
+                - id: 184
+                  uuid: 3fab6628-9f98-45b4-9285-9efea0b55d3e
+                  name: Test Azure Integration
+                  description: ''
+                  type: azure
+                  created_at: '2022-09-07T16:15:37.703Z'
+                  updated_at: '2022-09-07T00:00:00.000Z'
+      operationId: getApiV1ProjectsByUuidIntegrations
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/projects/{uuid}/integrations/jira/projects:
+    get:
+      tags:
+      - Integrations
+      summary: Jira projects
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 'Required: uuid from {{base_url}}/api/v1/projects'
+        example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getApiV1ProjectsByUuidIntegrationsJiraProjects
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/integrations/{uuid}:
+    delete:
+      tags:
+      - Integrations
+      summary: Destroy
+      description: 'Delete an existing integration. This cannot be undone!
+
+
+        To obtain a UUID for your integration, please see the GET Index query first:
+
+
+        ![](https://content.pstmn.io/f577cdca-1f0b-49b5-9515-14872c74b4ca/SW50ZWdyYXRpb24gRGVzdHJveS5wbmc=)'
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: uuid from {{base_url}}/api/v1/projects/:uuid/integrations
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:56:48 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=69B12vtYo6ovZcSmiGiV3P%2Fx9C3%2FZcFcSVtg6AzzSY7Pi96biQ20gax5GpOqlvySvDj%2FIYMEz1p7QXsgOM7lkFej%2FnVhHGRg%2BcC5j3Np6K4Jdf5j51%2F7bEVrsVs02elQBw%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 748175933d7886fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: false
+                message: Success
+                result: null
+      operationId: deleteApiV1IntegrationsByUuid
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /integrations:
+    get:
+      summary: List integrations
+      tags:
+      - Integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - type: ArcsightIntegration
+                organization_id: 38
+                name: null
+                logo_file: null
+                remote: false
+                params:
+                  query_timeout: 60
+                old_database_id: null
+                verodin_managed: true
+                can_correlate_events: null
+                host: 141.53.47.127
+                port: 9318
+                protocol: https
+                discovery_enabled: true
+                disabled: false
+                time_adjustment: 0
+                query_min_back: 15
+                delay_time: null
+                query_frequency: 20
+                filter_uri: /path/to/filter
+                query_viewer_name: example query viewer
+                node_ips: []
+                initial_filter_set: false
+                require_rule_match: null
+                node_id: null
+                version: null
+                last_query: null
+                save_suspect_events: false
+                paused: false
+                logo_path_for_web: /assets/arcsight_logo-a380484395248cd68045740cbd6846acb4e33c8dade71b5a36972bb203efc033.png
+                id: 2
+              - type: SplunkServer
+                organization_id: 38
+                name: null
+                logo_file: null
+                remote: false
+                params:
+                  auth_method: token
+                old_database_id: null
+                verodin_managed: true
+                can_correlate_events: null
+                host: 127.0.0.1
+                port: 8089
+                protocol: https
+                discovery_enabled: true
+                disabled: false
+                time_adjustment: 0
+                query_min_back: 15
+                delay_time: 0
+                query: test
+                query_frequency: 20
+                dns_action_query: null
+                dns_action_query_enabled: null
+                email_action_query: null
+                email_action_query_enabled: null
+                node_id: null
+                version: null
+                last_query: null
+                save_suspect_events: false
+                host_cli_action_query: null
+                host_cli_action_query_enabled: false
+                paused: false
+                logo_path_for_web: /assets/splunk_logo-c1a3ea3fe2e254050a6b6e8823d2de35be8d25fda76c76e6f4fc3477493bfc9e.png
+                id: 1
+      operationId: getIntegrations
+      x-operation-id-source: derived
+    post:
+      summary: Create a new integration
+      description: The allowed/required params depend on the integration type so it is helpful to first make a call to the GET /integrations/new?integration_type= route which will return a blank template for your desired integration.
+      tags:
+      - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/integration_type'
+            example:
+              arcsight_integration:
+                discovery_enabled: true
+                filter_uri: /All Filters/Personal/integration_user's filters/Verodin Filter
+                host: 10.0.23.12
+                password: testpassword
+                port: 8443
+                protocol: https
+                query_viewer_name: Verodin Query Viewer
+                query_timeout: 60
+                username: integration_user
+      responses:
+        '201':
+          description: Created
+      operationId: postIntegrations
+      x-operation-id-source: derived
+  /integrations/{id}:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: The ID of the integration to lookup.
+    get:
+      summary: Get an individual integration
+      tags:
+      - Integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                Request:
+                  created_at: '2016-09-22T19:29:46Z'
+                  disabled: false
+                  discovery_enabled: true
+                  filter_uri: /All Filters/Personal/integration_user's Filters/test filter
+                  host: 10.0.23.12
+                  id: 1
+                  initial_filter_set: false
+                  node_ips:
+                  - 192.168.45.129
+                  - 192.168.45.40
+                  - 192.168.45.41
+                  organization_id: 1
+                  port: 8443
+                  protocol: https
+                  query_viewer_name: local integration query viewer
+                  query_timeout: 60
+                  require_rule_match: false
+                  type: ArcsightIntegration
+                  updated_at: '2017-04-07T18:59:05Z'
+                  username: integration_user
+      operationId: getIntegrationsById
+      x-operation-id-source: derived
+    put:
+      summary: Update an existing integration
+      description: Like the POST /integrations route, the allowed/required params depend on the integration type so it can be helpful to first make a call to the GET /integrations/{id} route which will return the current attributes for the integration.
+      tags:
+      - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+            example:
+              arcsight_integration:
+                discovery_enabled: true
+                filter_uri: /All Filters/personal/integration_user's Filters/Verodin Filter
+                host: 10.0.23.12
+                password: newpassword
+                port: 8443
+                protocol: https
+                query_viewer_name: Verodin Query Viewer
+                username: integration_user
+      responses:
+        '200':
+          description: Success
+      operationId: putIntegrationsById
+      x-operation-id-source: derived
+    delete:
+      summary: Remove an existing integration
+      tags:
+      - Integrations
+      responses:
+        '200':
+          description: Success
+      operationId: deleteIntegrationsById
+      x-operation-id-source: derived
+  /integrations/{id}/test:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: The ID of the integration.
+    get:
+      summary: Get default test query for an integration
+      description: A value of null means the integration test doesn't take a query. A typical flow when wanting to run a test query from the API would be to first make a request to this endpoint, then use the query returned in a request to `POST /integrations/{id}/test`
+      tags:
+      - Integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                query: search earliest=-5m | head 1 | fields host,source,sourcetype
+      operationId: getIntegrationsByIdTest
+      x-operation-id-source: derived
+    post:
+      summary: Run the test function for an integration
+      description: If you're unsure of what to use for a test query, or whether a particular integration type needs one supplied, check the `GET /integrations/{id}/test` endpoint first and use the "query" value returned from it.
+      tags:
+      - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 'Required for integration types that use a query
+
+                '
+              properties:
+                test_query:
+                  type: object
+                  properties:
+                    test_query:
+                      type: string
+            example:
+              test_query:
+                test_query: search * | head 1 | fields source,sourcetype
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                Request:
+                  success:
+                  - Host, port, and protocol are correct
+                  - Valid credentials
+                  - Sufficient user permissions
+                  errors: []
+                  query_result: 'source: udp:8514
+
+                    sourcetype: example
+
+                    _time: 2019-11-27T23:18:07.000+00:00
+
+
+                    '
+      operationId: postIntegrationsByIdTest
+      x-operation-id-source: derived
+  /msi_integrations:
+    get:
+      summary: List Active MSI integrations.
+      tags:
+      - Integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - organization_id: 1
+                id: 1
+                paused: false
+                disabled: false
+                type: elasticsearch
+                brand_name: Elasticsearch
+                msi_version: v1
+                config:
+                  meta_config: {}
+                  conn_config: {}
+                  runtime_config:
+                    queries: []
+                    alert_query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"@timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                    field_map:
+                      __default__:
+                        uid: []
+                        start_time: []
+                        description: []
+                        src_ip: []
+                        src_port: []
+                        dest_ip: []
+                        dest_port: []
+                        url: []
+                        email_sender: []
+                        email_recipient: []
+                        email_subject: []
+                        host: []
+                        computer: []
+                        user: []
+                        sid: []
+                    alert_field_map:
+                      uid: []
+                      description: []
+                      start_time: []
+                      host: []
+                      base_event_uids: []
+                    max_pages: 100
+                    page_size: 500
+                  queries_with_labels:
+                  - name: IP Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%IPS%) OR destination.ip:(%IPS%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: Hostname Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%HOSTNAMES%) OR destination.ip:(%HOSTNAMES%) OR\\nhost.hostname:(%HOSTNAMES%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: DNS Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"domain:(%DOMAINS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: Email Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(sender:(%SENDERS%) OR recipient:(%RECIPIENTS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                int_app_owned: null
+                msi_uuid: null
+                host: host.com
+                correlation_query_enabled: false
+                last_query_results_at: null
+                remote: false
+                node_id: null
+                updated_at: '2025-05-14T20:08:32.068Z'
+                time_adjustment: 0
+                name: elasticsearch
+                discovery_enabled: true
+                query_min_back: 15
+                delay_time: 0
+                correlation_query: ''
+                query_frequency: 30
+                correlation_query_frequency: 60
+                created_at: '2025-05-14T20:08:32.068Z'
+                last_query: null
+                save_suspect_events: false
+                query_results_limit: 10000
+                correlation_query_min_back: 60
+      operationId: getMsiIntegrations
+      x-operation-id-source: derived
+    post:
+      summary: Creates a new MSI Integration
+      description: The spec endpoint can be used as reference for the Integration configuration schema
+      tags:
+      - Integrations
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/msi_type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/msi_integration'
+            example:
+              integration:
+                organization_id: 1
+                id: 1
+                paused: false
+                disabled: false
+                brand_name: Palo Alto Networks Next-Gen Firewall
+                msi_version: v1
+                config:
+                  meta_config: {}
+                  conn_config:
+                    protocol: https
+                    port: 443
+                    appliance_type: Panorama Console
+                    verify_ssl: false
+                    timeout: 30
+                    host: 10.10.0.3
+                    username: admin
+                  runtime_config:
+                    appliance_timezone: UTC
+                    log_types:
+                    - traffic
+                    - threat
+                    queries:
+                    - (%IPS%) and (time_generated geq '%START_TIME%') and (time_generated leq '%END_TIME%')
+                    page_size: 1000
+                    query_max_pages: 10
+                    field_map:
+                      src_ip:
+                      - src
+                      src_port:
+                      - sport
+                      dest_ip:
+                      - dst
+                      dest_port:
+                      - dport
+                      start_time:
+                      - __default__
+                      uid:
+                      - __default__
+                      sid: []
+                      url: []
+                      email_sender: []
+                      email_recipient: []
+                      email_subject: []
+                      description:
+                      - __default__
+                      host:
+                      - __default__
+                      computer:
+                      - __default__
+                      user: []
+                      filehashes: []
+                host: 10.10.0.3
+                correlation_query_enabled: false
+                last_query_results_at: '2025-04-24T16:06:04.318Z'
+                node_id: null
+                updated_at: '2025-04-24T16:06:04.340Z'
+                time_adjustment: 0
+                name: panoramaa
+                discovery_enabled: true
+                query_min_back: 15
+                delay_time: 0
+                correlation_query: ''
+                query_frequency: 30
+                correlation_query_frequency: 60
+                created_at: '2025-04-17T18:07:12.016Z'
+                last_query: (%IPS%) and (time_generated geq '%START_TIME%') and (time_generated leq '%END_TIME%')
+                save_suspect_events: false
+                query_results_limit: 10000
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+      operationId: postMsiIntegrations
+      x-operation-id-source: derived
+components:
+  schemas:
+    integration_type:
+      type: string
+      description: String indicating type of integration
+      enum:
+      - AlertLogicIntegration
+      - AlienVaultServer
+      - ArcsightIntegration
+      - AzureLogAnalyticsIntegration
+      - AzureSentinelIntegration
+      - CiscoFirepowerIntegration
+      - ElasticSearchServer
+      - FireeyeHelixIntegration
+      - GoogleBigQueryIntegration
+      - GraylogIntegration
+      - JsaQradarIntegration
+      - LogRhythmElasticIntegration
+      - LogzillaIntegration
+      - McafeeServer
+      - QradarServer
+      - SplunkServer
+      - SplunkEsServer
+      - SumoLogicIntegration
+      - ThreatStackIntegration
+      - LogrhythmIntegration
+      - AppDefenseIntegration
+      - CheckpointIntegration
+      - CloudtrailIntegration
+      - DarktraceIntegration
+      - ElsaIntegration
+      - ExabeamAnalyticsIntegration
+      - FireeyeIntegration
+      - GuarddutyIntegration
+      - McafeeEpoDlpIntegration
+      - NetWitnessIntegration
+      - PaloAltoIntegration
+      - SecOnionElasticIntegration
+      - SymantecDlpServer
+      - TippingPointServer
+      - CbProtectionIntegration
+      - CbPscIntegration
+      - CbResponseIntegration
+      - CiscoAmpIntegration
+      - CrowdstrikeIntegration
+      - CybereasonIntegration
+      - CylanceIntegration
+      - DefenderatpIntegration
+      - EndgameIntegration
+      - FireeyehxIntegration
+      - McafeeEpoIntegration
+      - SentinelOneIntegration
+      - SophosCloudIntegration
+      - SymantecEpServer
+    msi_integration:
+      type: object
+      properties:
+        integration:
+          type: object
+          required:
+          - name
+          - organization_id
+          - config
+          properties:
+            name:
+              type: string
+            organization_id:
+              type: integer
+            disabled:
+              type: boolean
+            paused:
+              type: boolean
+            type:
+              type: string
+              description: Integration type
+              enum:
+              - alertlogic
+              - alien-vault
+              - anomali-security-analytics
+              - arcsight
+              - att-usm-anywhere
+              - aws-cloudtrail
+              - aws-cloudwatch
+              - aws-guardduty
+              - azure-log-analytics
+              - azure-sentinel
+              - better-stack-logs
+              - carbon-black-protection
+              - carbon-black-psc
+              - carbon-black-response
+              - checkpoint
+              - cisco-amp
+              - cisco-firepower
+              - clickhouse
+              - crowdstrike-logscale
+              - crowdstrike-next-gen-siem-search
+              - crowdstrike
+              - cybereason
+              - cylance
+              - darktrace
+              - devo
+              - duo
+              - elasticsearch
+              - endgame
+              - exabeam-analytics
+              - exabeam-cloud
+              - exabeam-datalake
+              - extrahop-enterprise
+              - extrahop-reveal360
+              - f5-threat-stack
+              - fortianalyzer
+              - google-bigquery
+              - google-chronicle-backstory
+              - google-cloud-logging
+              - graylog
+              - iboss
+              - juniper-jsa
+              - logrhythm-cloud
+              - logrhythm-elastic
+              - logrhythm-sql
+              - logzilla
+              - ms-defender-atp
+              - ms-graph-security
+              - netskope
+              - opensearch
+              - palo-alto-cortex-xdr
+              - palo-alto-cortex-xsiam
+              - palo-alto
+              - qradar
+              - rapid7-insightidr
+              - rsa-netwitness-logs-and-packets
+              - rsa-netwitness-respond
+              - secureworks-taegis-xdr
+              - security-onion-elk
+              - security-onion-elsa
+              - securonix
+              - sentinelone
+              - snowflake
+              - sophos-cloud
+              - splunk
+              - sql
+              - sumologic
+              - symantec-dlp
+              - symantec-ep
+              - symantec-es
+              - tanium-threat-response
+              - tipping-point
+              - trellix-edr-threats
+              - trellix-email-security-cloud
+              - trellix-endpoint-security
+              - trellix-enterprise-security-manager
+              - trellix-epolicy-orchestrator
+              - trellix-helix
+              - trellix-ips
+              - trellix-network-dlp
+              - trellix-network-security
+              - trend-micro-trend-vision-one
+              - vmware-appdefense
+            brand_name:
+              type: string
+            msi_version:
+              type: string
+              description: MSI version of Integration
+              enum:
+              - v1
+              - v2
+            node_id:
+              type: integer
+            discovery_enabled:
+              type: boolean
+            query_min_back:
+              type: integer
+            delay_time:
+              type: integer
+            query_frequency:
+              type: integer
+            save_suspect_events:
+              type: boolean
+            query_results_limit:
+              type: integer
+            correlation_query_enabled:
+              type: boolean
+            correlation_query:
+              type: string
+            correlation_query_frequency:
+              type: integer
+            config:
+              type: object
+              required:
+              - conn_config
+              - meta_config
+              - runtime_config
+              properties:
+                conn_config:
+                  type: object
+                meta_config:
+                  type: object
+                runtime_config:
+                  type: object
+    msi_type:
+      type: string
+      description: 'The MSI Integration type
+
+        '
+      enum:
+      - alertlogic-v1
+      - alien-vault-v1
+      - anomali-security-analytics-v1
+      - arcsight-v1
+      - att-usm-anywhere-v1
+      - aws-cloudtrail-v1
+      - aws-cloudwatch-v1
+      - aws-guardduty-v1
+      - azure-log-analytics-v1
+      - azure-sentinel-v1
+      - better-stack-logs-v1
+      - carbon-black-protection-v1
+      - carbon-black-psc-v1
+      - carbon-black-response-v1
+      - checkpoint-v1
+      - cisco-amp-v1
+      - cisco-firepower-v1
+      - cisco-firepower-v2
+      - clickhouse-v1
+      - crowdstrike-logscale-v1
+      - crowdstrike-next-gen-siem-search-v1
+      - crowdstrike-v1
+      - crowdstrike-v2
+      - cybereason-v1
+      - cylance-v1
+      - darktrace-v1
+      - devo-v1
+      - duo-v1
+      - elasticsearch-v1
+      - endgame-v1
+      - exabeam-analytics-v1
+      - exabeam-cloud-v1
+      - exabeam-datalake-v1
+      - extrahop-enterprise-v1
+      - extrahop-reveal360-v1
+      - f5-threat-stack-v1
+      - fortianalyzer-v1
+      - google-bigquery-v1
+      - google-chronicle-backstory-v1
+      - google-chronicle-backstory-v2
+      - google-cloud-logging-v1
+      - graylog-v1
+      - iboss-v1
+      - juniper-jsa-v1
+      - logrhythm-cloud-v1
+      - logrhythm-elastic-v1
+      - logrhythm-sql-v1
+      - logzilla-v1
+      - ms-defender-atp-v1
+      - ms-defender-atp-v2
+      - ms-graph-security-v1
+      - netskope-v1
+      - netskope-v2
+      - opensearch-v1
+      - palo-alto-cortex-xdr-v1
+      - palo-alto-cortex-xsiam-v1
+      - palo-alto-v1
+      - qradar-v1
+      - rapid7-insightidr-v1
+      - rsa-netwitness-logs-and-packets-v1
+      - rsa-netwitness-respond-v1
+      - rsa-netwitness-respond-v2
+      - secureworks-taegis-xdr-v1
+      - security-onion-elk-v1
+      - security-onion-elsa-v1
+      - securonix-v1
+      - sentinelone-v1
+      - snowflake-v1
+      - sophos-cloud-v1
+      - splunk-v1
+      - sql-v1
+      - sumologic-v1
+      - symantec-dlp-v1
+      - symantec-ep-v1
+      - symantec-es-v1
+      - tanium-threat-response-v1
+      - tipping-point-v1
+      - trellix-edr-threats-v1
+      - trellix-email-security-cloud-v1
+      - trellix-endpoint-security-v1
+      - trellix-enterprise-security-manager-v1
+      - trellix-enterprise-security-manager-v2
+      - trellix-epolicy-orchestrator-v1
+      - trellix-helix-v1
+      - trellix-ips-v1
+      - trellix-network-dlp-v1
+      - trellix-network-security-v1
+      - trellix-network-security-v2
+      - trend-micro-trend-vision-one-v1
+      - vmware-appdefense-v1
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+x-refined-from:
+- mandiant-asm-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-asm-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

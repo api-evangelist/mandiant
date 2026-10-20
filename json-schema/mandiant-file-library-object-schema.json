@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-file-library-object-schema.json",
+  "title": "file_library_object",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-ma-sv-openapi.yml#/components/schemas/file_library_object",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "File library object identifier in the Director"
+    },
+    "orig_file_name": {
+      "type": "string",
+      "description": "File name"
+    },
+    "file_location": {
+      "type": "string",
+      "description": "Location of the File library object"
+    },
+    "filesize": {
+      "type": "integer",
+      "description": "Size of the file"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "Brief explanation of File library type"
+    },
+    "file_notes": {
+      "type": "string",
+      "description": "Description of the file library object's purpose or details"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp of file library object's creation"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Timestamp of file library object's last change"
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "File library object's enabled/disabled state"
+    },
+    "file_restrictions": {
+      "type": "string",
+      "enum": [
+        "restricted_malicious",
+        "none"
+      ],
+      "description": "Determination of file library's general execution authorization"
+    },
+    "related_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Details about actions that refer to this file library"
+    },
+    "verodin_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of system tags"
+    },
+    "user_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of user-created tags"
+    }
+  }
+}

@@ -1,0 +1,282 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Monitor Definitions API
+  version: '1.0'
+  description: 'Operations tagged Monitor Definitions across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Monitor Definitions
+  description: Sequences or Evaluations that run periodically and generate notifications depending on result
+paths:
+  /monitor_defs:
+    get:
+      summary: List monitor defs
+      tags:
+      - Monitor Definitions
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 12
+                organization_id: 62
+                name: Test Monitor e21b506f-39c0-4f82-b701-e9f601585e6d
+                desc: test monitor desc
+                disabled: false
+                created_at: '2020-02-10T15:16:17.166Z'
+                updated_at: '2020-02-10T15:16:17.166Z'
+                scheduled_action_id: 1
+                repeat_every_number: 1
+                repeat_every_period: hours
+                simulation_id: 33
+                monitor_group_id: 1
+                paused: false
+                last_run_job_id: null
+                user_tags: []
+              - id: 13
+                organization_id: 62
+                name: Additional Example
+                desc: Group description
+                disabled: false
+                created_at: '2020-02-10T15:16:17.176Z'
+                updated_at: '2020-02-10T15:16:17.176Z'
+                scheduled_action_id: 1
+                repeat_every_number: 1
+                repeat_every_period: days
+                simulation_id: 34
+                monitor_group_id: 1
+                paused: false
+                last_run_job_id: null
+                user_tags: []
+      operationId: getMonitorDefs
+      x-operation-id-source: derived
+    post:
+      summary: Create a monitor def
+      tags:
+      - Monitor Definitions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/monitor'
+            example:
+              monitor_def:
+                name: Example Monitor Name
+                desc: Example Monitor Description
+                monitor_group_id: 0
+              action_id: 8
+              monitor_def_datetime: 2016/09/01 17:14 EDT
+              monitor_type_step_1: node
+              attack_node_id_step_1: 89
+              target_node_id_step_1: 90
+              repeat_job_period_number: 24
+              repeat_job_period_type: hours
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 10
+                organization_id: 59
+                name: Example Monitor Name
+                desc: Example Monitor Description
+                disabled: false
+                created_at: '2020-02-10T15:15:50.296Z'
+                updated_at: '2020-02-10T15:15:50.363Z'
+                scheduled_action_id: 6
+                repeat_every_number: 24
+                repeat_every_period: hours
+                simulation_id: 31
+                monitor_group_id: 28
+                paused: false
+                simulation:
+                  id: 31
+                  organization_id: 59
+                  name: Monitor from Action @ 2020-02-10 15:15:50 +0000
+                  desc: Created directly from Action
+                  created_at: '2020-02-10T15:15:50.281Z'
+                  updated_at: '2020-02-10T15:15:50.281Z'
+                  stop_on_error: null
+                  simulation_type: run_once
+                  disabled: false
+                  vid: null
+                  ver: 1
+                  uuid: ee97cfce-7188-4599-a9fd-75b014055614
+                  metadata_version: 1
+                  protected_endpoint_rollback: 'no'
+                  sectech_logo_id: null
+                  run_all_content_marker: null
+                  steps:
+                  - id: 2
+                    simulation_id: 31
+                    organization_id: 59
+                    name: null
+                    desc: null
+                    created_at: '2020-02-10T15:15:50.284Z'
+                    updated_at: '2020-02-10T15:15:50.284Z'
+                    profile_id: 2
+                    order: 0
+                    disabled: false
+                    repeating: false
+                    repeat_every_number: null
+                    repeat_every_period: null
+                    repeat_count: null
+                user_tags: []
+      operationId: postMonitorDefs
+      x-operation-id-source: derived
+  /monitor_defs/{id}:
+    get:
+      summary: Show a monitor def
+      tags:
+      - Monitor Definitions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 14
+                organization_id: 65
+                name: Test Monitor 25204bff-9f1c-4688-b797-30763a95c571
+                desc: test monitor desc
+                disabled: false
+                created_at: '2020-02-10T15:16:30.426Z'
+                updated_at: '2020-02-10T15:16:30.426Z'
+                scheduled_action_id: 1
+                repeat_every_number: 1
+                repeat_every_period: hours
+                simulation_id: 35
+                monitor_group_id: 1
+                paused: false
+                last_run_job_id: null
+                simulation:
+                  id: 35
+                  organization_id: 66
+                  name: Example Simulation c4577e9f-a925-47cf-a2c5-3fe660cc336b
+                  desc: example description
+                  created_at: '2020-02-10T15:16:30.421Z'
+                  updated_at: '2020-02-10T15:16:30.421Z'
+                  stop_on_error: null
+                  simulation_type: run_once
+                  disabled: false
+                  vid: S259-46
+                  ver: 1
+                  uuid: d32e2e5a-88a7-4f59-a9cd-c8036180db4c
+                  metadata_version: null
+                  protected_endpoint_rollback: 'no'
+                  sectech_logo_id: null
+                  run_all_content_marker: null
+                  steps: []
+                user_tags: []
+      operationId: getMonitorDefsById
+      x-operation-id-source: derived
+  /monitor_defs/{id}/cancel:
+    get:
+      summary: Cancel an active Monitor
+      tags:
+      - Monitor Definitions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                result: success
+      operationId: getMonitorDefsByIdCancel
+      x-operation-id-source: derived
+components:
+  schemas:
+    monitor:
+      type: object
+      properties:
+        monitor_def:
+          $ref: '#/components/schemas/monitor_def'
+        action_id:
+          type: integer
+          description: 'Required if monitor is for an Action, indicates which Action the Monitor runs
+
+            '
+        simulation_id:
+          type: integer
+          description: 'Required if monitor is for a Sequence or Evaluation, indicates what the Monitor runs
+
+            '
+        monitor_type_step_<num>:
+          type: string
+          enum:
+          - node
+          - zone
+          description: 'Each step of the monitor must specify whether it''s to be run between actors (nodes) or zones
+
+            '
+        attack_node_id_step_<num>:
+          type: integer
+          description: 'ID of attacker Actor if step is run between actors.  Replace <num> with the order of the step, starting at 1.
+
+            '
+        target_node_id_step_<num>:
+          type: integer
+          description: 'ID of target Actor if step is run between actors. Replace <num> with the order of the step, starting at 1.
+
+            '
+        attack_zone_id_step_<num>:
+          type: integer
+          description: 'ID of attacker Security Zone if step is run between zones
+
+            '
+        target_zone_id_step_<num>:
+          type: integer
+          description: 'ID of target Security Zone if step is run between zones
+
+            '
+        monitor_def_datetime:
+          type: string
+          description: 'Date and time of first run of the monitor.  Must be a string in a format like: `2016/09/01 17:14 UTC`
+
+            '
+        repeat_job_period_number:
+          type: integer
+          minimum: 1
+          description: 'Number indicating how often to repeat monitor
+
+            '
+        repeat_job_period_type:
+          type: string
+          enum:
+          - seconds
+          - minutes
+          - hours
+          - days
+          description: 'String indicating how repeat_job_period_number parameter is interpreted
+
+            '
+    monitor_def:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of monitor
+        desc:
+          type: string
+          description: Description of monitor
+        monitor_group_id:
+          type: integer
+          description: ID of monitor group this monitor belongs to
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

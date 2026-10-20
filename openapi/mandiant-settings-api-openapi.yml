@@ -1,0 +1,188 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Settings API
+  version: '1.0'
+  description: 'Operations tagged Settings across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Settings
+  description: 'The Settings are used for Director-specific alterations to your organizations installation.
+
+
+    Handling Content Backups
+
+
+    Creating and using a data backup involves calling a few Setting endpoints in sequence. Visit each endpoint for argument and usage details:
+
+
+    | Endpoint | Description |
+
+    |----------|-------------|
+
+    | `/settings/create_backup` | Start the backup process. |
+
+    | `/settings/backup_download` | Download the backup once it has been generated. |
+
+    | `/settings/restore_backup` | Upload and apply a system backup to the Director. |'
+paths:
+  /settings/content_export:
+    post:
+      summary: Export content from the Director
+      description: Content can be filtered by specific VIDs, content type, and approval status.
+      tags:
+      - Settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pending:
+                  description: 'Takes one of two values.
+
+                    * `prevent` will prevent the export if any content is unapproved;
+
+                    * `always` will ignore approval checks and export regardless
+
+                    '
+                  type: string
+                  default: prevent
+                  enum:
+                  - always
+                  - prevent
+                content_export:
+                  description: 'The type of content to export
+
+                    * `all` - All content
+
+                    * `all_custom` - All custom content
+
+                    * `actions` - Actions only, no Sequences / Evals
+
+                    * `actions_custom` - Custom actions only, no Sequences / Evals
+
+                    * `vid` - Specific content by VID. Must also include `content_vids` parameter
+
+                    '
+                  type: string
+                  enum:
+                  - all
+                  - actions
+                  - actions_customer
+                  - all_custom
+                  - vid
+                content_vids:
+                  description: 'Specify content VIDs, separated by comma. Only necessary when content_export is `vid`.
+
+
+                    example: `"A100-001,A100-002"`
+
+                    '
+                  type: string
+              required:
+              - content_export
+            examples:
+              All content, ignoring approval status:
+                value:
+                  pending: always
+                  content_export: all
+              All approved custom content:
+                value:
+                  pending: prevent
+                  content_export: all_custom
+              Specific content by VID:
+                value:
+                  pending: always
+                  content_export: vid
+                  content_vids: A104-325,A104-323
+      responses:
+        '200':
+          description: Returns a .vas file containing the exported content
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+      operationId: postSettingsContentExport
+      x-operation-id-source: derived
+  /settings/create_backup:
+    get:
+      summary: Create system backup
+      description: Response will be the system backup file. Depending on the specific data on Director, this API endpoint can take a while to complete.
+      tags:
+      - Settings
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                status: success
+                message: Backup generation process successfully initiated.
+                backup_id: 3
+                created_at: Tue, 11 Jul 2023 19:27:09 UTC
+      operationId: getSettingsCreateBackup
+      x-operation-id-source: derived
+  /settings/backup_download/{id}.json:
+    get:
+      summary: Download a backup once it has been generated
+      description: Download a backup generated using `GET /settings/create_backup`
+      tags:
+      - Settings
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The backup ID returned in the `/settings/create_backup` call
+      responses:
+        '200':
+          description: Success
+      operationId: getSettingsBackupDownload{id}Json
+      x-operation-id-source: derived
+  /settings/restore_backup:
+    post:
+      summary: Restore Director from a system backup
+      description: Upload a file created using `GET /settings/create_backup` and obtained from the `GET /settings/backup_download` endpoint under the param `restore_file`. Because the restore process restarts Apache, a successful restore will usually get an empty reply back from the server rather than a 200 response.
+      tags:
+      - Settings
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                restore_file:
+                  description: 'Backup file from create_backup to use for the restore
+
+                    '
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example: null
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                result: error
+                notice: Error restoring backup, please upload a valid file
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                result: error
+                notice: 'Error restoring backup: <example error>'
+      operationId: postSettingsRestoreBackup
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

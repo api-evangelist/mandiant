@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Bulk Jobs API
+  version: '1.0'
+  description: 'Operations tagged Bulk Jobs across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Bulk Jobs
+  description: 'Bulk jobs can be created from a single Action with a list of source and
+
+    destination tags.'
+paths:
+  /bulk_jobs/create_bulk_job:
+    post:
+      summary: Create a bulk job
+      tags:
+      - Bulk Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_bulk_job'
+            example:
+              id: 1
+              name: My Job
+              source_actor_tags: 1,2,3
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                redir_path: /manage_sims/actions/bulk_actions_result?bulk_job_id=18
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: ''
+      operationId: postBulkJobsCreateBulkJob
+      x-operation-id-source: derived
+components:
+  schemas:
+    create_bulk_job:
+      type: object
+      required:
+      - id
+      - name
+      - source_actor_tags
+      properties:
+        id:
+          type: string
+          description: The id of the Sim Action to run when creating the job.
+        name:
+          type: string
+          description: The name to give the new bulk job.
+        source_actor_tags:
+          type: string
+          description: Comma separated list of source actors by id.
+        destination_actor_tags:
+          type: string
+          description: Comma separated list of destination actors by id.
+        tag_combination_strategy:
+          type: string
+          enum:
+          - OR
+          - AND
+          description: Determines how actors are lookedup. 'OR' - any actor with at least one of the tags. 'AND' - any actor with all of the tags.
+          default: OR
+        action_user_profile_id:
+          type: string
+          description: Action user profile to use when running the job.
+        run_time_params:
+          type: array
+          description: If supplied, must be of the form 'run_time_params[1][key1]=value1&run_time_params[1][key2]=value2'. Only run_time_params[1]... will be included. Anything starting with run_time_params[2]... etc., will be ignored.
+          items:
+            type: array
+            items:
+              type: string
+              description: Hash of runtime params set when running the job.
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

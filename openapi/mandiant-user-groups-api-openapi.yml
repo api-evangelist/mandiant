@@ -1,0 +1,60 @@
+openapi: 3.2.0
+info:
+  title: Mandiant User Groups API
+  version: '1.0'
+  description: 'Operations tagged User Groups across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: User Groups
+  description: User Groups are collections of Users with similar privileges and that all belong to the same Organization.
+paths:
+  /settings/user_groups.json:
+    get:
+      summary: List all enabled user groups for the organization
+      tags:
+      - User Groups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 1
+                name: System Admin
+                desc: Additional Control of Organizations and such
+                access_level: 10000
+                created_at: '2022-02-24T20:02:53.198Z'
+                updated_at: '2022-02-24T20:02:53.198Z'
+                organization_id: 1
+      operationId: getSettingsUserGroupsJson
+      x-operation-id-source: derived
+  /settings/user_groups/{id}.json:
+    get:
+      summary: Show a user group
+      tags:
+      - User Groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 1
+                name: System Admin
+                desc: Additional Control of Organizations and such
+                access_level: 10000
+                created_at: '2022-02-24T20:02:53.198Z'
+                updated_at: '2022-02-24T20:02:53.198Z'
+                organization_id: 1
+      operationId: getSettingsUserGroups{id}Json
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

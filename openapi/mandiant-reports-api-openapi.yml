@@ -1,0 +1,594 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Reports API
+  version: '1.0'
+  description: 'Operations tagged Reports across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Reports
+  description: 'Reports are the finished product of system interactions.
+
+    Behaviors are the possibly-nested umbrella for job actions.
+
+    Zones are the pseudological encapsulation of areas of influence in the system.
+
+    SecTech are the types of security technologies implemented by the system.'
+paths:
+  /reports/zone_chart_data:
+    get:
+      summary: List of Zones related to a given Behavior
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/type_filter'
+      - $ref: '#/components/parameters/time_range'
+      - $ref: '#/components/parameters/zones_filter'
+      responses:
+        '200':
+          description: Success
+      operationId: getReportsZoneChartData
+      x-operation-id-source: derived
+  /reports/integration_chart_data:
+    get:
+      summary: Integrations related to a Behavior
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/type_filter'
+      - $ref: '#/components/parameters/time_range'
+      - $ref: '#/components/parameters/zones_filter'
+      responses:
+        '200':
+          description: Success
+      operationId: getReportsIntegrationChartData
+      x-operation-id-source: derived
+  /reports/behavior_chart_data:
+    get:
+      summary: Results for a Behavior
+      description: List of Security Technologies, Zones, Integrations, and statistics related to a given Behavior
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/type_filter'
+      - $ref: '#/components/parameters/time_range'
+      - $ref: '#/components/parameters/zones_filter'
+      responses:
+        '200':
+          description: Success
+      operationId: getReportsBehaviorChartData
+      x-operation-id-source: derived
+  /reports/gauge_data:
+    get:
+      summary: Gauges data
+      description: Data underlying the MSV Gauges Page. List of Security Technologies, Integrations, and statistics related to a set of given Behaviors
+      tags:
+      - Reports
+      parameters:
+      - name: types
+        in: query
+        required: true
+        description: 'Array of Strings indicating names of Dimensions to return in report.  Options for the Dimension names can be obtained from a request to `GET /reports/filter_data.json`.
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+      - $ref: '#/components/parameters/date_range'
+      - $ref: '#/components/parameters/zones_filter'
+      - $ref: '#/components/parameters/sectech_filter'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - SecTech:
+                  missed:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 60
+                    count: 3
+                    label: Suricata - Suricata(IDS)
+                  detected:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 40
+                    count: 2
+                    label: Suricata - Suricata(IDS)
+                  prevented:
+                  - event_count: 0
+                    job_count: 5
+                    job_action_count: 5
+                    job_action_ids:
+                    - 10680
+                    - 10687
+                    - 13355
+                    - 13356
+                    - 13372
+                    logo_path: /images/logos/other_logo.svg
+                    percentage: 100
+                    count: 5
+                    label: Other
+                  runs:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 100
+                    count: 5
+                    label: Suricata - Suricata(IDS)
+                Integrations:
+                  SplunkEsServer:
+                    alerts:
+                      percentage: 0
+                      count: 0
+                    logs:
+                      percentage: 0
+                      count: 0
+                    runs:
+                      logo_path: /images/splunk_logo.png
+                      percentage: 100
+                      count: 5
+                    host_name: 192.168.20.20
+                behavior_type:
+                  results:
+                    alerted:
+                      percentage: 0
+                      count: 0
+                      label: Malicious File Transfer
+                    logged:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    missed:
+                      percentage: 0
+                      count: 0
+                      label: Malicious File Transfer
+                    detected:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    prevented:
+                      percentage: 100
+                      count: 5
+                      label: Malicious File Transfer
+                    blocked_or_events:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    runs:
+                      percentage: 100
+                      count: 5
+                      label: Malicious File Transfer
+                name: Malicious File Transfer
+                jobs: 5
+      operationId: getReportsGaugeData
+      x-operation-id-source: derived
+  /reports/filtered_chart_data:
+    get:
+      summary: Original Gauges Data
+      description: 'This endpoint is deprecated and will be removed in a future release.
+
+        Data underlying the MSV Gauges Page. List of Security Technologies, Zones, Integrations, and statistics related to a set of given Behaviors'
+      tags:
+      - Reports
+      parameters:
+      - name: types
+        in: query
+        description: 'Array of Strings indicating names of Dimensions to return in report.  Options for the Dimension names can be obtained from a request to `GET /reports/filter_data.json`.
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+      - name: sectechs
+        in: query
+        description: 'Array of Integers indicating IDs of Security Technologies to return in report.  Options for the Security Technology IDs can be obtained from a request to `GET /reports/filter_data.json`.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      - $ref: '#/components/parameters/date_range'
+      - $ref: '#/components/parameters/zones_filter'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - zones:
+                  alerts:
+                  - percentage: 0
+                    count: 0
+                    label: DMZ
+                  missed:
+                  - percentage: 60
+                    count: 3
+                    label: DMZ
+                  detected:
+                  - percentage: 40
+                    count: 2
+                    label: DMZ
+                  prevented:
+                  - percentage: 100
+                    count: 5
+                    label: DMZ
+                  runs:
+                  - percentage: 100
+                    count: 5
+                    label: DMZ
+                SecTech:
+                  missed:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 60
+                    count: 3
+                    label: Suricata - Suricata(IDS)
+                  detected:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 40
+                    count: 2
+                    label: Suricata - Suricata(IDS)
+                  prevented:
+                  - event_count: 0
+                    job_count: 5
+                    job_action_count: 5
+                    job_action_ids:
+                    - 10680
+                    - 10687
+                    - 13355
+                    - 13356
+                    - 13372
+                    logo_path: /images/logos/other_logo.svg
+                    percentage: 100
+                    count: 5
+                    label: Other
+                  runs:
+                  - logo_path: /images/logos/1/suricata_logo.png
+                    percentage: 100
+                    count: 5
+                    label: Suricata - Suricata(IDS)
+                Integrations:
+                  SplunkEsServer:
+                    alerts:
+                      percentage: 0
+                      count: 0
+                    logs:
+                      percentage: 0
+                      count: 0
+                    runs:
+                      logo_path: /images/splunk_logo.png
+                      percentage: 100
+                      count: 5
+                    host_name: 192.168.20.20
+                behavior_type:
+                  results:
+                    alerted:
+                      percentage: 0
+                      count: 0
+                      label: Malicious File Transfer
+                    logged:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    missed:
+                      percentage: 0
+                      count: 0
+                      label: Malicious File Transfer
+                    detected:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    prevented:
+                      percentage: 100
+                      count: 5
+                      label: Malicious File Transfer
+                    blocked_or_events:
+                      percentage: 40
+                      count: 2
+                      label: Malicious File Transfer
+                    runs:
+                      percentage: 100
+                      count: 5
+                      label: Malicious File Transfer
+                name: Malicious File Transfer
+                jobs: 5
+      operationId: getReportsFilteredChartData
+      x-operation-id-source: derived
+  /reports/dimension_children:
+    get:
+      summary: List child behaviors
+      description: List of child behaviors for a given Behavior, to an arbitrary depth
+      parameters:
+      - $ref: '#/components/parameters/type_filter'
+      - name: depth
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          default: 1
+      tags:
+      - Reports
+      responses:
+        '200':
+          description: Success
+      operationId: getReportsDimensionChildren
+      x-operation-id-source: derived
+  /reports/summary_chart_data:
+    get:
+      summary: Summary report data
+      description: Data underlying the MSV Summary Page. Overview of Security Technologies, Zones, Integrations, and statistics related to a given Behavior.
+      tags:
+      - Reports
+      parameters:
+      - name: types
+        in: query
+        description: 'Array of Strings indicating names of Dimensions to return in report.  Options for the Dimension names can be obtained from a request to `GET /reports/filter_data.json`.
+
+          '
+        schema:
+          type: array
+          default:
+          - Attack Vector
+          - Stage of Attack
+          - Behavior Type
+          items:
+            type: string
+      - name: job_ids
+        in: query
+        description: 'List of job IDs to include in the results.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      - $ref: '#/components/parameters/time_range'
+      - $ref: '#/components/parameters/zones_filter'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                message: null
+                sectech:
+                  Other:
+                    missed: 0
+                    detected: 0
+                    prevented: 0
+                    runs: 58
+                  Suricata - Suricata(IDS):
+                    missed: 41
+                    detected: 17
+                    prevented: 0
+                    runs: 58
+                analysis:
+                  behaviors:
+                  - alerted: 0
+                    detected: 7
+                    prevented: 13
+                    total: 18
+                    key: General-Behavior
+                  zones:
+                  - alerted: 0
+                    passed: 38
+                    detected: 17
+                    prevented: 37
+                    total: 58
+                    key: DMZ
+                pass_fail:
+                  vectors:
+                  - total: 15
+                    fail_pct: 13
+                    pass_pct: 87
+                    fail: -13
+                    pass: 87
+                    failed: -2
+                    passed: 13
+                    count: 13
+                    key: General-Vector
+                  stages:
+                  - total: 7
+                    fail_pct: 43
+                    pass_pct: 57
+                    fail: -43
+                    pass: 57
+                    failed: -3
+                    passed: 4
+                    count: 4
+                    key: Delivery
+                  business_zones:
+                  - total: 58
+                    fail_pct: 34
+                    pass_pct: 66
+                    fail: -34
+                    pass: 66
+                    failed: -20
+                    passed: 38
+                    count: 38
+                    key: DMZ
+                results_stats:
+                  alerted: 0
+                  detected: 17
+                  blocked: 37
+                  total: 58
+                top_stats:
+                  sectech: 1
+                  sa_count: 5
+                  av_count: 5
+                  bt_count: 7
+                  totals: 58
+      operationId: getReportsSummaryChartData
+      x-operation-id-source: derived
+  /reports/data_exfil.json:
+    get:
+      summary: Data Exfil report
+      description: This endpoint is deprecated and will be removed in a future release.
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/old_time'
+      - $ref: '#/components/parameters/old_relationship'
+      - $ref: '#/components/parameters/old_show'
+      - $ref: '#/components/parameters/old_group'
+      - name: divisions
+        in: query
+        description: 'Determines how many divisions there are for the given time range.
+
+          '
+        schema:
+          type: integer
+          minimum: 1
+      - name: nodes
+        in: query
+        description: 'List of job action attack node IDs to include in the results.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: zones
+        in: query
+        description: 'List of job action attack node security zone IDs to include in the results.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: tags
+        in: query
+        description: 'List of tag IDs to include in the results.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: dimensions
+        in: query
+        description: 'List of dimension IDs to include in the results.
+
+          '
+        schema:
+          type: array
+          items:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example: {}
+      operationId: getReportsDataExfilJson
+      x-operation-id-source: derived
+  /reports/malicious_transfer.json:
+    get:
+      summary: Malicious File Transfer report
+      description: This endpoint is deprecated and will be removed in a future release.
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/old_time'
+      - $ref: '#/components/parameters/old_relationship'
+      - $ref: '#/components/parameters/old_show'
+      - $ref: '#/components/parameters/old_group'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example: (Same structure as Data Exfil report)
+      operationId: getReportsMaliciousTransferJson
+      x-operation-id-source: derived
+components:
+  parameters:
+    zones_filter:
+      name: zones
+      in: query
+      description: 'List of Security Zones to include in the results.  Must be Array of Strings indicating Security Zone names.
+
+        '
+      schema:
+        type: array
+        items:
+          type: string
+    old_group:
+      name: group
+      in: query
+      description: 'Whether to group blocked actions or separate payload/connection blocked actions
+
+        '
+      schema:
+        type: string
+        enum:
+        - grouped
+        - separate
+        default: separate
+    old_show:
+      name: show
+      in: query
+      description: 'Which blocked actions to show, whether payload-blocked, connection-blocked, or all
+
+        '
+      schema:
+        type: string
+        enum:
+        - all
+        - payload
+        - connection
+        default: all
+    time_range:
+      name: time_range
+      in: query
+      description: 'Job Action time range for results, of the format `2019-08-27 04:18:42 PM UTC to 2019-09-27 04:18:42 PM UTC`
+
+        '
+      schema:
+        type: string
+    old_time:
+      name: time
+      in: query
+      description: Integer indicating number of days to include in the report
+      schema:
+        type: integer
+        minimum: 1
+        default: 30
+    date_range:
+      name: dateRange
+      in: query
+      description: 'Job Action time range for results, of the format `2019-08-27 04:18:42 PM UTC to 2019-09-27 04:18:42 PM UTC`
+
+        '
+      schema:
+        type: string
+    sectech_filter:
+      name: sectechs
+      in: query
+      description: 'List of security technology ids to filter results.  No parameter value means show all applicable security technologies.  This list can be obtained from `GET /security_technologies.json`
+
+        '
+      schema:
+        type: array
+        items:
+          type: integer
+    old_relationship:
+      name: relationship
+      in: query
+      description: Whether to show relationship between blocked and detected
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        default: 'no'
+    type_filter:
+      name: type
+      in: query
+      required: true
+      schema:
+        type: string
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

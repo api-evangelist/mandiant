@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-create-bulk-job-schema.json",
+  "title": "create_bulk_job",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-ma-sv-openapi.yml#/components/schemas/create_bulk_job",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "source_actor_tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of the Sim Action to run when creating the job."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name to give the new bulk job."
+    },
+    "source_actor_tags": {
+      "type": "string",
+      "description": "Comma separated list of source actors by id."
+    },
+    "destination_actor_tags": {
+      "type": "string",
+      "description": "Comma separated list of destination actors by id."
+    },
+    "tag_combination_strategy": {
+      "type": "string",
+      "enum": [
+        "OR",
+        "AND"
+      ],
+      "description": "Determines how actors are lookedup. 'OR' - any actor with at least one of the tags. 'AND' - any actor with all of the tags.",
+      "default": "OR"
+    },
+    "action_user_profile_id": {
+      "type": "string",
+      "description": "Action user profile to use when running the job."
+    },
+    "run_time_params": {
+      "type": "array",
+      "description": "If supplied, must be of the form 'run_time_params[1][key1]=value1&run_time_params[1][key2]=value2'. Only run_time_params[1]... will be included. Anything starting with run_time_params[2]... etc., will be ignored.",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "Hash of runtime params set when running the job."
+        }
+      }
+    }
+  }
+}

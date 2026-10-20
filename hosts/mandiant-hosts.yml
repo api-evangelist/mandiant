@@ -1,0 +1,121 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 6
+  other_domain: 2
+  platform: 1
+  roles:
+  - api
+  - identity
+  - marketing
+  - other
+  - portal
+  - source
+  - website
+hosts:
+- host: advantage.mandiant.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Login
+  serves: []
+  registrable_domain: mandiant.com
+  role: identity
+  relation: own
+- host: api.google.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: google.com
+  role: api
+  relation: other-domain
+- host: api.intelligence.mandiant.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: mandiant.com
+  role: api
+  relation: own
+- host: api.mandiant.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: mandiant.com
+  role: api
+  relation: own
+- host: asm-api.advantage.mandiant.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: mandiant.com
+  role: other
+  relation: own
+- host: cloud.google.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  types:
+  - Blog
+  serves: []
+  registrable_domain: google.com
+  role: marketing
+  relation: other-domain
+- host: docs.mandiant.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - GettingStarted
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  serves:
+  - docs
+  - cdn
+  - documentation
+  vendor: cloudflare
+  registrable_domain: mandiant.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: mandiant.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Website
+  serves: []
+  registrable_domain: mandiant.com
+  role: website
+  relation: own

@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-email-setting-schema.json",
+  "title": "Email Setting",
+  "description": "Email notification settings.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-dtm-openapi.yml#/components/schemas/EmailSetting",
+  "properties": {
+    "created_at": {
+      "description": "The timestamp this email setting was created.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "delivery_times": {
+      "description": "The delivery times specified for scheduled emails.",
+      "items": {
+        "enum": [
+          "00:00",
+          "00:30",
+          "01:00",
+          "01:30",
+          "02:00",
+          "02:30",
+          "03:00",
+          "03:30",
+          "04:00",
+          "04:30",
+          "05:00",
+          "05:30",
+          "06:00",
+          "06:30",
+          "07:00",
+          "07:30",
+          "08:00",
+          "08:30",
+          "09:00",
+          "09:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30",
+          "14:00",
+          "14:30",
+          "15:00",
+          "15:30",
+          "16:00",
+          "16:30",
+          "17:00",
+          "17:30",
+          "18:00",
+          "18:30",
+          "19:00",
+          "19:30",
+          "20:00",
+          "20:30",
+          "21:00",
+          "21:30",
+          "22:00",
+          "22:30",
+          "23:00",
+          "23:30"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "frequency": {
+      "description": "The frequency at which scheduled emails are delivered.",
+      "items": {
+        "enum": [
+          "sunday",
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "id": {
+      "description": "The ID of the email settings.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "recipients": {
+      "description": "The recipients to receive emails.",
+      "items": {
+        "$ref": "#/$defs/EmailRecipient"
+      },
+      "type": "array"
+    },
+    "timezone_location": {
+      "description": "The timezone location to use for scheduled emails.",
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "The timestamp this email setting was last updated.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "EmailRecipient": {
+      "description": "An email recipient.",
+      "properties": {
+        "email_address": {
+          "description": "The email address of the recipient.",
+          "format": "email",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the email address verification.",
+          "enum": [
+            "invalid",
+            "pending",
+            "verified",
+            "expired"
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "verification_sent_at": {
+          "description": "The timestamp an email verification was sent at for this email address.",
+          "format": "date-time",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "email_address"
+      ],
+      "title": "Email Recipient",
+      "type": "object"
+    }
+  }
+}

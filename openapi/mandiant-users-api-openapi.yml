@@ -1,0 +1,214 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Users API
+  version: '1.0'
+  description: 'Operations tagged Users across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Users
+  description: Users are individuals belonging to an Organization. Each user belongs to a UserGroup which determines their privileges.
+paths:
+  /settings/users:
+    get:
+      summary: List users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 62
+                email: jackeline@maggiochamplin.co
+                created_at: '2020-02-10T15:22:48.876Z'
+                updated_at: '2020-02-10T15:22:48.876Z'
+                organization_id: 97
+                user_group_id: 2
+                first_name: Franz
+                last_name: Reilly
+                disabled: false
+                pass_changed: false
+                sort_content_by: name
+                sort_reverse: false
+                flash_notice_time: 3
+                time_zone: UTC
+                hide_modal_on_click: null
+                endpoint_approval: null
+                always_show_debug: false
+                local_only: false
+                login_name: null
+                gauth_secret: null
+                gauth_enabled: f
+                gauth_tmp: null
+                gauth_tmp_datetime: null
+                protected_theater_developer: null
+                password_changed_at: '2020-02-10T15:22:48.876Z'
+                file_library_approval: false
+                github_token: null
+                authentication_token: null
+                override_email_verification: null
+              - id: 61
+                email: keshawn_king@harris.info
+                created_at: '2020-02-10T15:22:48.758Z'
+                updated_at: '2020-02-10T15:22:48.767Z'
+                organization_id: 97
+                user_group_id: 60
+                first_name: Lawrence
+                last_name: Klocko
+                disabled: false
+                pass_changed: true
+                sort_content_by: name
+                sort_reverse: false
+                flash_notice_time: 3
+                time_zone: UTC
+                hide_modal_on_click: null
+                endpoint_approval: null
+                always_show_debug: false
+                local_only: false
+                login_name: null
+                gauth_secret: null
+                gauth_enabled: f
+                gauth_tmp: null
+                gauth_tmp_datetime: null
+                protected_theater_developer: null
+                password_changed_at: '2020-02-10T15:22:48.758Z'
+                file_library_approval: false
+                github_token: null
+                authentication_token: null
+                override_email_verification: null
+      operationId: getSettingsUsers
+      x-operation-id-source: derived
+    post:
+      summary: Create a user
+      description: The user will be created in the organization that the current user is switched to
+      tags:
+      - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_wrapped'
+            example:
+              user:
+                first_name: Meta
+                last_name: Huel
+                email: lindsey_thiel@armstrongruel.io
+                organization_user:
+                  user_group_id: 2
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 60
+                email: lindsey_thiel@armstrongruel.io
+                created_at: '2020-02-10T15:22:36.090Z'
+                updated_at: '2020-02-10T15:22:36.090Z'
+                organization_id: 96
+                user_group_id: 2
+                first_name: Meta
+                last_name: Huel
+                disabled: false
+                pass_changed: false
+                sort_content_by: name
+                sort_reverse: false
+                flash_notice_time: 3
+                time_zone: UTC
+                hide_modal_on_click: null
+                endpoint_approval: null
+                always_show_debug: false
+                local_only: false
+                login_name: null
+                gauth_secret: null
+                gauth_enabled: f
+                gauth_tmp: null
+                gauth_tmp_datetime: null
+                protected_theater_developer: null
+                password_changed_at: '2020-02-10T15:22:36.090Z'
+                file_library_approval: false
+                github_token: null
+                authentication_token: null
+                override_email_verification: null
+      operationId: postSettingsUsers
+      x-operation-id-source: derived
+  /settings/users/{id}:
+    get:
+      summary: Show an user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 63
+                email: jasen@predovic.co
+                created_at: '2020-02-10T15:23:01.829Z'
+                updated_at: '2020-02-10T15:23:01.848Z'
+                organization_id: 98
+                user_group_id: 61
+                first_name: Kaitlin
+                last_name: Nolan
+                disabled: false
+                pass_changed: true
+                sort_content_by: name
+                sort_reverse: false
+                flash_notice_time: 3
+                time_zone: UTC
+                hide_modal_on_click: null
+                endpoint_approval: null
+                always_show_debug: false
+                local_only: false
+                login_name: null
+                gauth_secret: null
+                gauth_enabled: f
+                gauth_tmp: null
+                gauth_tmp_datetime: null
+                protected_theater_developer: null
+                password_changed_at: '2020-02-10T15:23:01.828Z'
+                file_library_approval: false
+                github_token: null
+                authentication_token: null
+                override_email_verification: null
+      operationId: getSettingsUsersById
+      x-operation-id-source: derived
+components:
+  schemas:
+    user_wrapped:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/user'
+    user:
+      type: object
+      required:
+      - email
+      - first_name
+      - last_name
+      - user_group_id
+      properties:
+        email:
+          type: string
+          description: 'Email address for user.  This is used for the login for each user.  Must be a valid email address.
+
+            '
+        first_name:
+          type: string
+        last_name:
+          type: string
+        user_group_id:
+          type: integer
+          description: ID indicating UserGroup to which User belongs
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

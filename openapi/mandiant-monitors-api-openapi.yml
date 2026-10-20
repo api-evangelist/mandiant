@@ -1,0 +1,1145 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Monitors API
+  version: '1.0'
+  description: 'Operations tagged Monitors across 6 of this provider''s published API definitions: mandiant-dtm-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-dtm-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.intelligence.mandiant.com/v4/dtm
+tags:
+- name: Monitors
+paths:
+  /monitors:
+    parameters: []
+    get:
+      description: Lists all monitors belonging to the current organization. Pagination is supported and the URI to next page of results is provided in the response link header. If fetching subsequent pages, only use the next link header provided in the previous page of results.
+      operationId: get-monitors
+      parameters:
+      - description: The monitor field name to sort the response monitors by.
+        in: query
+        name: sort
+        schema:
+          default: created_at
+          enum:
+          - id
+          - name
+          - description
+          - created_at
+          - updated_at
+          example: updated_at
+          type: string
+      - description: The order used to sort the response monitors.
+        in: query
+        name: order
+        schema:
+          default: desc
+          enum:
+          - desc
+          - asc
+          example: asc
+          type: string
+      - description: The number of monitors to return in each page.
+        in: query
+        name: size
+        schema:
+          default: 10
+          example: 20
+          type: integer
+      - description: The type of content accepted.
+        in: header
+        name: Accept
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      - description: When listing monitors by date range, since defines the starting date in RFC3339 format
+        in: query
+        name: since
+        schema:
+          format: date-time
+          type: string
+      - description: When listing monitors by date range, until defines the ending date in RFC3339 format
+        in: query
+        name: until
+        schema:
+          type: string
+      - description: Only used when fetching subsequent pages during pagination and will contain a unique page ID. No other query parameters can be used with page
+        in: query
+        name: page
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monitors'
+          description: OK
+          headers:
+            Link:
+              description: If another page of results is available for pagination, the Link header will contain the URI used to fetch the next page.
+              schema:
+                example: <https://api.intelligence.mandiant.com/v4/dtm/monitors?page=c52e5bc1hrv40t8d0gvg>; rel="next"
+                type: string
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: List monitors
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    post:
+      description: Create a new monitor.
+      operationId: post-monitor
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          example: application/json
+          type: string
+      - description: If true and a template_id is set, we will return 400 bad request if it the monitor does not adhear to the template
+        in: query
+        name: strict
+        schema:
+          default: true
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monitor'
+        description: Create a new monitor.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monitor'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Create a new monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitors/{id}:
+    parameters:
+    - description: The monitor ID.
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    delete:
+      description: Delete an existing monitor by its ID.
+      operationId: delete-monitor-id
+      parameters: []
+      responses:
+        '204':
+          description: No Content
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: Not Found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Delete an existing monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    get:
+      description: Get an existing monitor by ID.
+      operationId: get-monitor-id
+      parameters:
+      - description: application/json
+        in: header
+        name: Accept
+        required: true
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monitor'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: Not Found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Get a monitor by its ID
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    patch:
+      description: Partial update an existing monitor with the fields in the request body. This request only updates the specified fields in the request body; the remaining fields of the existing monitor are unchanged.
+      operationId: patch-monitor-id
+      parameters:
+      - description: The accept type supported in the response.
+        in: header
+        name: Accept
+        required: true
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      - description: The content type of the request body.
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      - description: If true and a template_id is set, we will return 400 bad request if it the monitor does not adhear to the template
+        in: query
+        name: strict
+        schema:
+          default: true
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            examples:
+              patch-monitor:
+                value:
+                  description: My updated description
+            schema:
+              $ref: '#/components/schemas/Monitor'
+        description: The monitor fields to update.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monitor'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: Not Found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Partial update an existing monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    put:
+      description: Update an existing monitor by replacing all its fields with the given body.
+      operationId: put-monitor-id
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          type: string
+      - description: application/json
+        in: header
+        name: Accept
+        required: true
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      - description: If true and a template_id is set, we will return 400 bad request if it the monitor does not adhear to the template
+        in: query
+        name: strict
+        schema:
+          default: true
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monitor'
+        description: The monitor to validate
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monitor'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              examples:
+                not-found:
+                  value:
+                    message: Not Found
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Not Found
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Update an existing monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitors/{id}/backfill:
+    patch:
+      description: Asynchronously backfill alerts for the new domains added in the latest version of the monitor (when compared to it's previous version) using the time range specified. This API is only supported for monitors created from the Compromised Credential monitor template and will create at most 10,000 alerts.
+      operationId: patch-monitor-backfill
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          example: application/json
+          type: string
+      - description: The ID of the monitor to begin a backfill for.
+        in: path
+        name: id
+        required: true
+        schema:
+          example: c4huif0mhcmiku5g7jsg
+          type: string
+      - description: Backfill alerts starting from this date in RFC3339 format
+        in: query
+        name: since
+        schema:
+          format: date-time
+          type: string
+      - description: Backfill alerts ending at this date in RFC3339 format
+        in: query
+        name: until
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Asynchronously backfill alerts for new domains
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    post:
+      description: Begin a new alert backfill for the current monitor using the time range specified. This API is only supported for monitors created from the Compromised Credential monitor template and will create at most 10,000 alerts.
+      operationId: post-monitor-backfill
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          example: application/json
+          type: string
+      - description: The ID of the monitor to begin a backfill for.
+        in: path
+        name: id
+        required: true
+        schema:
+          example: c4huif0mhcmiku5g7jsg
+          type: string
+      - description: Backfill alerts starting from this date in RFC3339 format
+        in: query
+        name: since
+        schema:
+          format: date-time
+          type: string
+      - description: Backfill alerts ending at this date in RFC3339 format
+        in: query
+        name: until
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Asynchronously backfill alerts for the monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitors/{id}/backfill/esimate:
+    patch:
+      description: Estimate how many alerts will be created when backfilling the given updated monitor. Only newly added domains are considered for backfill. Backfill is only applicable for monitors created from the Compromised Credential monitor template.
+      operationId: patch-monitor-backfill-estimate
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          example: application/json
+          type: string
+      - description: The monitor ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Backfill alerts starting from this date in RFC3339 format
+        in: query
+        name: since
+        schema:
+          format: date-time
+          type: string
+      - description: Backfill alerts ending at this date in RFC3339 format
+        in: query
+        name: until
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monitor'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorBackfillEstimate'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Estimate how many alerts will be created for the backfill of an updated monitor
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitors/backfill/esimate:
+    post:
+      description: Estimate how many alerts will be created when backfilling the given new monitor. Backfill is only applicable for monitors created from the Compromised Credential monitor template.
+      operationId: post-monitor-backfill-estimate
+      parameters:
+      - description: application/json
+        in: header
+        name: Content-Type
+        required: true
+        schema:
+          example: application/json
+          type: string
+      - description: Backfill alerts starting from this date in RFC3339 format
+        in: query
+        name: since
+        schema:
+          format: date-time
+          type: string
+      - description: Backfill alerts ending at this date in RFC3339 format
+        in: query
+        name: until
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monitor'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorBackfillEstimate'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: Estimate how many alerts will be created for the backfill of a newly created…
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitors/templates:
+    parameters: []
+    get:
+      description: Lists all monitor templates for top DTM use cases. Templates are intended to be the starting place for montior creation based on a specific use case.
+      operationId: get-monitor-templates
+      parameters:
+      - description: The type of content accepted.
+        in: header
+        name: Accept
+        schema:
+          default: application/json
+          example: application/json
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorTemplates'
+          description: OK
+        '400':
+          content:
+            application/json:
+              examples:
+                bad-request:
+                  value:
+                    message: Bad Request
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              examples:
+                unauthorized:
+                  value:
+                    message: Unauthorized
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Unauthorized
+        '500':
+          content:
+            application/json:
+              examples:
+                internal-error:
+                  value:
+                    message: Internal Server Error
+              schema:
+                $ref: '#/components/schemas/Response-message'
+          description: Internal Server Error
+      summary: List monitor templates for top DTM use cases
+      tags:
+      - Monitors
+      security:
+      - My_API_Key: []
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+  /monitor/update_data:
+    get:
+      summary: AEDA Dashboard data
+      description: Data used to build the AEDA Dashboard Environment Map
+      tags:
+      - Monitors
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                map_data:
+                  green_paths: []
+                  alert_paths:
+                  - - node-2
+                    - node-1
+                  zone_alarms:
+                    zone-2:
+                      zone-5: 3
+                  zone_stats:
+                    zone-2:
+                      zone-5: 3
+                widgets:
+                  breakdown_tooltips:
+                  - 0 Passed
+                  - 0 Passed
+                  - 0 Passed
+                  - 0 Passed
+                  - 0 Passed
+                  - 0 Passed
+                  breakdown_data:
+                  - 0
+                  - 0
+                  - 0
+                  - 0
+                  - 0
+                  - 0
+                stats:
+                  alert_count: 3
+                  unique_count: 8
+                  monitor_count: 8
+      operationId: getMonitorUpdateData
+      x-operation-id-source: derived
+components:
+  schemas:
+    MonitorTemplate:
+      description: Monitor templates provide suggested monitor conditions based on top DTM use cases.
+      properties:
+        description:
+          description: The description of the monitor.
+          type: string
+        doc_condition:
+          $ref: '#/components/schemas/Condition'
+        id:
+          description: The ID of the monitor.
+          example: c4fbb52bqsiatib6i4gg
+          readOnly: true
+          type: string
+        name:
+          description: The name of the monitor.
+          type: string
+      required:
+      - doc_condition
+      title: Monitor Template
+      type: object
+    Monitor:
+      description: A monitor defines 1 or more conditions and an optional doc query string to use for matching documents of interest. Matching a document results in the creation of an alert.
+      properties:
+        created_at:
+          description: The timestamp the monitor was created.
+          example: '"2021-08-19T19:48:36Z"'
+          format: date-time
+          readOnly: true
+          type: string
+        created_by_user_email:
+          description: The user's name that created the monitor.
+          readOnly: true
+          type: string
+        created_by_user_id:
+          description: The ID of the user that created the monitor.
+          readOnly: true
+          type: string
+        description:
+          description: The description of the monitor.
+          type: string
+        doc_condition:
+          $ref: '#/components/schemas/Condition'
+        email_notify_enabled:
+          description: If email notifications are enabled for this monitor.
+          type: boolean
+        email_notify_immediate:
+          description: If immediate email delivery is enabled for this monitor.
+          type: boolean
+        enabled:
+          description: If the monitor is enabled or not.
+          type: boolean
+        id:
+          description: The ID of the monitor.
+          example: c4fbb52bqsiatib6i4gg
+          readOnly: true
+          type: string
+        last_updated_by_user_id:
+          description: The ID of the user that last updated the monitor.
+          readOnly: true
+          type: string
+        last_updated_user_email:
+          description: The user's name that last updated the monitor.
+          readOnly: true
+          type: string
+        name:
+          description: The name of the monitor.
+          type: string
+        password_policy:
+          $ref: '#/components/schemas/PasswordPolicy'
+        template_id:
+          description: If a monitor was created from a template, then this field is populated with the template's ID. It cannot be changed after creation.
+          readOnly: true
+          type: string
+        updated_at:
+          description: The timestamp the monitor was last updated.
+          example: '"2021-08-19T19:48:36Z"'
+          format: date-time
+          readOnly: true
+          type: string
+        version:
+          description: The version number for the monitor. A monitor's version is incremented each time the monitor is updated.
+          readOnly: true
+          type: integer
+      required:
+      - doc_condition
+      title: Monitor
+      type: object
+    Response-message:
+      description: Error response message.
+      properties:
+        message:
+          description: The response message.
+          type: string
+      title: Error Response
+      type: object
+    MonitorTemplates:
+      description: A list of monitor templates for top DTM use cases.
+      properties:
+        templates:
+          description: The list of monitor templates.
+          items:
+            $ref: '#/components/schemas/MonitorTemplate'
+          type: array
+      title: Monitor Templates
+      type: object
+    Condition:
+      description: A Condition forms the basis for querying topics and labels in monitors. It can be used to form complex conditions using all/any as well as specifying specific values to match for documents. See the user guide for more details.
+      properties:
+        match:
+          description: The match values, or sub Conditions.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+        operator:
+          description: The operator to use for this Condition.
+          enum:
+          - must_equal
+          - must_not_equal
+          - must_start_with
+          - must_not_start_with
+          - must_end_with
+          - must_not_end_with
+          - must_contain
+          - must_not_contain
+          - any
+          - all
+          type: string
+        topic:
+          description: The topic to apply this Condition to.
+          enum:
+          - doc_type
+          - source
+          - match_conditions
+          - credential_domain
+          - typosquatted_domain
+          - keyword
+          - lucene
+          - group_bin
+          - group_brand
+          - group_crypto
+          - group_hash
+          - group_identity
+          - group_keys
+          - group_location
+          - group_network
+          - group_paths
+          - group_social
+          - group_threats
+          - label_industry
+          - label_language
+          - label_threat
+          - label_type
+          - bin
+          - bin_foreign
+          - bin_partial
+          - identity_name
+          - organization
+          - product
+          - name
+          - brand
+          - product_batch_name
+          - atom_address
+          - bch_address
+          - btc_address
+          - dash_address
+          - doge_address
+          - ltc_address
+          - xlm_address
+          - xmr_address
+          - zec_address
+          - sha1_hash
+          - sha256_hash
+          - md5_hash
+          - client_identifier
+          - email_address
+          - identity_name
+          - twitter_handle
+          - telegram_user_name
+          - phone_number
+          - access_token
+          - crypto_key_private
+          - crypto_key_public
+          - password_plaintext
+          - predict_password_plaintext
+          - location_name
+          - city
+          - country
+          - ipv4_address
+          - ipv6_address
+          - domain
+          - mac_address
+          - url
+          - filename
+          - path
+          - registry_key
+          - hashtag
+          - icq_uin
+          - jid
+          - cve
+          - threat_name
+          - threat_group_name
+          - service_name
+          - cwe
+          type: string
+      required:
+      - operator
+      - topic
+      - match
+      title: Condition
+      type: object
+    Monitors:
+      description: A list of monitor.
+      properties:
+        monitors:
+          description: The list of monitors.
+          items:
+            $ref: '#/components/schemas/Monitor'
+          type: array
+      title: Monitors
+      type: object
+    MonitorBackfillEstimate:
+      description: An estimated count of alerts that will be created when backfilling a monitor.
+      properties:
+        alert_count:
+          description: The estimated number of alerts that will be created when backfilling alerts for the monitor.
+          readOnly: true
+          type: integer
+      title: Monitor Backfill Estimate
+      type: object
+    PasswordPolicy:
+      description: Criteria defining a password policy.
+      properties:
+        length_max:
+          description: The maxium length of the password in order to meet the policy.
+          readOnly: false
+          type: integer
+        length_min:
+          description: The minimum length of the password in order to meet the policy.
+          readOnly: false
+          type: integer
+        lowercase_char_count:
+          description: The minimum numer of lowercase characters a password is expected to have in order to meet the policy.
+          readOnly: false
+          type: integer
+        lowercase_char_required:
+          description: If true, then the password is expected to have lowercase characters in order to meet the policy.
+          readOnly: false
+          type: boolean
+        numbers_count:
+          description: The minimum numer of numerical characters a password is expected to have in order to meet the policy.
+          readOnly: false
+          type: integer
+        numbers_required:
+          description: If true, then the password is expected to have numerical characters in order to meet the policy.
+          readOnly: false
+          type: boolean
+        special_char_count:
+          description: The minimum numer of special case characters a password is expected to have in order to meet the policy.
+          readOnly: false
+          type: integer
+        special_char_required:
+          description: If true, then the password is expected to have special case characters in order to meet the policy.
+          readOnly: false
+          type: boolean
+        uppercase_char_count:
+          description: The minimum numer of uppercase characters a password is expected to have in order to meet the policy.
+          readOnly: false
+          type: integer
+        uppercase_char_required:
+          description: If true, then the password is expected to have uppercase characters in order to meet the policy.
+          readOnly: false
+          type: boolean
+      title: Password Policy
+      type: object
+  securitySchemes:
+    My_API_Key:
+      scheme: bearer
+      type: http
+x-refined-from:
+- mandiant-dtm-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-dtm-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

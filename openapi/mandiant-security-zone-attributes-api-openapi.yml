@@ -1,0 +1,61 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Security zone attributes API
+  version: '1.0'
+  description: 'Operations tagged Security zone attributes across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Security zone attributes
+  description: Security Zone attributes are descriptors added to Security Zones. Attributes determine whether a zone's location is internal or external and influence Source and Destination recommendations for Actions.
+paths:
+  /security_zone_attributes:
+    get:
+      summary: List security zone attributes
+      tags:
+      - Security zone attributes
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/security_zone_attribute'
+              example:
+              - id: 1
+                name: Internal
+                label: Internal
+                desc: ''
+                organization_id: 1
+                created_at: Mon, 13 Mar 2017 23:25:01 UTC +00:00
+                updated_at: Mon, 13 Mar 2017 23:25:01 UTC +00:00
+              - id: 2
+                name: External
+                label: External
+                desc: ''
+                organization_id: 1
+                created_at: Mon, 13 Mar 2017 23:25:01 UTC +00:00
+                updated_at: Mon, 13 Mar 2017 23:25:01 UTC +00:00
+      operationId: getSecurityZoneAttributes
+      x-operation-id-source: derived
+components:
+  schemas:
+    security_zone_attribute:
+      type: object
+      required:
+      - name
+      - label
+      - desc
+      properties:
+        name:
+          type: string
+          description: Name of the security zone attribute.
+        label:
+          type: string
+          description: Label of the security zone attribute.
+        desc:
+          type: string
+          description: Description of the security zone attribute.
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

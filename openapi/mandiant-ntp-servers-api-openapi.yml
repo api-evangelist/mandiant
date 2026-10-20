@@ -1,0 +1,124 @@
+openapi: 3.2.0
+info:
+  title: Mandiant NTP Servers API
+  version: '1.0'
+  description: 'Operations tagged NTP Servers across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: NTP Servers
+  description: NTP Servers allow you to provide server addresses for actors to use to synchronize their time
+paths:
+  /settings/ntp_servers:
+    get:
+      summary: List ntp servers
+      tags:
+      - NTP Servers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 3
+                hostname: 192.168.1.1
+                desc: test desc
+                organization_id: 73
+                created_at: '2020-02-10T15:18:02.238Z'
+                updated_at: '2020-02-10T15:18:02.238Z'
+              - id: 4
+                hostname: us.pool.ntp.org
+                desc: test desc
+                organization_id: 73
+                created_at: '2020-02-10T15:18:02.241Z'
+                updated_at: '2020-02-10T15:18:02.241Z'
+      operationId: getSettingsNtpServers
+      x-operation-id-source: derived
+    post:
+      summary: Create an NTP server
+      tags:
+      - NTP Servers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ntp_server_wrapped'
+            example:
+              ntp_server:
+                hostname: us.pool.ntp.org
+                desc: US NTP server pool
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 1
+                hostname: us.pool.ntp.org
+                desc: US NTP server pool
+                organization_id: 71
+                created_at: '2020-02-10T15:17:36.414Z'
+                updated_at: '2020-02-10T15:17:36.414Z'
+      operationId: postSettingsNtpServers
+      x-operation-id-source: derived
+  /settings/ntp_servers/{id}:
+    get:
+      summary: Show an NTP server
+      tags:
+      - NTP Servers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 5
+                hostname: 192.168.1.1
+                desc: test desc
+                organization_id: 74
+                created_at: '2020-02-10T15:18:15.720Z'
+                updated_at: '2020-02-10T15:18:15.720Z'
+      operationId: getSettingsNtpServersById
+      x-operation-id-source: derived
+    delete:
+      summary: Destroy an NTP server
+      tags:
+      - NTP Servers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No content
+          content:
+            application/json:
+              example: null
+      operationId: deleteSettingsNtpServersById
+      x-operation-id-source: derived
+components:
+  schemas:
+    ntp_server:
+      type: object
+      properties:
+        desc:
+          type: string
+        hostname:
+          type: string
+          description: Must be a valid hostname or IP address.
+    ntp_server_wrapped:
+      type: object
+      properties:
+        ntp_server:
+          $ref: '#/components/schemas/ntp_server'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

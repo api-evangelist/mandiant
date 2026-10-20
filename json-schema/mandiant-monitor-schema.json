@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-monitor-schema.json",
+  "title": "Monitor",
+  "description": "A monitor defines 1 or more conditions and an optional doc query string to use for matching documents of interest. Matching a document results in the creation of an alert.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-dtm-openapi.yml#/components/schemas/Monitor",
+  "properties": {
+    "created_at": {
+      "description": "The timestamp the monitor was created.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "created_by_user_email": {
+      "description": "The user's name that created the monitor.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "created_by_user_id": {
+      "description": "The ID of the user that created the monitor.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of the monitor.",
+      "type": "string"
+    },
+    "doc_condition": {
+      "$ref": "#/$defs/Condition"
+    },
+    "email_notify_enabled": {
+      "description": "If email notifications are enabled for this monitor.",
+      "type": "boolean"
+    },
+    "email_notify_immediate": {
+      "description": "If immediate email delivery is enabled for this monitor.",
+      "type": "boolean"
+    },
+    "enabled": {
+      "description": "If the monitor is enabled or not.",
+      "type": "boolean"
+    },
+    "id": {
+      "description": "The ID of the monitor.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "last_updated_by_user_id": {
+      "description": "The ID of the user that last updated the monitor.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "last_updated_user_email": {
+      "description": "The user's name that last updated the monitor.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the monitor.",
+      "type": "string"
+    },
+    "password_policy": {
+      "$ref": "#/$defs/PasswordPolicy"
+    },
+    "template_id": {
+      "description": "If a monitor was created from a template, then this field is populated with the template's ID. It cannot be changed after creation.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "The timestamp the monitor was last updated.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "version": {
+      "description": "The version number for the monitor. A monitor's version is incremented each time the monitor is updated.",
+      "readOnly": true,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "doc_condition"
+  ],
+  "type": "object",
+  "$defs": {
+    "Condition": {
+      "description": "A Condition forms the basis for querying topics and labels in monitors. It can be used to form complex conditions using all/any as well as specifying specific values to match for documents. See the user guide for more details.",
+      "properties": {
+        "match": {
+          "description": "The match values, or sub Conditions.",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "type": "array"
+        },
+        "operator": {
+          "description": "The operator to use for this Condition.",
+          "enum": [
+            "must_equal",
+            "must_not_equal",
+            "must_start_with",
+            "must_not_start_with",
+            "must_end_with",
+            "must_not_end_with",
+            "must_contain",
+            "must_not_contain",
+            "any",
+            "all"
+          ],
+          "type": "string"
+        },
+        "topic": {
+          "description": "The topic to apply this Condition to.",
+          "enum": [
+            "doc_type",
+            "source",
+            "match_conditions",
+            "credential_domain",
+            "typosquatted_domain",
+            "keyword",
+            "lucene",
+            "group_bin",
+            "group_brand",
+            "group_crypto",
+            "group_hash",
+            "group_identity",
+            "group_keys",
+            "group_location",
+            "group_network",
+            "group_paths",
+            "group_social",
+            "group_threats",
+            "label_industry",
+            "label_language",
+            "label_threat",
+            "label_type",
+            "bin",
+            "bin_foreign",
+            "bin_partial",
+            "identity_name",
+            "organization",
+            "product",
+            "name",
+            "brand",
+            "product_batch_name",
+            "atom_address",
+            "bch_address",
+            "btc_address",
+            "dash_address",
+            "doge_address",
+            "ltc_address",
+            "xlm_address",
+            "xmr_address",
+            "zec_address",
+            "sha1_hash",
+            "sha256_hash",
+            "md5_hash",
+            "client_identifier",
+            "email_address",
+            "identity_name",
+            "twitter_handle",
+            "telegram_user_name",
+            "phone_number",
+            "access_token",
+            "crypto_key_private",
+            "crypto_key_public",
+            "password_plaintext",
+            "predict_password_plaintext",
+            "location_name",
+            "city",
+            "country",
+            "ipv4_address",
+            "ipv6_address",
+            "domain",
+            "mac_address",
+            "url",
+            "filename",
+            "path",
+            "registry_key",
+            "hashtag",
+            "icq_uin",
+            "jid",
+            "cve",
+            "threat_name",
+            "threat_group_name",
+            "service_name",
+            "cwe"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "operator",
+        "topic",
+        "match"
+      ],
+      "title": "Condition",
+      "type": "object"
+    },
+    "PasswordPolicy": {
+      "description": "Criteria defining a password policy.",
+      "properties": {
+        "length_max": {
+          "description": "The maxium length of the password in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "length_min": {
+          "description": "The minimum length of the password in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "lowercase_char_count": {
+          "description": "The minimum numer of lowercase characters a password is expected to have in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "lowercase_char_required": {
+          "description": "If true, then the password is expected to have lowercase characters in order to meet the policy.",
+          "readOnly": false,
+          "type": "boolean"
+        },
+        "numbers_count": {
+          "description": "The minimum numer of numerical characters a password is expected to have in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "numbers_required": {
+          "description": "If true, then the password is expected to have numerical characters in order to meet the policy.",
+          "readOnly": false,
+          "type": "boolean"
+        },
+        "special_char_count": {
+          "description": "The minimum numer of special case characters a password is expected to have in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "special_char_required": {
+          "description": "If true, then the password is expected to have special case characters in order to meet the policy.",
+          "readOnly": false,
+          "type": "boolean"
+        },
+        "uppercase_char_count": {
+          "description": "The minimum numer of uppercase characters a password is expected to have in order to meet the policy.",
+          "readOnly": false,
+          "type": "integer"
+        },
+        "uppercase_char_required": {
+          "description": "If true, then the password is expected to have uppercase characters in order to meet the policy.",
+          "readOnly": false,
+          "type": "boolean"
+        }
+      },
+      "title": "Password Policy",
+      "type": "object"
+    }
+  }
+}

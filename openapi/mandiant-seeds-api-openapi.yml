@@ -1,0 +1,346 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Seeds API
+  version: 1.0.6
+  description: 'Operations tagged Seeds across 2 of this provider''s published API definitions: mandiant-asm-openapi.yml, mandiant-asm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://{{base_url}}
+tags:
+- name: Seeds
+  description: deletes a user entity / seed
+paths:
+  /api/v1/user_collections/{collection_uuid}/user_entities:
+    get:
+      tags:
+      - Seeds
+      summary: Index
+      description: endpoint to list user entities / seeds
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: collection_uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: uuid from {{base_url}}/api/v1/user_collections
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:51:23 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=kmg2K%2Fahsbac5G1NECV8ZN0vwiYJRmXfLf1WJgU0kJiAfXziFiPICX1AXNvvz6gt1Fpa9x6tksDU%2BmR38lmlmGgtcwn20odEVEc1fIEqPYBQG7sCQJyzzSo8kedw2dmJ9w%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816da5f83086fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection entities retrieved!
+                result:
+                - id: 1490825
+                  type: Domain
+                  name: attacksurface.app
+                  details: null
+                  claimed: false
+                  seed: true
+                  created_at: '2022-08-18T16:10:20.952Z'
+                  updated_at: '2022-08-18T16:10:20.952Z'
+                  last_modified: null
+      operationId: getApiV1UserCollectionsByCollectionUuidUserEntities
+      x-operation-id-source: derived
+    post:
+      tags:
+      - Seeds
+      summary: Create
+      description: endpoint which creates a user entity (could be a seed or not) for a collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                entities:
+                - type: Domain
+                  name: ASM2.io
+                - type: Domain
+                  name: ASM1.io
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: collection_uuid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: uuid of collection from {{base_url}}/api/v1/user_collections
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:49:33 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=Adr%2BzXWfvZ0qIZlfmNtdt0jayyekR%2BUJ%2BKsPNxnP5kzID%2BO2QYw8KKvvZhv%2FWlUyoANl7bUDZBcD9%2Fa9Kcy7%2BpdIMfUJwRn8BvZQqPwq239GSqsEgyzoDaIMwHTW8pphEQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816af38c0286fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: User entities added to collection
+                result:
+                - id: 1506950
+                  type: Domain
+                  name: ASM2.io
+                  details: null
+                  claimed: false
+                  seed: true
+                  created_at: '2022-09-09T16:49:33.093Z'
+                  updated_at: '2022-09-09T16:49:33.093Z'
+                  last_modified: null
+                - id: 1506951
+                  type: Domain
+                  name: ASM1.io
+                  details: null
+                  claimed: false
+                  seed: true
+                  created_at: '2022-09-09T16:49:33.108Z'
+                  updated_at: '2022-09-09T16:49:33.108Z'
+                  last_modified: null
+      operationId: postApiV1UserCollectionsByCollectionUuidUserEntities
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/entities/{entity_id}:
+    delete:
+      tags:
+      - Seeds
+      summary: Delete
+      description: delete a user entity / seed
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: entity_id
+        in: path
+        schema:
+          type: integer
+        required: true
+        description: id from {{base_url}}/api/v1/user_collections/:collection_uuid/user_entities
+        example: '1504086'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:50:49 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=jZwNlAZeTzvDvbomdXDbSaghZocJuhcg9iNIZZ1xl3uUlAKZwaf%2BfhQ%2B3mxUAimm7gN4pUTIAQ7rLAiJXDy3jMNfHZmfWknDJOYpdAhw0jkbldvfQr3lTMsHKVM%2FxI3LcQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816cd1bc0186fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: User Entity deleted
+                result: true
+      operationId: deleteApiV1EntitiesByEntityId
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+x-refined-from:
+- mandiant-asm-openapi.yml
+- mandiant-asm-openapi.yml

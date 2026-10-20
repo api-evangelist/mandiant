@@ -1,0 +1,454 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/mandiant-asm-openapi.yml
+- openapi/mandiant-dtm-openapi.yml
+- openapi/mandiant-ma-sv-openapi.yml
+- openapi/mandiant-msv-openapi.yml
+vocabulary:
+  name: Mandiant Domain Vocabulary
+  description: 'Terms declared by Mandiant''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Projects
+    definition: Projects are the most foundational unit of organization in the ASM platform. Collections exist within one and only one project.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-asm-openapi.yml
+  - term: Collections
+    definition: Collections live under a project and are another foundational unit of organization in the ASM platform. They define the process
+      of collecting entities, issues and technologies. All entities, issues and technologies live within one and only one collection (and its
+      corresponding project).
+    tags:
+    - Resource Group
+    source: openapi/mandiant-asm-openapi.yml
+  - term: Seeds
+    definition: deletes a user entity / seed
+    tags:
+    - Resource Group
+    source: openapi/mandiant-asm-openapi.yml
+  - term: Integrations
+    definition: Add your integration(s) here. Once added you can associate them to a collection within the Integrations Collections section.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-asm-openapi.yml
+  - term: Integration Collections
+    definition: Configure Collections with integrations for Cloud credential associations.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-asm-openapi.yml
+  - term: Introducing the MSV API
+    definition: Application Programming Interfaces (“APIs”) define interfaces to programming libraries or frameworks for accessing functionality
+      provided by the library or framework. The MSV API follows the principles of Representational State Transfer (“REST”) and provides methods
+      for accessing every feature, such as creating MSV Actors, scheduling Sequences and Evaluations, and editing SIEM integrations among o
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Connection & Authentication
+    definition: 'For access to the MSV API, you can use an API Key that is tied to your account. You can generate/regenerate/clear API Keys in
+      User Preferences under the User menu in the Director interface. The API Key is passed in an Authorization header in the format: "Bearer
+      API_KEY", so for example if your API Key was q6kzPy7JrbAxbAer9VEL, then your Authorization header would be `Bearer q6kzPy7JrbAxbAer9VEL`
+      T'
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Supported HTTP Methods
+    definition: The MSV API supports the standard HTTP methods, including GET, POST, and DELETE. In general, GETs are used to query for particular
+      data, POSTs are used to create or update data, and DELETEs are used to remove data from the platform. Where applicable, contextual elements
+      or parameters must be URI encoded.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: HTTP Status Codes
+    definition: MSV leverages standard HTTP status codes as responses for many of its API-accessible operations as detailed in the table below.
+      | Status Code | Description | |------------ | ----------- | | 200 | Request completed successfully | 201 | Create request completed successfully
+      | 204 | No content | 400 | Bad Request. See response body for details. | 401 | Authentication failure, invalid access credentia
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: API Formats
+    definition: 'Most MSV API endpoints respond to both JSON and XML formats. To specify which format, append .json or .xml at the end of the
+      URL. To avoid making this document unnecessarily verbose, Most of the example requests and responses for each API endpoint will be in JSON.
+      The example below shows what a JSON and XML response looks like for the same API call: ``` Request: GET /security_zones/396.json Respon'
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Notes
+    definition: General notes and clarifications regarding API calls are below. * Some areas of the documentation and within the API itself still
+      refer to the Director as Planner. This will be corrected in an upcoming release. * Some areas of the documentation and within the API itself
+      still refer to Actors as Nodes. This will be corrected in an upcoming release. * Sequences and Evaluations are referred to as “si
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Audit Logs
+    definition: 'The Validation Platform Director has a consolidated audit log that tracks Validation Platform activity. As a general overview,
+      the type of data in the Audit log is captured below. Each record is categorized using a Section and Action Type. For a list of Section and
+      Action Type values, see Audit Log Record Categorization. Some of the types of data it captures includes: * Security Content changes: C'
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Action user profiles
+    definition: Action User Profiles allow running certain types of actions as other users. For example, to run a Host CLI action as a non-System
+      or non-root user, you would configure an Action User Profile and select it when running an action
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Actions
+    definition: Actions are the smallest units MSV uses and simulate suspicious or malicious network traffic. They can be combined to form Sequences
+      and Evaluations.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Bulk Jobs
+    definition: Bulk jobs can be created from a single Action with a list of source and destination tags.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Cloud Profiles
+    definition: Cloud profiles provide a secure way to use credentials when running cloud actions. They are made available in your scripts as
+      environment variables. Once entered, sensitive fields (such as secret keys) and any custom values will not show up in the UI or API and
+      are encrypted at rest.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: DNS Servers
+    definition: DNS Servers provide addresses for actors to use as DNS servers in DNS query actions. Individual DNS query actions can specify
+      one of the available DNS servers.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Email Profiles
+    definition: Email Profiles provide the valid email addresses and email servers that are used to send files for email file transfer actions.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Email rules
+    definition: Rules to use when determining the results of Email Actions
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Event Filter Rules
+    definition: 'The suppressed event filter rule API endpoints interact with the rules governing an event matching a Job Action. An suppressing
+      or dropping EventFilterRule will prevent an Integration event from having a normal relationship with a Job Action. A suppressed or dropped
+      event will not contribute to the prevented/alerted/detected/missed set of statistics for a Job Action. The event''s relationship will '
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Event Suppression
+    definition: The suppressed event API endpoints provide accessors to suppress and drop events.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: File Library
+    definition: File Library objects that can be attached to Actions.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Integration API Tokens
+    definition: 'Tokens to use when authenticating with the Integrations API. When being used, the token must be in the Authorization header as
+      a bearer token like "Authorization: Bearer abc123"'
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Integration Events
+    definition: Events that came from an integration configured on the Director. This does not include events that come from local logs for Host
+      CLI Actions.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Job Actions
+    definition: The result of running an action as part of a simulation. Belongs to a Job
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Jobs
+    definition: Jobs are the results of Actions, Evaluations, or Sequences that have been run. They contain JobSteps and JobActions
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Mitre ATT&CK Dashboard
+    definition: ActionProfiles are statistical actions based on a metatag.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Monitor Definitions
+    definition: Sequences or Evaluations that run periodically and generate notifications depending on result
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Monitor groups
+    definition: Groups to contain multiple Monitor Definitions
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Monitors
+    definition: Sequences or Evaluations that run periodically and generate notifications depending on result
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: NTP Servers
+    definition: NTP Servers allow you to provide server addresses for actors to use to synchronize their time
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Notification formats
+    definition: 'Monitors generate notifications of two different formats: email and syslog. Notification formats let you customize the messages
+      sent when a monitor creates a notification.'
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Notification profiles
+    definition: Notification profiles allow you to configure which monitors produce notifications and under what conditions the notification is
+      sent.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Organizations
+    definition: Organizations are the top-level resource that all other resources reside in
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Proxy Rules
+    definition: Proxy Rules specify proxies to use for MSV traffic.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Report Builder
+    definition: A collection of API endpoints to help automate report creation
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Reports
+    definition: Reports are the finished product of system interactions. Behaviors are the possibly-nested umbrella for job actions. Zones are
+      the pseudological encapsulation of areas of influence in the system. SecTech are the types of security technologies implemented by the system.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Security zones
+    definition: Security Zones are regions within the network that contain actors and can be considered as being Internal or External. Each actor
+      must belong to exactly one Security Zone.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Security zone attributes
+    definition: Security Zone attributes are descriptors added to Security Zones. Attributes determine whether a zone's location is internal or
+      external and influence Source and Destination recommendations for Actions.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Settings
+    definition: 'The Settings are used for Director-specific alterations to your organizations installation. Handling Content Backups Creating
+      and using a data backup involves calling a few Setting endpoints in sequence. Visit each endpoint for argument and usage details: | Endpoint
+      | Description | |----------|-------------| | `/settings/create_backup` | Start the backup process. | | `/settings/backup_download` | '
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Sequences and Evaluations
+    definition: Sequences and evaluations can have one or more steps, each containing one or more actions. Each step of a sequence or evaluation
+      can be run between different actors, but all the actions within a single step must run between the same actors. Sequences typically represent
+      a complete network attack and Evaluations are often groups of similar actions.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Topology
+    definition: The topology API endpoints provide information about Actors, Security Zones, and the connections between them.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Users
+    definition: Users are individuals belonging to an Organization. Each user belongs to a UserGroup which determines their privileges.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: User Groups
+    definition: User Groups are collections of Users with similar privileges and that all belong to the same Organization.
+    tags:
+    - Resource Group
+    source: openapi/mandiant-ma-sv-openapi.yml
+  - term: Aggregated Alert Reference
+    definition: Metadata about an aggregated alert that belongs to a parent alert bucket.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AggregatedAlertRef
+  - term: Alert
+    definition: An alert is created for each monitor that has at least one matching condition. The alert includes details and context regarding
+      the (raw) document matched, the topics/labels matched from the monitor, as well as the labels and topics identified within the (raw) document.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Alert
+  - term: Alert Analysis Operation
+    definition: The analysis text for an alert. This can be in markdown format.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertAnalysisOp
+  - term: Alert Audit Record
+    definition: Metadata regarding an operation performed on an alert.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertAuditRecord
+  - term: Alert Audit Records
+    definition: List of alert audit records.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertAuditRecords
+  - term: Bulk Alert Request
+    definition: Request body for bulk alert operations.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertBulk
+  - term: Bulk Alert Apply Operation
+    definition: The changes to apply to alerts meeting the query criteria.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertBulkApplyOp
+  - term: Bulk Alert Operation
+    definition: An alert bulk operation to apply in a bulk request.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/AlertBulkOp
+  - term: Alerts
+    definition: A list of alerts.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Alerts
+  - term: Condition
+    definition: A Condition forms the basis for querying topics and labels in monitors. It can be used to form complex conditions using all/any
+      as well as specifying specific values to match for documents. See the user guide for more details.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Condition
+  - term: Raw Source Document
+    definition: A ingested/indexed raw document including thet topics and labels created from the doc by our Analytics processing.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Doc
+  - term: Doc Match
+    definition: A Doc Match represents the doc query that was matched for a monitor alert.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Doc_match
+  - term: Document Search Response
+    definition: Response body for a document search. If if timed out, the search request can be scoped using date ranges.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/DocSearchResponse
+  - term: Email Recipient
+    definition: An email recipient.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/EmailRecipient
+  - term: Email Recipients
+    definition: A list of email recipients.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/EmailRecipients
+  - term: Email Setting
+    definition: Email notification settings.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/EmailSetting
+  - term: Email Settings
+    definition: List of email settings.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/EmailSettings
+  - term: Entity Location
+    definition: The location of a Topic (entity) identified within a (raw) document
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Entity_location
+  - term: File Attachment
+    definition: Metadata describing a file attachment.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/FileAttachment
+  - term: File Attachments
+    definition: List of file attachments.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/FileAttachments
+  - term: Indicator Attribution
+    definition: Attributions assodicated with an indicator.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/IndicatorAttribution
+  - term: Label
+    definition: A Label identified within a (raw) document.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Label
+  - term: Label Match
+    definition: Indication of a label matching a monitor condition for label topics
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Label_match
+  - term: Labels
+    definition: A list of labels that have been extracted from a document by our analytics processing.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Labels
+  - term: Location
+    definition: Location represents a text location as specified by its start and end index and its matching value.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Location
+  - term: Monitor
+    definition: A monitor defines 1 or more conditions and an optional doc query string to use for matching documents of interest. Matching a
+      document results in the creation of an alert.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Monitor
+  - term: Monitor Backfill Estimate
+    definition: An estimated count of alerts that will be created when backfilling a monitor.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/MonitorBackfillEstimate
+  - term: Monitor Template
+    definition: Monitor templates provide suggested monitor conditions based on top DTM use cases.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/MonitorTemplate
+  - term: Monitor Templates
+    definition: A list of monitor templates for top DTM use cases.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/MonitorTemplates
+  - term: Password Policy
+    definition: Criteria defining a password policy.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/PasswordPolicy
+  - term: Error Response
+    definition: Error response message.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Response-message
+  - term: Topic
+    definition: A topic identified within a (raw) document
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Topic
+  - term: Topic Match
+    definition: A topic match indicates which search and topic was matched for a monitor alert.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Topic_match
+  - term: Topics
+    definition: A list of topics extracted from a document by our analytics processing.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/Topics
+  - term: Verifeid Domain
+    definition: A verified domain proves ownership of domain and is used for authenticating login credential visibility for Compromised Credential
+      alerts.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/VerifiedDomain
+  - term: Verified Domain Operation
+    definition: A verified domain proves ownership of domain and is used for authenticating login credential visibility for Compromised Credential
+      alerts.
+    tags:
+    - Object
+    source: openapi/mandiant-dtm-openapi.yml#/components/schemas/VerifiedDomainOp

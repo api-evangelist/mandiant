@@ -1,0 +1,44 @@
+name: Mandiant rate limits
+generated: '2026-10-20'
+method: searched
+source: https://docs.mandiant.com/home/dtm-api-limits-and-quotas
+note: Digital Threat Monitoring API limits; configurable limits can be raised through the customer's CSM. The ASM limits page (https://docs.mandiant.com/home/asm-api-limits-and-quotas) publishes only a resource quota (Number of collections, 100, Per organization), not a request rate.
+limit_count: 6
+limits:
+- name: All APIs
+  limit_text: 50,000
+  max: 50000
+  window: 24 hours
+  scope: Per user
+  api: Mandiant Digital Threat Monitoring API
+- name: Alert backfill
+  limit_text: '50'
+  max: 50
+  window: 24 hours
+  scope: Per user
+  endpoint: POST and PATCH monitor operations
+  api: Mandiant Digital Threat Monitoring API
+- name: Invalid requests
+  limit_text: '100'
+  max: 100
+  window: 1 hour
+  scope: Per user
+  api: Mandiant Digital Threat Monitoring API
+- name: Bulk alert update
+  limit_text: '10'
+  max: 10
+  window: 1 hour
+  scope: Per user
+  api: Mandiant Digital Threat Monitoring API
+- name: Document Search
+  kind: concurrency
+  limit_text: '5'
+  max: 5
+  scope: Per user
+  api: Mandiant Digital Threat Monitoring API
+- name: List alerts
+  kind: concurrency
+  limit_text: '10'
+  max: 10
+  scope: Per user
+  api: Mandiant Digital Threat Monitoring API

@@ -1,0 +1,858 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Entities API
+  version: 1.0.6
+  description: 'Operations tagged Entities across 2 of this provider''s published API definitions: mandiant-asm-openapi.yml, mandiant-asm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://{{base_url}}
+tags:
+- name: Entities
+paths:
+  /api/v1/search/entities/{search_string}:
+    get:
+      tags:
+      - Entities
+      summary: Search Entities
+      description: 'Search Endpoint for all entity data. If no operator is used, "name" field is searched. This response is limited to 10,000 items. Results are paginated.
+
+
+        Valid Search Keywords (''**search_string'' parameter)**:
+
+
+        - collection:intrigue_123k221
+
+
+        - type:string
+
+
+        - ApiEndpoint, AppEndpoint, AutonomousSystem, AwsEC2Instance, AwsRdsDbInstance, AwsS3Bucket, AzureStorageAccount, AzureVirtualMachine, DnsRecord, Domain, EmailAddress, GcpApiGateway, GcpAppEngineApplication, GcpCloudFunction, GcpCloudSQLInstance, GcpComputeEngineInstance, GcpStorageBucket, GithubAccount, GithubRepository, IpAddress, Nameserver, NetBlock, NetworkService, SslCertificate, UniqueKeyword, UniqueToken, Uri
+
+
+        - name:string
+
+
+        - hidden:false | true
+
+
+        - tag:tagname
+
+
+        - country:us (alpha-2 country coded)
+
+
+        - uid:12345
+
+
+        - last_seen_after:string
+
+
+        - last_scan_count_1 (1-10)
+
+
+        - last_refresh
+
+
+        - configured_scan_count
+
+
+        - YYYY-MM-DD
+
+
+        - last_seen_before:string
+
+
+        - last_scan_count_1 (1-10)
+
+
+        - last_refresh
+
+
+        - configured_scan_count
+
+
+        - YYYY-MM-DD
+
+
+        - first_seen_after:string
+
+
+        - last_scan_count_1 (1-10)
+
+
+        - last_refresh
+
+
+        - configured_scan_count
+
+
+        - YYYY-MM-DD
+
+
+        - scoped:true | false
+
+
+        - http_code:404
+
+
+        - http_auth:true | false
+
+
+        - http_auth_basic:true | false
+
+
+        - http_auth_ntlm:true | false
+
+
+        - http_title:string
+
+
+        - http_forms:true | false
+
+
+        - http_cookie
+
+
+        - technology:jquery
+
+
+        - cloud:true | false
+
+
+        - cloud_provider
+
+
+        - network
+
+
+        - port_tcp
+
+
+        - port_udp
+
+
+        - port_count_lte:1
+
+
+        - port_count_gte:1
+
+
+        - issue_count_lte:1
+
+
+        - issue_count_gte:1
+
+
+        - vuln:cve
+
+
+        - vuln_count_gte:1
+
+
+        - vuln_count_lte:1
+
+
+        - critical_or_high:true | false
+
+
+        - resolves_to:string'
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+        description: 'Optional: Used to control how many results returned per page <default 50, max 1000> '
+        example: '100'
+      - name: page_token
+        in: query
+        schema:
+          type: string
+        description: 'Optional: Used to get the next page of results. Use the value from next_page_token in results. The next_page_token will change with each new page. When using page_token do not use the "page" key. '
+        example: eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJaaXRVdGVIOV9ORUNlY2RnIiwidGFnIjoiN0JWUnk0QjRXalNTN1dCWmMwY2FWdyJ9.dpg0fRevYn8P6TocpJ9DUSxVFurrYXqaXuqGI8CaK2o.NoNoFUbHyAEh6ckk.3hOnO4BKO57sBoTvCCxrK_QJLxFZKRID98b9MklxR1FpZW2dZpNEQHSilyXaWAwC6-qXX5hL6Xr0SNQGyWFNHQp2GFmAzAaBalRpohwB1ADZ6ALj93juPChmaQLjsfTQOEFOnVdFhxx_wo_cfXWqGUn_SIxcm309dHT9-SvbNF7XtDaZ6U4sg3F7NORR8lKTyrCQvf2l4itOw0HAKxePav1ys_tIiTJx4ct-utmIYg6eB8vjVpDflhblQe7_JqlDTbI8JWX4GqL2tqmDvCHcpxOiSPPENzYV2D-C1xoTRCctfaZRh9BERs_cFA.OmkBu4OHPgXcnATiO5FcCw
+      - name: search_string
+        in: path
+        schema:
+          type: string
+        required: true
+        description: Example with multiple keywords. If no string is entered all entities for the project will be returned
+        example: collection:collectionname_a6mz56o first_seen_after:2022-01-01 last_seen_before:last_refresh
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:00:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '4760'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Search completed!
+                result:
+                  search:
+                    search_body:
+                      query:
+                        bool:
+                          must:
+                          - bool:
+                              should:
+                              - match:
+                                  summary.scoped:
+                                    query: 'true'
+                                    operator: AND
+                              minimum_should_match: 1
+                          - range:
+                              first_seen:
+                                gte: '2022-01-01T00:00:00Z'
+                          filter:
+                            bool:
+                              should:
+                              - bool:
+                                  must:
+                                  - match:
+                                      collection: collectionname_a6mz56o
+                                  - range:
+                                      last_seen:
+                                        lte: '2023-01-31T18:59:39Z'
+                      aggs:
+                        collection_bucket:
+                          terms:
+                            field: collection
+                            size: 10
+                        entity_type_bucket:
+                          terms:
+                            field: type.raw
+                            size: 25
+                        scoped_bucket:
+                          terms:
+                            field: scoped
+                            size: 3
+                        issues_severity_1_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.1
+                        issues_severity_2_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.2
+                        issues_severity_3_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.3
+                        issues_severity_4_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.4
+                        issues_severity_5_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.5
+                        country_code_bucket:
+                          terms:
+                            field: summary.geolocation.country_code.raw
+                            size: 10
+                        technolgy_bucket:
+                          terms:
+                            field: summary.technology.cpes.cpe.raw
+                            size: 10
+                      sort:
+                      - last_seen: asc
+                      - _doc
+                    search_string: collection:collectionname_a6mz56o first_seen_after:2022-01-01 last_seen_before:last_refresh
+                    search_type: entities
+                    sort_direction: asc
+                    sort_field: last_seen
+                    group_by_field: null
+                  total_hits: 4323
+                  timed_out: false
+                  more: true
+                  page: 0
+                  page_size: 1
+                  total_pages: 4323
+                  hits:
+                  - id: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+                    dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                    alias_group: null
+                    aliases: null
+                    hidden: false
+                    name: 192.168.1.109
+                    type: Intrigue::Entity::IpAddress
+                    seed: null
+                    first_seen: '2022-10-05T19:27:33Z'
+                    last_seen: '2022-10-05T19:27:33Z'
+                    collection: collectionname_a6mz56o
+                    collection_type: user_collection
+                    collection_naics: null
+                    collection_uuid: f11e71db-d12d-4733-a19e-b8742ed7eb70
+                    organization_uuid: 075811c8-fe6f-412f-a071-34a7342c16a3
+                    tags: []
+                    issues: []
+                    exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                    summary:
+                      scoped: true
+                      issues:
+                        current_by_severity: {}
+                        current_with_cve: 0
+                        all_time_by_severity: {}
+                        current_count: 0
+                        all_time_count: 0
+                        critical_or_high: false
+                      task_results:
+                      - search_shodan
+                      - enrich/uri
+                      geolocation:
+                        city: Macenta
+                        country_code: GN
+                        country_name: null
+                        latitude: 8.54829
+                        longitude: -9.48282
+                        asn: null
+                      ports:
+                        count: 1
+                        tcp:
+                        - 80
+                        udp: []
+                      resolutions: []
+                      network:
+                        name: Namecheap, Inc.
+                        asn: 22612
+                        route: null
+                        type: null
+                      technology:
+                        cloud: false
+                        cloud_providers: []
+                        cpes: []
+                        technologies: []
+                        technology_labels: []
+                  aggregations:
+                    scoped_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets: []
+                    issues_severity_1_bucket:
+                      value: 1114
+                    collection_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                      - key: collectionname_a6mz56o
+                        doc_count: 4323
+                    technolgy_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 2971
+                      buckets:
+                      - key: 'cpe:2.3:s:cloudflare:cloudflare::'
+                        doc_count: 615
+                      - key: 'cpe:2.3:a:php:php::'
+                        doc_count: 185
+                      - key: 'cpe:2.3:a:jquery:jquery:1.10.2:'
+                        doc_count: 145
+                      - key: 'cpe:2.3:a:apache:http_server::'
+                        doc_count: 140
+                      - key: 'cpe:2.3:a:php:php:7.1.33:'
+                        doc_count: 136
+                      - key: 'cpe:2.3:a:apache:http_server:2.4.38:'
+                        doc_count: 129
+                      - key: 'cpe:2.3:s:the_open_graph_protocol:the_open_graph_protocol::'
+                        doc_count: 121
+                      - key: 'cpe:2.3:a:openbsd:openssh::'
+                        doc_count: 108
+                      - key: 'cpe:2.3:a:ssh:ssh:2.0:'
+                        doc_count: 108
+                      - key: 'cpe:2.3:a:google:tag_manager::'
+                        doc_count: 106
+                    entity_type_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                      - key: Intrigue::Entity::NetworkService
+                        doc_count: 2275
+                      - key: Intrigue::Entity::Uri
+                        doc_count: 743
+                      - key: Intrigue::Entity::SslCertificate
+                        doc_count: 582
+                      - key: Intrigue::Entity::IpAddress
+                        doc_count: 531
+                      - key: Intrigue::Entity::DnsRecord
+                        doc_count: 118
+                      - key: Intrigue::Entity::UniqueToken
+                        doc_count: 41
+                      - key: Intrigue::Entity::ApiEndpoint
+                        doc_count: 22
+                      - key: Intrigue::Entity::AwsS3Bucket
+                        doc_count: 7
+                      - key: Intrigue::Entity::PreCertificate
+                        doc_count: 4
+                    country_code_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                      - key: US
+                        doc_count: 3141
+                      - key: CA
+                        doc_count: 329
+                      - key: BR
+                        doc_count: 9
+                      - key: DE
+                        doc_count: 8
+                      - key: HK
+                        doc_count: 8
+                      - key: GN
+                        doc_count: 2
+                      - key: VG
+                        doc_count: 2
+                    issues_severity_5_bucket:
+                      value: 371
+                    issues_severity_4_bucket:
+                      value: 70
+                    issues_severity_3_bucket:
+                      value: 239
+                    issues_severity_2_bucket:
+                      value: 59
+                  next_page_token: eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJDMmhPQlRweE5jT2psUTNlIiwidGFnIjoiTGpqaFhvQ1F0RWZjXzdJTkt4ZG5XZyJ9.MmWAi13CT942tNOv07i7l40wt9wm4XKt9PZ10x34cu0.0GDiGDyp6Snff9mk.MVB3X0pjYjkN8-9-glzlVQl5VjsAMkxtkFN_A8ZELCUGnpSg-pUEfMntNZ4iglMLk7amm4Bh7saZ2QGzNRLCmGcwIxlmSqTWqB1UrSRRkdMpHec5O1EdAyh41SK4B2Vh8DnTnBwLQFYdExi82oNobIX5tWdJmVKdsAFFm7F_0gW1J2TR49HreXyXxv5UtCRvFf3FlqvbPzWEO6cyQ8eMUuNEGvLi_F5YncAfxwsjuNY-FHk-TUl0aUOEj3mD4ZnaokFI4HK6SB95SqJ7WCFSf3iSulVSMihnuJ7e0V_YCS9Lrk8n6DSOHdPelQ.-Z1v3MQn335tNg7FcflqPA
+      operationId: getApiV1SearchEntitiesBySearchString
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/entities/{entity_uid}:
+    get:
+      tags:
+      - Entities
+      summary: Get Detail
+      description: Obtains an individual entity's searchable details
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: entity_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 'Required: id from {{base_url}}/api/v1/search/entities/'
+        example: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:08:18 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '6134'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: successfully returned entity
+                result:
+                  uuid: 89fcba93-ddc9-44a6-a78c-615db734aa23
+                  dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                  collection_name: collectionname_a6mz56o
+                  alias_group: null
+                  aliases: null
+                  allow_list: true
+                  ancestors:
+                  - name: 192.168.1.109
+                    type: Intrigue::Entity::IpAddress
+                  category: null
+                  collection_naics: null
+                  confidence: null
+                  deleted: false
+                  deny_list: false
+                  details:
+                    name: 192.168.1.109
+                    ports:
+                    - number: 80
+                      protocol: tcp
+                    version: 4
+                    net_name: ''
+                    whitelist: true
+                    geolocation:
+                      asn:
+                        asn: 22612
+                        isp: Namecheap
+                        name: Namecheap, Inc.
+                        organization: Web-hosting.com
+                        connection_type: Corporate
+                      city: Macenta
+                      postal: null
+                      country: Guinea
+                      latitude: 8.53829
+                      continent: Africa
+                      longitude: -9.47282
+                      time_zone: Africa/Conakry
+                      country_code: GN
+                      continent_code: AF
+                    network.asn: AS22612
+                    network.rir: ARIN
+                    resolutions: []
+                    cloud_hosted: false
+                    network.name: ''
+                    network.block: 192.168.1.0/21
+                    cloud_providers: []
+                    whois_full_text: "\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\nNetRange:       192.168.1.0 - 192.168.1.255\nCIDR:           192.168.1.0/21\nNetName:        NCNET-3\nNetHandle:      NET-192-64-112-0-1\nParent:         NET192 (NET-192-0-0-0-0)\nNetType:        Direct Allocation\nOriginAS:       AS16626, AS174, AS3356, AS4323, AS22612, AS32421\nOrganization:   Namecheap, Inc. (NAMEC-4)\nRegDate:        2012-12-17\nUpdated:        2015-03-24\nComment:        http://namecheap.com\nComment:        for any abuse please use: abuse@namecheap.com\nRef:            https://rdap.arin.net/registry/ip/192.168.1.0\n\n\nOrgName:        Namecheap, Inc.\nOrgId:          NAMEC-4\nAddress:        11400 W. Olympic Blvd. Suite 200\nCity:           Los Angeles\nStateProv:      CA\nPostalCode:     90064\nCountry:        US\nRegDate:        2011-01-28\nUpdated:        2017-01-28\nRef:            https://rdap.arin.net/registry/entity/NAMEC-4\n\nReferralServer:  rwhois://whois.namecheaphosting.com:4321\n\nOrgTechHandle: TECHT4-ARIN\nOrgTechName:   Tech team\nOrgTechPhone:  +1-661-310-2107 \nOrgTechEmail:  tech@namecheaphosting.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/TECHT4-ARIN\n\nOrgTechHandle: EFIME-ARIN\nOrgTechName:   Efimenko, Igor \nOrgTechPhone:  +1-323-375-2822 \nOrgTechEmail:  igor.e@namecheap.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/EFIME-ARIN\n\nOrgAbuseHandle: ABUSE2885-ARIN\nOrgAbuseName:   Abuse team\nOrgAbusePhone:  +1-323-375-2822 \nOrgAbuseEmail:  abuse@namecheaphosting.com\nOrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2885-ARIN\n\n\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\n%rwhois V-1.0,V-1.5:00090h:00 billing.web-hosting.com (Ubersmith RWhois Server V-4.5.5)\nautharea=192.168.1.0/24\nxautharea=192.168.1.0/24\nnetwork:Class-Name:network\nnetwork:Auth-Area:192.168.1.0/24\nnetwork:ID:NET-79088.192.168.1.0/24\nnetwork:Network-Name:anycast-edge-fwd-range\nnetwork:IP-Network:192.168.1.0/24\nnetwork:IP-Network-Block:192.168.1.0 - 192.168.1255\nnetwork:Org-Name:Web-hosting.com\nnetwork:Street-Address:\nnetwork:City:Atlanta\nnetwork:State:GA\nnetwork:Postal-Code:30303/3030\nnetwork:Country-Code:US\nnetwork:Tech-Contact:MAINT-79088.192.168.1.0/24\nnetwork:Created:20190523134201000\nnetwork:Updated:20190523163005000\nnetwork:Updated-By:net-admin@namecheap.com\ncontact:POC-Name:Network team\ncontact:POC-Email:net-admin@namecheap.com\ncontact:POC-Phone:\ncontact:Tech-Name:Network team\ncontact:Tech-Email:net-admin@namecheap.com\ncontact:Tech-Phone:\ncontact:Abuse-Name:Abuse team\ncontact:Abuse-Email:abuse@namecheaphosting.com\n%ok\n"
+                    network.country_code: US
+                    exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                    network.allocation_date: '2012-12-17'
+                  details_file: data/v4/collectionname_a6mz56o/2022_10_05/collectionname_a6mz56o/entities/1b3e614b751e35dfab02737d474e133e862ef80c.json
+                  description: null
+                  first_seen: '2022-10-05T19:27:33.000Z'
+                  hidden: false
+                  last_seen: '2022-10-05T19:27:33.000Z'
+                  name: 192.168.14109
+                  scoped: true
+                  scoped_reason: allow_list_override
+                  seed: null
+                  source: null
+                  status: null
+                  task_results:
+                  - name: search_shodan_on_192.168.1.109
+                    task: search_shodan
+                    depth: 4
+                    entity_name: 192.168.1.109
+                    entity_type: Intrigue::Entity::IpAddress
+                  - name: enrich/uri_on_http://192.168.1.109:80
+                    task: enrich/uri
+                    depth: 4
+                    entity_name: http://192.168.1.109:80
+                    entity_type: Intrigue::Entity::Uri
+                  type: Intrigue::Entity::IpAddress
+                  uid: 1fb70436b2fa66a62ee1b1b989eaddb871a1f573287fd5128bf509a9f9b0140e
+                  created_at: '2022-10-05T19:28:27.973Z'
+                  updated_at: '2022-10-05T19:28:27.978Z'
+                  collection_id: 134840
+                  elasticsearch_mappings_hash: null
+                  collection: collectionname_a6mz56o
+                  collection_uuid: f12c71db-d34d-4733-a19e-b8742ed7eb70
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  collection_type: user_collection
+                  fingerprint: []
+                  summary:
+                    scoped: true
+                    issues:
+                      current_with_cve: 0
+                      current_by_severity: {}
+                      all_time_by_severity: {}
+                      current_count: 0
+                      all_time_count: 0
+                      critical_or_high: false
+                    task_results:
+                    - search_shodan
+                    - enrich/uri
+                    geolocation:
+                      city: Macenta
+                      country_code: GN
+                      country_name: null
+                      latitude: 8.53829
+                      longitude: -9.47282
+                      asn: null
+                    ports:
+                      tcp:
+                      - 80
+                      udp: []
+                      count: 1
+                    resolutions: []
+                    network:
+                      name: Namecheap, Inc.
+                      asn: 22612
+                      route: null
+                      type: null
+                    technology:
+                      cloud: false
+                      cloud_providers: []
+                      cpes: []
+                      technologies: []
+                      technology_labels: []
+                  tags: []
+      operationId: getApiV1EntitiesByEntityUid
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/entities/{entity_uid}/raw:
+    get:
+      tags:
+      - Entities
+      summary: Get Full Detail
+      description: Obtains an individual entity's full details
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: entity_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: 'Required: id from {{base_url}}/api/v1/search/entities/'
+        example: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:13:23 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '6092'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: successfully returned entity
+                result:
+                  uuid: 89fcba93-ddc9-44a6-a78c-615db734aa23
+                  dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                  collection_name: collectionname_a6mz56o
+                  alias_group: 209583
+                  aliases:
+                  - 192.168.1.109
+                  allow_list: true
+                  ancestors:
+                  - type: Intrigue::Entity::IpAddress
+                    name: 192.168.1.109
+                  category: null
+                  collection_naics: null
+                  confidence: null
+                  deleted: false
+                  deny_list: false
+                  details:
+                    name: 192.168.1.109
+                    ports:
+                    - number: 80
+                      protocol: tcp
+                    version: 4
+                    net_name: ''
+                    whitelist: true
+                    geolocation:
+                      asn:
+                        asn: 22612
+                        isp: Namecheap
+                        name: Namecheap, Inc.
+                        organization: Web-hosting.com
+                        connection_type: Corporate
+                      city: Macenta
+                      postal: null
+                      country: Guinea
+                      latitude: 8.53829
+                      continent: Africa
+                      longitude: -9.47282
+                      time_zone: Africa/Conakry
+                      country_code: GN
+                      continent_code: AF
+                    network.asn: AS22612
+                    network.rir: ARIN
+                    resolutions: []
+                    cloud_hosted: false
+                    network.name: ''
+                    network.block: 192.64.112.0/21
+                    cloud_providers: []
+                    hidden_original: 192.168.1.109
+                    whois_full_text: "\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\nNetRange:       192.64.112.0 - 192.168.1.255\nCIDR:           192.64.112.0/21\nNetName:        NCNET-3\nNetHandle:      NET-192-64-112-0-1\nParent:         NET192 (NET-192-0-0-0-0)\nNetType:        Direct Allocation\nOriginAS:       AS16626, AS174, AS3356, AS4323, AS22612, AS32421\nOrganization:   Namecheap, Inc. (NAMEC-4)\nRegDate:        2012-12-17\nUpdated:        2015-03-24\nComment:        http://namecheap.com\nComment:        for any abuse please use: abuse@namecheap.com\nRef:            https://rdap.arin.net/registry/ip/192.64.112.0\n\n\nOrgName:        Namecheap, Inc.\nOrgId:          NAMEC-4\nAddress:        11400 W. Olympic Blvd. Suite 200\nCity:           Los Angeles\nStateProv:      CA\nPostalCode:     90064\nCountry:        US\nRegDate:        2011-01-28\nUpdated:        2017-01-28\nRef:            https://rdap.arin.net/registry/entity/NAMEC-4\n\nReferralServer:  rwhois://whois.namecheaphosting.com:4321\n\nOrgTechHandle: TECHT4-ARIN\nOrgTechName:   Tech team\nOrgTechPhone:  +1-661-310-2107 \nOrgTechEmail:  tech@namecheaphosting.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/TECHT4-ARIN\n\nOrgTechHandle: EFIME-ARIN\nOrgTechName:   Efimenko, Igor \nOrgTechPhone:  +1-323-375-2822 \nOrgTechEmail:  igor.e@namecheap.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/EFIME-ARIN\n\nOrgAbuseHandle: ABUSE2885-ARIN\nOrgAbuseName:   Abuse team\nOrgAbusePhone:  +1-323-375-2822 \nOrgAbuseEmail:  abuse@namecheaphosting.com\nOrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2885-ARIN\n\n\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\n%rwhois V-1.0,V-1.5:00090h:00 billing.web-hosting.com (Ubersmith RWhois Server V-4.5.5)\nautharea=192.168.1.0/24\nxautharea=192.168.1.0/24\nnetwork:Class-Name:network\nnetwork:Auth-Area:192.168.1.0/24\nnetwork:ID:NET-79088.192.168.1.0/24\nnetwork:Network-Name:anycast-edge-fwd-range\nnetwork:IP-Network:192.168.1.0/24\nnetwork:IP-Network-Block:192.168.1.0 - 192.168.1.255\nnetwork:Org-Name:Web-hosting.com\nnetwork:Street-Address:\nnetwork:City:Atlanta\nnetwork:State:GA\nnetwork:Postal-Code:30303/3030\nnetwork:Country-Code:US\nnetwork:Tech-Contact:MAINT-79088.192.168.1.0/24\nnetwork:Created:20190523134201000\nnetwork:Updated:20190523163005000\nnetwork:Updated-By:net-admin@namecheap.com\ncontact:POC-Name:Network team\ncontact:POC-Email:net-admin@namecheap.com\ncontact:POC-Phone:\ncontact:Tech-Name:Network team\ncontact:Tech-Email:net-admin@namecheap.com\ncontact:Tech-Phone:\ncontact:Abuse-Name:Abuse team\ncontact:Abuse-Email:abuse@namecheaphosting.com\n%ok\n"
+                    network.country_code: US
+                    extended_path_to_seed: []
+                    exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                    network.allocation_date: '2012-12-17'
+                  details_file: data/v4/collectionname_a6mz56o/2022_10_05/collectionname_a6mz56o/entities/1b3e614b751e35dfab02737d474e133e862ef80c.json
+                  description: null
+                  first_seen: '2022-10-05T19:27:33.000Z'
+                  hidden: false
+                  last_seen: '2022-10-05T19:27:33.000Z'
+                  name: 192.168.1.109
+                  scoped: true
+                  scoped_reason: allow_list_override
+                  seed: true
+                  source: null
+                  status: null
+                  task_results: []
+                  type: Intrigue::Entity::IpAddress
+                  uid: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+                  created_at: '2022-10-05T19:28:27.973Z'
+                  updated_at: '2022-10-05T19:28:27.978Z'
+                  collection_id: 134840
+                  elasticsearch_mappings_hash: null
+                  collection: collectionname_a6mz56o
+                  collection_uuid: f12c71db-d34d-4733-a19e-b8742ed7eb70
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  collection_type: user_collection
+                  fingerprint: []
+                  summary:
+                    scoped: true
+                    issues:
+                      current_with_cve: 0
+                      current_by_severity: {}
+                      all_time_by_severity: {}
+                      current_count: 0
+                      all_time_count: 0
+                      critical_or_high: false
+                    task_results:
+                    - search_shodan
+                    - enrich/uri
+                    geolocation:
+                      city: Macenta
+                      country_code: GN
+                      country_name: null
+                      latitude: 8.53829
+                      longitude: -9.47282
+                      asn: null
+                    ports:
+                      tcp:
+                      - 80
+                      udp: []
+                      count: 1
+                    resolutions: []
+                    network:
+                      name: Namecheap, Inc.
+                      asn: 22612
+                      route: null
+                      type: null
+                    technology:
+                      cloud: false
+                      cloud_providers: []
+                      cpes: []
+                      technologies: []
+                      technology_labels: []
+                  tags: []
+                  id: 243399
+                  scoped_at: 2022-10-05 19:10:28 +0000
+                  detail_string: ' | Macenta GN |  Open Ports: 1 |  PTR: '
+                  enrichment_tasks:
+                  - enrich/ip_address
+                  generated_at: '2022-10-05T19:27:36Z'
+      operationId: getApiV1EntitiesByEntityUidRaw
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+x-refined-from:
+- mandiant-asm-openapi.yml
+- mandiant-asm-openapi.yml

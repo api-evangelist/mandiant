@@ -18,6 +18,7 @@ pagination:
     Limits and Quotas".
   docs: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
 idempotency:
+  coverage: none
   supported: unknown
   detail: >-
     No documented idempotency-key mechanism was found on the public
@@ -38,3 +39,9 @@ notes: >-
   Mandiant publishes no public OpenAPI document, so these conventions are
   captured from the public developer documentation rather than derived from a
   spec.
+reversibility:
+  coverage: none
+  detail: >-
+    None of the four published OpenAPI contracts (DTM, ASM, MA-SV, MSV) nor the docs read on
+    2026-10-20 state a reversal window for write operations; delete/update operations exist
+    but no undo or restore window is documented. Not asserted.

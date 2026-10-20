@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Topology API
+  version: '1.0'
+  description: 'Operations tagged Topology across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Topology
+  description: The topology API endpoints provide information about Actors, Security Zones, and the connections between them.
+paths:
+  /topology/nodes:
+    get:
+      summary: List pending and active actors
+      tags:
+      - Topology
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                pending: []
+                registered:
+                - id: 152
+                  mgmt_ip: 21.66.225.144
+                  desc: example actor
+                  parameters: null
+                  created_at: '2020-02-10T15:20:25.591Z'
+                  updated_at: '2020-02-10T15:20:25.591Z'
+                  organization_id: 84
+                  name: InternetActor
+                  netmask: null
+                  gateway: null
+                  comm_mode: Pull
+                  pull_interval: 10
+                  security_zone_id: 247
+                  dhcp_enabled: null
+                  last_update: null
+                  disabled: false
+                  sim_ip: 96.122.178.150
+                  location: Local
+                  node_version: 1.2.3.4a1
+                  last_comms: null
+                  monitor_ip: ''
+                  dns_server_id: null
+                  time_sync_id: null
+                  updating: false
+                  keepalive: false
+                  os_base: ubuntu
+                  os_full: null
+                  os_architecture: null
+                  processor: null
+                  node_type: network
+                  sandbox_node_id: null
+                  code_type: null
+                  packages: null
+                  hostname: win10x64
+                  username: testuser
+                  os_packages: null
+                  os_packages_update: null
+                  python_packages: null
+                  python_packages_update: null
+                  remote_vnc_address: null
+                  pt_video_driver: vga
+                  pt_memory_size: '2'
+                  proxy_node_id: null
+                  ssh_status: null
+                  ssh_authorized_keys: null
+                  requires_sec_update: false
+                  ssh_password_enabled: null
+                  pt_image_name: unknown
+                  pt_boot_type: unknown
+                  pt_selected_os: unknown
+                  pt_cpu_cores: '1'
+                  pt_tickpolicy: delay
+                  available_interfaces: null
+                  fq_hostname: null
+                  uptime: default
+                  captive_ioc_enabled: false
+                  bulk_token_id: null
+                  boottime: null
+                  verodin_controlled: false
+                  user_tags: []
+                - id: 153
+                  mgmt_ip: 192.16.22.56
+                  desc: another example actor
+                  parameters: null
+                  created_at: '2020-02-10T15:20:25.636Z'
+                  updated_at: '2020-02-10T15:20:25.636Z'
+                  organization_id: 84
+                  name: DesktopActor
+                  netmask: null
+                  gateway: null
+                  comm_mode: Pull
+                  pull_interval: 10
+                  security_zone_id: 249
+                  dhcp_enabled: null
+                  last_update: null
+                  disabled: false
+                  sim_ip: 227.137.244.43
+                  location: Local
+                  node_version: 1.2.3.4a1
+                  last_comms: null
+                  monitor_ip: ''
+                  dns_server_id: null
+                  time_sync_id: null
+                  updating: false
+                  keepalive: false
+                  os_base: ubuntu
+                  os_full: null
+                  os_architecture: null
+                  processor: null
+                  node_type: network
+                  sandbox_node_id: null
+                  code_type: null
+                  packages: null
+                  hostname: win10x64
+                  username: testuser
+                  os_packages: null
+                  os_packages_update: null
+                  python_packages: null
+                  python_packages_update: null
+                  remote_vnc_address: null
+                  pt_video_driver: vga
+                  pt_memory_size: '2'
+                  proxy_node_id: null
+                  ssh_status: null
+                  ssh_authorized_keys: null
+                  requires_sec_update: false
+                  ssh_password_enabled: null
+                  pt_image_name: unknown
+                  pt_boot_type: unknown
+                  pt_selected_os: unknown
+                  pt_cpu_cores: '1'
+                  pt_tickpolicy: delay
+                  available_interfaces: null
+                  fq_hostname: null
+                  uptime: default
+                  captive_ioc_enabled: false
+                  bulk_token_id: null
+                  boottime: null
+                  verodin_controlled: false
+                  user_tags: []
+      operationId: getTopologyNodes
+      x-operation-id-source: derived
+  /topology/nodes/{id}:
+    get:
+      summary: Show an actor
+      tags:
+      - Topology
+      parameters:
+      - name: id
+        in: path
+        description: The unique ID of the node.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 157
+                mgmt_ip: 116.191.171.74
+                desc: test description
+                parameters: null
+                created_at: '2020-02-10T15:20:38.633Z'
+                updated_at: '2020-02-10T15:20:38.633Z'
+                organization_id: 85
+                name: test-actor
+                netmask: null
+                gateway: null
+                comm_mode: Pull
+                pull_interval: 10
+                security_zone_id: 257
+                dhcp_enabled: null
+                last_update: null
+                disabled: false
+                sim_ip: ''
+                location: AWS
+                node_version: 1.2.3.4a1
+                last_comms: null
+                monitor_ip: ''
+                dns_server_id: null
+                time_sync_id: null
+                updating: false
+                keepalive: false
+                os_base: ubuntu
+                os_full: null
+                os_architecture: null
+                processor: null
+                node_type: network
+                sandbox_node_id: null
+                code_type: null
+                packages: null
+                hostname: win10x64
+                username: testuser
+                os_packages: null
+                os_packages_update: null
+                python_packages: null
+                python_packages_update: null
+                remote_vnc_address: null
+                pt_video_driver: vga
+                pt_memory_size: '2'
+                proxy_node_id: null
+                ssh_status: null
+                ssh_authorized_keys: null
+                requires_sec_update: false
+                ssh_password_enabled: null
+                pt_image_name: unknown
+                pt_boot_type: unknown
+                pt_selected_os: unknown
+                pt_cpu_cores: '1'
+                pt_tickpolicy: delay
+                available_interfaces: null
+                fq_hostname: null
+                uptime: default
+                captive_ioc_enabled: false
+                bulk_token_id: null
+                boottime: null
+                verodin_controlled: false
+                user_tags: []
+      operationId: getTopologyNodesById
+      x-operation-id-source: derived
+  /topology/nodes/{id}/theater_restart:
+    put:
+      summary: Restart an individual Protected Theater virtual domain
+      description: A 302 response indicates that the comamnd to restart the virtual domain was successfully sent to the Protected Theater.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: image
+        in: query
+        required: true
+        schema:
+          type: integer
+          enum:
+          - windows
+          - virtual
+        description: 'The virtual domain to restart. The ''virtual'' option will restart the inetsim domain.
+
+          '
+      - name: command
+        in: query
+        required: false
+        schema:
+          type: integer
+          enum:
+          - start
+          - restart
+          default: restart
+        description: 'The command used to start, or restart the virtual domain.
+
+          '
+      tags:
+      - Topology
+      responses:
+        '302':
+          description: Found
+          content:
+            text/html:
+              example: <html><body>You are being <a href="https://director/topology/nodes/1/image_status">redirected</a>.</body></html>
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                status: '404'
+                error: Not Found
+      operationId: putTopologyNodesByIdTheaterRestart
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

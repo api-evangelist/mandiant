@@ -1,0 +1,210 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Search API
+  version: '1.0'
+  description: 'Operations tagged Search across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Search
+paths:
+  /search:
+    post:
+      summary: List Job Actions and related data from parameters
+      description: Users can access this endpoint to request a list of Job Actions (and other related information) from a set of query parameters.
+      tags:
+      - Search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/search'
+            example:
+              operator: or
+              conditions:
+              - conditions:
+                - match_object: action
+                  match_field: tags
+                  operator: in
+                  value:
+                  - T1063
+                operator: and
+              include:
+                job_actions:
+                - blocking_technologies
+                - detecting_technologies
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                job_actions:
+                - id: 5006
+                  status: ran
+                  began_at: '2020-03-22T14:02:05.878Z'
+                  ended_at: '2020-03-22T14:02:08.521Z'
+                  blocked: false
+                  detected: false
+                  alerted: false
+                  passed: false
+                  action_id: 395
+                  blocking_technologies: []
+                  detecting_technologies: []
+                - id: 5013
+                  status: ran
+                  began_at: '2020-03-22T14:03:29.146Z'
+                  ended_at: '2020-03-22T14:03:32.048Z'
+                  blocked: false
+                  detected: false
+                  alerted: false
+                  passed: false
+                  action_id: 1228
+                  blocking_technologies: []
+                  detecting_technologies: []
+      operationId: postSearch
+      x-operation-id-source: derived
+components:
+  schemas:
+    tuple:
+      type: object
+      properties:
+        operator:
+          type: string
+          enum:
+          - in
+          - not in
+          - and
+          - or
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/tuple'
+        match_object:
+          type: string
+          enum:
+          - action
+          - job
+          - evaluation
+          - sequence
+          - monitor
+          - threat_actor
+          - source_actor
+          - destination_actor
+          - actor
+          - source_zone
+          - destination_zone
+          - zone
+          - blocking_security_technology
+          - detecting_security_technology
+          description: "# \nThis is the object that the query should be evaluated upon for this conditional\n"
+        match_field:
+          type: string
+          enum:
+          - job
+          - tags
+          - id
+          - attack_tactic
+          - nist_800_53_control_id
+          - controls
+          - results
+          - action_type
+          - nist_800_53_control_family_id
+          - nist_800_53_priority
+          description: "#\nThis is the field on the object the user is querying about in this conditional.  \nAll field usage is predicated on that field being available on the match object in the conditional.\n| match_object | Permitted match_field entries |\n|--------------|-------------------------------|\n| `action` | `tags` <br/> `attack_tactic` <br/> `controls` <br/> `nist_800_53_control_id` <br/> `results` <br/> `action_type` <br/> `nist_800_53_control_family_id` <br/> `nist_800_53_priority` |\n| `evaluation` <br/> `sequence` | `tags` |\n| `monitor` <br/> `threat_actor` <br/> `source_zone` <br/> `destination_zone` <br/> `zone` <br/> `blocking_security_technology` <br/> `detecting_security_technology` | `id` |\n| `job` <br/> `source_actor` <br/> `destination_actor` <br/> `actor` | `id` <br/> `tags` |\n"
+        value:
+          type: string
+          description: '#
+
+            This is a freeform field used to compare to the match object/match field in the user''s conditional.
+
+            Some of the values in this parameter are dependent on the match_object/match_field tuple query.
+
+            - If the user queries on match_object `action` and match_field `results`, the value should be one of `prevented`, `missed`, `detected`, `alerted`, or `errored`.
+
+            - On the other hand, if the user queries on match_object `job` and match_field `id`, then the value parameter would be the string representation of any numerical id ("75559", for example)
+
+            '
+    time:
+      type: object
+      properties:
+        start:
+          type: string
+        end:
+          type: string
+    modifiers:
+      type: array
+      description: 'If present, this signifies that the search results should reflect a different set of information from normal implementation.
+
+
+        For example, if given the string `last_results`, only the Job Action with the most recent end_time per Action will be returned in the response.
+
+        '
+      items:
+        type: string
+        enum:
+        - last_results
+    include:
+      type: object
+      properties:
+        job_actions:
+          type: array
+          items:
+            type: string
+            enum:
+            - actors
+            - emails
+            - event_count
+            - job_id
+            - blocking_technologies
+            - detecting_technologies
+            - unix_ended_at
+            - unix_began_at
+        actions:
+          type: array
+          items:
+            type: string
+            enum:
+            - name
+            - description
+            - vid
+            - dimensions.stage_of_attack
+            - dimensions.attacker_behavior
+            - dimensions.os_platform
+            - attack_tactic
+            - files
+            - tags
+            - controls
+            - mitre_mitigations
+            - nist_800_53
+            - host_cli_commands
+        security_technologies:
+          type: array
+          items:
+            type: string
+            enum:
+            - job_actions
+            - icon
+    search:
+      type: object
+      required:
+      - operator
+      properties:
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/tuple'
+        time:
+          $ref: '#/components/schemas/time'
+        include:
+          $ref: '#/components/schemas/include'
+        modifiers:
+          $ref: '#/components/schemas/modifiers'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

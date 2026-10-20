@@ -1,0 +1,224 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Notification formats API
+  version: '1.0'
+  description: 'Operations tagged Notification formats across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Notification formats
+  description: 'Monitors generate notifications of two different formats: email and syslog. Notification formats let you customize the messages sent when a monitor creates a notification.'
+paths:
+  /alert_formats:
+    get:
+      summary: List notification formats
+      tags:
+      - Notification formats
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 14
+                organization_id: 5
+                name: Additional example
+                alert_type: email
+                from_address: test@test.com
+                subject: test subject
+                message: Notification format message
+                created_at: '2020-02-10T15:10:44.768Z'
+                updated_at: '2020-02-10T15:10:44.768Z'
+                syslog_facility: null
+                syslog_severity: null
+                disabled: false
+              - id: 13
+                organization_id: 5
+                name: testname
+                alert_type: email
+                from_address: test@test.com
+                subject: test subject
+                message: test message
+                created_at: '2020-02-10T15:10:44.766Z'
+                updated_at: '2020-02-10T15:10:44.766Z'
+                syslog_facility: null
+                syslog_severity: null
+                disabled: false
+              - id: 12
+                organization_id: 5
+                name: AEDA Notification With Missing Events
+                alert_type: email
+                from_address: placeholder@example.com
+                subject: AEDA Notification With Missing Events
+                message: 'Monitor Name: %monitor_def_name%
+
+                  Monitor ID: %monitor_def_id%
+
+                  Monitor State: %monitor_state%
+
+                  Job: %job_link%
+
+                  Job Action Timestamp: %action_timestamp%
+
+
+                  Expected Blocked: %expected_blocked%
+
+                  Monitor Blocked: %monitor_blocked%
+
+                  Expected Detected: %expected_detected%
+
+                  Monitor Detected: %monitor_detected%
+
+
+                  Missed Expected Events:
+
+                  %missed_expected_events%
+
+                  '
+                created_at: '2020-02-10T15:10:42.238Z'
+                updated_at: '2020-02-10T15:10:42.238Z'
+                syslog_facility: null
+                syslog_severity: null
+                disabled: false
+              - id: 11
+                organization_id: 5
+                name: Common Event Format
+                alert_type: syslog
+                from_address: null
+                subject: null
+                message: '%monitor_result_state_change_timestamp% director CEF:0|Verodin|planner|4.2.0.0a11|%monitor_def_id%|%monitor_def_name%|1|'
+                created_at: '2020-02-10T15:10:42.233Z'
+                updated_at: '2020-02-10T15:10:42.233Z'
+                syslog_facility: null
+                syslog_severity: info
+                disabled: false
+      operationId: getAlertFormats
+      x-operation-id-source: derived
+    post:
+      summary: Create a notification format
+      tags:
+      - Notification formats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/alert_format_wrapped'
+            example:
+              alert_format:
+                name: Example Notification Format
+                from_address: earlene_hermiston@cole.info
+                subject: Monitor %monitor_def_name%
+                message: 'monitor: %monitor_def_name%, failed: %monitor_result_failed%, vid: %sequence_vid%'
+                alert_type: email
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 7
+                organization_id: 3
+                name: Example Notification Format
+                alert_type: email
+                from_address: earlene_hermiston@cole.info
+                subject: Monitor %monitor_def_name%
+                message: 'monitor: %monitor_def_name%, failed: %monitor_result_failed%, vid: %sequence_vid%'
+                created_at: '2020-02-10T15:10:19.064Z'
+                updated_at: '2020-02-10T15:10:19.064Z'
+                syslog_facility: null
+                syslog_severity: null
+                disabled: false
+      operationId: postAlertFormats
+      x-operation-id-source: derived
+  /alert_formats/{id}:
+    get:
+      summary: Show a notification format
+      tags:
+      - Notification formats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 17
+                organization_id: 6
+                name: testname
+                alert_type: email
+                from_address: test@test.com
+                subject: test subject
+                message: test message
+                created_at: '2020-02-10T15:10:57.502Z'
+                updated_at: '2020-02-10T15:10:57.502Z'
+                syslog_facility: null
+                syslog_severity: null
+                disabled: false
+      operationId: getAlertFormatsById
+      x-operation-id-source: derived
+    delete:
+      summary: Destroy a notification format
+      tags:
+      - Notification formats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                result: success
+      operationId: deleteAlertFormatsById
+      x-operation-id-source: derived
+components:
+  schemas:
+    alert_format_wrapped:
+      type: object
+      properties:
+        alert_format:
+          $ref: '#/components/schemas/alert_format'
+    alert_format:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+          description: "Message for the content of the notification.  Must be a string.  You can include placeholders in the message to be replaced with the attributes of the individual monitor.  These are the available placeholders:\n\n  %monitor_def_id%\n  %monitor_def_name%\n  %monitor_def_desc%\n  %monitor_result_id%\n  %monitor_result_state_change_timestamp%\n  %monitor_result_failed%\n  %sequence_id%\n  %sequence_vid%\n"
+        alert_type:
+          type: string
+          enum:
+          - email
+          - syslog
+          description: String indicating type of notification
+        syslog_severity:
+          type: string
+          enum:
+          - emerg
+          - alert
+          - crit
+          - err
+          - warning
+          - notice
+          - info
+          - debug
+          description: Required if alert_type is syslog
+        from_address:
+          type: string
+          description: Required if alert_type is email
+        subject:
+          type: string
+          description: Required if alert_type is email
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

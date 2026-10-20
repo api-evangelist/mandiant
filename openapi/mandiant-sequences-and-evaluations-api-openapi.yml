@@ -1,0 +1,840 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Sequences and Evaluations API
+  version: '1.0'
+  description: 'Operations tagged Sequences and Evaluations across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Sequences and Evaluations
+  description: Sequences and evaluations can have one or more steps, each containing one or more actions. Each step of a sequence or evaluation can be run between different actors, but all the actions within a single step must run between the same actors. Sequences typically represent a complete network attack and Evaluations are often groups of similar actions.
+paths:
+  /jobs/run_now:
+    post:
+      summary: Run a job from a sequence or evaluation
+      description: The ID of the sequence or evaluation should be passed as the sim_id parameter; to get a list of available IDs, use the GET /simulations API endpoint. To run a single action instead of a sequence or evaluation, use the POST /manage_sims/actions/{id}/run API endpoint.
+      tags:
+      - Sequences and Evaluations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/run_job'
+            example:
+              sim_id: 29
+              schedule_run_now_selector: run_now
+              attack_node_id_1: '2'
+              target_node_id_1: '3'
+              attack_node_id_2: '2'
+              target_node_id_2: '3'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 8
+                plan_id: 8
+                status: waiting
+                progress: Preparing Job
+                created_at: '2020-02-10T15:15:36.839Z'
+                updated_at: '2020-02-10T15:15:36.839Z'
+                organization_id: 55
+                status_desc: null
+                user_id: 27
+                simulation_id: 29
+                node_action_queue_id: null
+                monitor: null
+                scheduled_action_id: null
+                planner_controlled: null
+                desc: null
+                name: null
+                parent_job_id: null
+                job_actions: []
+      operationId: postJobsRunNow
+      x-operation-id-source: derived
+  /simulations:
+    get:
+      summary: List sequences or evaluations
+      description: This endpoint can also return a CSV export of the Sequences/Evaluations by adding `.csv` to the end of the route rather than `.json`
+      tags:
+      - Sequences and Evaluations
+      parameters:
+      - name: sim_type
+        in: query
+        required: true
+        description: 'Indicate whether you want to list sequences or evaluations
+
+          '
+        schema:
+          type: string
+          enum:
+          - sequence
+          - eval
+      - name: name_filter
+        in: query
+        description: Filter simulation by name
+        schema:
+          type: string
+      - name: vid_filter
+        in: query
+        description: Filter simulations by VID
+        schema:
+          type: string
+      - name: tag_filter
+        in: query
+        description: Filter simulation by a single tag
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: 'Limit returned fields to given elements.  Must be an Array of Strings or comma-separated string indicating multiple fields.  Not available for CSV response.
+
+          '
+        schema:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 38
+                organization_id: 80
+                name: Example Sequence 1
+                desc: 'example description
+
+                  '
+                created_at: '2020-02-10T15:19:33.866Z'
+                updated_at: '2020-02-10T15:19:33.866Z'
+                stop_on_error: null
+                simulation_type: sequence
+                disabled: false
+                vid: S282-216
+                ver: 1
+                uuid: 16e1746b-8675-4ea5-b3af-e386cfc75afd
+                metadata_version: null
+                protected_endpoint_rollback: 'no'
+                sectech_logo_id: null
+                run_all_content_marker: null
+                verodin_tags: []
+                user_tags: []
+                tip_aliases: []
+                user_tip_aliases: []
+                sim_actions: ''
+                group_names: []
+                action_ids: []
+                action_vids: []
+              - id: 39
+                organization_id: 80
+                name: Example Sequence 2
+                desc: '8 Actions run from queue
+
+                  '
+                created_at: '2020-02-10T15:19:33.870Z'
+                updated_at: '2020-02-10T15:19:33.870Z'
+                stop_on_error: null
+                simulation_type: sequence
+                disabled: false
+                vid: S281-135
+                ver: 1
+                uuid: 206f989e-3f44-4880-b478-98dbee061de9
+                metadata_version: null
+                protected_endpoint_rollback: 'no'
+                sectech_logo_id: null
+                run_all_content_marker: null
+                verodin_tags: []
+                user_tags: []
+                tip_aliases: []
+                user_tip_aliases: []
+                sim_actions: ''
+                group_names: []
+                action_ids: []
+                action_vids: []
+      operationId: getSimulations
+      x-operation-id-source: derived
+    post:
+      summary: Create a sequence or evaluation
+      tags:
+      - Sequences and Evaluations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_simulation_wrapped'
+            examples:
+              Evaluation with single group:
+                value:
+                  simulation:
+                    sim_type: eval
+                    name: Evaluation with One Group
+                    desc: abc
+                    steps:
+                      '0':
+                      - 2
+                      - 1
+                    step_names:
+                    - First group name
+              Sequence with multiple groups:
+                value:
+                  simulation:
+                    sim_type: sequence
+                    name: Sequence with Multiple Groups
+                    desc: abc
+                    steps:
+                      '0':
+                      - 2
+                      - 1
+                      '1':
+                      - 5
+                      - 7
+                      '2':
+                      - 30
+                      - 14
+                    step_names:
+                    - First group name
+                    - Second group name
+                    - Third group name
+      responses:
+        '200':
+          description: Success
+      operationId: postSimulations
+      x-operation-id-source: derived
+  /v2/simulations/library_simulations_list:
+    get:
+      summary: List sequences or evaluations
+      tags:
+      - Sequences and Evaluations
+      parameters:
+      - name: simulation_type
+        in: query
+        required: true
+        description: 'Indicate whether you want to list sequences or evaluations
+
+          '
+        schema:
+          type: string
+          enum:
+          - sequences
+          - evaluations
+      - name: search
+        in: query
+        description: 'Searches for given input across multiple fields: name, VID & description
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?search=owasp`
+
+          '
+        schema:
+          type: string
+      - name: content_tree_ids
+        in: query
+        description: 'Filter by Content Tree. Use below values to include corresponding data:
+
+          * 1: Sys
+
+          * 2: User
+
+          * 3: Outside
+
+          * 4: Threat Intel
+
+          * 5: Pending
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+      - name: tags
+        in: query
+        description: 'Filter by tags.
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?&tags[]=CVE-2018-4878&tag_logic=OR`
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+      - name: tag_logic
+        in: query
+        description: 'logic used when using multiple values in tags query param.
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?tags[]=foo&tags[]=bar&tag_logic=OR`
+
+          '
+        schema:
+          type: string
+          enum:
+          - OR
+          - AND
+      - name: content_uuids
+        in: query
+        description: 'Filter by content uuids
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?content_uuids[]=1352574b-054d-4238-8326-0b73774132bc&content_uuids[]=a5f5a9ba-7de5-4380-ac5c-c219fc00adcf`
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+      - name: last_run_status
+        in: query
+        description: 'Filter by last run status of job action
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?last_run_status[]=cancelled`
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - completed
+            - errored
+            - cancelled
+            - never_ran
+      - name: last_run_date
+        in: query
+        description: 'Filter by last run date of job action. Format: YYYY-mm-dd
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?last_run_date=2023-12-31`
+
+          '
+        schema:
+          type: string
+      - name: show_full_response
+        in: query
+        description: 'Get detailed output in response which includes multiple attributes
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?show_full_response=true`
+
+          '
+        schema:
+          type: string
+          enum:
+          - 'true'
+      - name: order_by
+        in: query
+        description: 'Sort result based on an attribute
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?page_number=1&page_size=2&order_by=id`
+
+          '
+        schema:
+          type: string
+          enum:
+          - id
+          - name
+          - vid
+          - updated_at
+          - last_added
+          - last_run
+          - total_runs
+      - name: direction
+        in: query
+        description: 'Sorting direction
+
+
+          e.g. `GET /v2/simulations/library_simulations_list?page_number=1&page_size=2&order_by=id&direction=desc`
+
+          '
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                simulations:
+                - id: 4181577
+                  name: Malicious Activity Scenario - Campaign 24-001, Phishing Campaign Distributing ASYNCRAT
+                  updated_at: '2024-01-17T19:54:24.930Z'
+                  simulation_type: sequence
+                  vid: S100-305
+                  uuid: f59a2294-23b0-49f3-a365-339119f81e33
+                  latest_job: null
+                - id: 4181576
+                  name: Malicious Activity Scenario - Campaign 23-056, Suspected Russian Espionage Group Conducts Phishing Campaign for Credential Harvesting
+                  updated_at: '2024-01-17T19:54:24.746Z'
+                  simulation_type: sequence
+                  vid: S100-304
+                  uuid: d012fb28-0b0e-4ce8-af2e-24a66126b81e
+                  latest_job: null
+                total_count: 151
+                total_pages: 76
+                start: 1
+      operationId: getV2SimulationsLibrarySimulationsList
+      x-operation-id-source: derived
+  /simulations/{id}.json:
+    delete:
+      summary: Disables a Simulation
+      description: Security Validation defined Simulations (VIDs that start with 'S1') cannot be disabled and will respond with HTTP status code 422. If the Simulation is successfully disabled, a response with HTTP status code 204 is returned.
+      tags:
+      - Sequences and Evaluations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+                base:
+                - Verodin System Content cannot be deleted
+      operationId: deleteSimulations{id}Json
+      x-operation-id-source: derived
+  /simulations/{id}/actors.json:
+    get:
+      summary: Get actor options for a job step
+      description: Returns action user profiles, email profiles, capable actor details and a list of capable actor options for source/destination for a list steps of SimActions.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Simulation id.
+      tags:
+      - Sequences and Evaluations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                action_user_profiles: []
+                email_profiles:
+                - id: 1
+                  organization_id: 1
+                  server_address: 10.10.10.6
+                  account_username: jseinfeld
+                  status: verified
+                  created_at: '2020-11-05T17:41:28.061Z'
+                  updated_at: '2020-11-05T17:41:51.637Z'
+                  server_port: 110
+                  server_type: pop3
+                  server_smtp_port: '25'
+                  node_status:
+                    '2': verified
+                  server_smtp_address: 10.10.10.6
+                  server_smtp_ssl: false
+                  server_smtp_auth: false
+                  email_address: jseinfeld@mail.inside.aio.local
+                  server_smtp_auth_type: null
+                  server_smtp_tls: false
+                  detailed_status: email sent
+                  detailed_node_status:
+                    '2': null
+                  server_auth_required: true
+                  server_auth_type: plain
+                  skip_verification: false
+                  send_manual_verification: false
+                  verification_uuid: null
+                - id: 2
+                  organization_id: 1
+                  server_address: 10.10.0.6
+                  account_username: ckramer
+                  status: verified
+                  created_at: '2020-11-05T17:42:50.741Z'
+                  updated_at: '2020-11-05T17:42:56.501Z'
+                  server_port: 110
+                  server_type: pop3
+                  server_smtp_port: '25'
+                  node_status:
+                    '3': verified
+                  server_smtp_address: 10.10.0.6
+                  server_smtp_ssl: false
+                  server_smtp_auth: false
+                  email_address: ckramer@mail.outside.aio.local
+                  server_smtp_auth_type: null
+                  server_smtp_tls: false
+                  detailed_status: email sent
+                  detailed_node_status:
+                    '3': null
+                  server_auth_required: true
+                  server_auth_type: plain
+                  skip_verification: false
+                  send_manual_verification: false
+                  verification_uuid: null
+                actors:
+                  '2':
+                    id: 2
+                    name: vna-server
+                    os: centos
+                    monitor_ip: 10.10.10.200
+                    mgmt_ip: 10.10.10.10
+                    sim_ip: 10.10.10.100
+                  '3':
+                    id: 3
+                    name: vna-internet
+                    os: centos
+                    monitor_ip: 10.10.0.200
+                    mgmt_ip: 10.10.0.10
+                    sim_ip: 10.10.0.100
+                  '4':
+                    id: 4
+                    name: vna-desktop
+                    os: centos
+                    monitor_ip: 10.10.20.200
+                    mgmt_ip: 10.10.20.10
+                    sim_ip: 10.10.20.100
+                  '5':
+                    id: 5
+                    name: vea-ul16
+                    os: ubuntu
+                    monitor_ip: null
+                    mgmt_ip: 10.10.20.150
+                    sim_ip: null
+                step_options:
+                - action_types:
+                  - dns
+                  - file_transfer
+                  capable_source_actors:
+                  - 4
+                  - 2
+                  - 3
+                  - 5
+                  capable_destination_actors: []
+                  talking:
+                    '2':
+                    - 4
+                    - 3
+                    '3': []
+                    '4':
+                    - 2
+                    - 3
+                    '5':
+                    - 2
+                    - 3
+                  all:
+                    '2':
+                    - 4
+                    - 3
+                    - 5
+                    '3':
+                    - 4
+                    - 2
+                    - 5
+                    '4':
+                    - 2
+                    - 3
+                    - 5
+                    '5':
+                    - 4
+                    - 2
+                    - 3
+                - action_types:
+                  - host_cli
+                  capable_source_actors:
+                  - 4
+                  - 2
+                  - 3
+                  - 5
+                  capable_destination_actors: []
+                  talking:
+                    '2':
+                    - 4
+                    - 3
+                    '3': []
+                    '4':
+                    - 2
+                    - 3
+                    '5':
+                    - 2
+                    - 3
+                  all:
+                    '2':
+                    - 4
+                    - 3
+                    - 5
+                    '3':
+                    - 4
+                    - 2
+                    - 5
+                    '4':
+                    - 2
+                    - 3
+                    - 5
+                    '5':
+                    - 4
+                    - 2
+                    - 3
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                status: error
+                errors:
+                  id:
+                  - must be an integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error: ''
+      operationId: getSimulationsByIdActorsJson
+      x-operation-id-source: derived
+  /simulations/actions/{vid}:
+    get:
+      summary: Return Actions related to a Sequence/Evaluation by VID
+      tags:
+      - Sequences and Evaluations
+      parameters:
+      - name: vid
+        in: path
+        required: true
+        description: VID of Sequence or Evaluation
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                vid: S100-100
+                disabled: false
+                sim_actions:
+                - id: 1324
+                  name: Action 1
+                - id: 1364
+                  name: Action 2
+                - id: 1220
+                  name: Action 3
+                - id: 1314
+                  name: Action 4
+      operationId: getSimulationsActionsByVid
+      x-operation-id-source: derived
+  /simulations/vid_and_id:
+    post:
+      summary: Lookup Sequence or Evaluation by VID or ID
+      tags:
+      - Sequences and Evaluations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lookup_sim_wrapped'
+            example:
+              id: S100-052
+              type: sequence
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 2461
+                vid: S100-052
+      operationId: postSimulationsVidAndId
+      x-operation-id-source: derived
+components:
+  schemas:
+    run_job:
+      type: object
+      properties:
+        sim_id:
+          type: integer
+          description: ID of the Sequence or Evaulation to execute
+        schedule_run_now_selector:
+          type: string
+          enum:
+          - run_now
+          - schedule
+          description: Selects whether the job should be run immediately or scheduled
+        schedule_job_datetime:
+          type: string
+          description: 'If the job is scheduled, this indicates what time it should start.  Must be a string of format `YYYY/MM/DD HH:MM UTC`
+
+            '
+        job_name:
+          type: string
+          description: Optional name for this job
+        repeat_job_selector:
+          type: string
+          enum:
+          - 'on'
+          description: 'Optional.  If this job should be repeating then this param should a string equal to "on"
+
+            '
+        repeat_job_period_number:
+          type: integer
+          minimum: 1
+          description: 'This param is ignored if the job is not repeating but it''s required if repeat_job_selector == "on".  It indicates the time interval to repeat the job.
+
+            '
+        repeat_job_period_type:
+          type: string
+          enum:
+          - seconds
+          - minutes
+          - hours
+          - days
+          description: 'This param is ignored if the job is not repeating but it''s required if repeat_job_selector == "on".  It indicates how the repeat_job_period_number should be interpreted as a time.  For example if repeat_job_period_number is 5 and repeat_job_period_type is "minutes", the job created will repeat every 5 minutes.
+
+            '
+        repeat_job_times_selector:
+          type: string
+          enum:
+          - number
+          - indefinitely
+          description: 'This param is ignored if the job is not repeating.  If the job is repeating, it indicates whether it should repeat a fixed number of times, or indefinitely
+
+            '
+        repeat_job_count:
+          type: integer
+          minimum: 1
+          description: 'If the job is repeating and repeat_job_times_selector is "number", then this param indicates how many times the job should repeat. For example, if this param is 3 then the job will run 4 times total - once for the initial run and then 3 repeats.
+
+            '
+        attack_node_id_1:
+          type: string
+          description: 'ID of the attack actor for the first step in the sequence/eval.  If the sequence/eval specified by the sim_id param has more than one step, then the attack and target actors would be selected with attack_node_id_X and target_node_X params, where X is the order of the step in the sequence/eval, starting from 1.
+
+            '
+        target_node_id_1:
+          type: string
+          description: 'ID of the target actor for the first step in the sequence/eval.  For sequences/evals with more than on step, the subsequent steps follow the same pattern of target_node_id_X as the attack_node_id_X
+
+            '
+        repeat_job_period_number_1:
+          type: integer
+          minimum: 1
+          description: 'If the this job step should not repeat, then omit this param or leave it blank.  Otherwise, it works like the repeat_job_period_type param but for the specific step in the simulation.  Just like with the attack_node_X and target_node_X params, if a simulation has more than a single step then you can set the repeating attributes for each step by substituting the step order for X in the param name.
+
+            '
+        repeat_job_period_type_1:
+          type: string
+          enum:
+          - seconds
+          - minutes
+          - hours
+          - days
+          description: 'Works like the repeat_job_period_type param, but for the specific step in the simulation.
+
+            '
+        repeat_job_times_selector_1:
+          type: string
+          enum:
+          - number
+          - indefinitely
+          description: 'Works like the repeat_job_times_selector param, but for the specific step in the simulation.
+
+            '
+        repeat_job_count_1:
+          type: integer
+          minimum: 1
+          description: 'Works like the repeat_job_count param, but for the specific step in the simulation.
+
+            '
+    create_simulation:
+      type: object
+      required:
+      - sim_type
+      - name
+      - desc
+      - steps
+      properties:
+        sim_type:
+          type: string
+          enum:
+          - sequence
+          - eval
+          description: Type of simulation to create
+        name:
+          type: string
+          description: Simulation name, must be unique
+        desc:
+          type: string
+          description: Cannot be blank
+        steps:
+          description: 'Actions to include per group.  Must be an object with the order of each group as the key and the array of action IDs in that group as the value.  The order starts at 0 for the first group.  To get IDs of available actions use the `GET /manage_sims/actions` endpoint.
+
+            '
+          type: object
+          properties:
+            '0':
+              type: array
+              description: Array of Action IDs
+              items:
+                type: integer
+            '1':
+              type: array
+              description: Array of Action IDs
+              items:
+                type: integer
+            <etc>:
+              type: array
+              description: 'For each additional group in the sequence or evaluation, continue this pattern for naming the keys in this object.
+
+                '
+              items:
+                type: integer
+        step_names:
+          description: 'Array of strings with optional names for the groups in the simulation.  The order of the names in this array corresponds to the keys of the `steps` object in the request, so the zeroth element in this array will be the name of the group under `steps["0"]`
+
+            '
+          type: array
+          items:
+            type: string
+    lookup_sim_wrapped:
+      type: object
+      properties:
+        simulation:
+          $ref: '#/components/schemas/lookup_sim'
+    create_simulation_wrapped:
+      type: object
+      properties:
+        simulation:
+          $ref: '#/components/schemas/create_simulation'
+    lookup_sim:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          description: VID or ID of Sequence or Evaluation
+          type: string
+        type:
+          description: Indicate search for sequences or evaluations. Defaults to sequences.
+          type: string
+          enum:
+          - sequence
+          - eval
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

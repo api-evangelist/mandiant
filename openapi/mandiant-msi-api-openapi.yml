@@ -1,0 +1,745 @@
+openapi: 3.2.0
+info:
+  title: Mandiant MSI API
+  version: 4.14.7.0
+  description: 'Operations tagged MSI across 2 of this provider''s published API definitions: mandiant-msv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: MSI
+paths:
+  /msi_integrations:
+    get:
+      summary: List Active MSI integrations.
+      tags:
+      - MSI
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - organization_id: 1
+                id: 1
+                paused: false
+                disabled: false
+                type: elasticsearch
+                brand_name: Elasticsearch
+                msi_version: v1
+                config:
+                  meta_config: {}
+                  conn_config: {}
+                  runtime_config:
+                    queries: []
+                    alert_query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"@timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                    field_map:
+                      __default__:
+                        uid: []
+                        start_time: []
+                        description: []
+                        src_ip: []
+                        src_port: []
+                        dest_ip: []
+                        dest_port: []
+                        url: []
+                        email_sender: []
+                        email_recipient: []
+                        email_subject: []
+                        host: []
+                        computer: []
+                        user: []
+                        sid: []
+                    alert_field_map:
+                      uid: []
+                      description: []
+                      start_time: []
+                      host: []
+                      base_event_uids: []
+                    max_pages: 100
+                    page_size: 500
+                  queries_with_labels:
+                  - name: IP Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%IPS%) OR destination.ip:(%IPS%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: Hostname Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%HOSTNAMES%) OR destination.ip:(%HOSTNAMES%) OR\\nhost.hostname:(%HOSTNAMES%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: DNS Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"domain:(%DOMAINS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - name: Email Query
+                    query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(sender:(%SENDERS%) OR recipient:(%RECIPIENTS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                int_app_owned: null
+                msi_uuid: null
+                host: host.com
+                correlation_query_enabled: false
+                last_query_results_at: null
+                remote: false
+                node_id: null
+                updated_at: '2025-05-14T20:08:32.068Z'
+                time_adjustment: 0
+                name: elasticsearch
+                discovery_enabled: true
+                query_min_back: 15
+                delay_time: 0
+                correlation_query: ''
+                query_frequency: 30
+                correlation_query_frequency: 60
+                created_at: '2025-05-14T20:08:32.068Z'
+                last_query: null
+                save_suspect_events: false
+                query_results_limit: 10000
+                correlation_query_min_back: 60
+      operationId: getMsiIntegrations
+      x-operation-id-source: derived
+    post:
+      summary: Creates a new MSI Integration
+      description: The spec endpoint can be used as reference for the Integration configuration schema
+      tags:
+      - MSI
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/msi_type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/msi_integration'
+            example:
+              integration:
+                organization_id: 1
+                id: 1
+                paused: false
+                disabled: false
+                brand_name: Palo Alto Networks Next-Gen Firewall
+                msi_version: v1
+                config:
+                  meta_config: {}
+                  conn_config:
+                    protocol: https
+                    port: 443
+                    appliance_type: Panorama Console
+                    verify_ssl: false
+                    timeout: 30
+                    host: 10.10.0.3
+                    username: admin
+                  runtime_config:
+                    appliance_timezone: UTC
+                    log_types:
+                    - traffic
+                    - threat
+                    queries:
+                    - (%IPS%) and (time_generated geq '%START_TIME%') and (time_generated leq '%END_TIME%')
+                    page_size: 1000
+                    query_max_pages: 10
+                    field_map:
+                      src_ip:
+                      - src
+                      src_port:
+                      - sport
+                      dest_ip:
+                      - dst
+                      dest_port:
+                      - dport
+                      start_time:
+                      - __default__
+                      uid:
+                      - __default__
+                      sid: []
+                      url: []
+                      email_sender: []
+                      email_recipient: []
+                      email_subject: []
+                      description:
+                      - __default__
+                      host:
+                      - __default__
+                      computer:
+                      - __default__
+                      user: []
+                      filehashes: []
+                host: 10.10.0.3
+                correlation_query_enabled: false
+                last_query_results_at: '2025-04-24T16:06:04.318Z'
+                node_id: null
+                updated_at: '2025-04-24T16:06:04.340Z'
+                time_adjustment: 0
+                name: panoramaa
+                discovery_enabled: true
+                query_min_back: 15
+                delay_time: 0
+                correlation_query: ''
+                query_frequency: 30
+                correlation_query_frequency: 60
+                created_at: '2025-04-17T18:07:12.016Z'
+                last_query: (%IPS%) and (time_generated geq '%START_TIME%') and (time_generated leq '%END_TIME%')
+                save_suspect_events: false
+                query_results_limit: 10000
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+      operationId: postMsiIntegrations
+      x-operation-id-source: derived
+  /msi_integrations/{id}:
+    get:
+      summary: Get an individual MSI Integration
+      tags:
+      - MSI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+      operationId: getMsiIntegrationsById
+      x-operation-id-source: derived
+    put:
+      summary: Update an existing MSI integration
+      tags:
+      - MSI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/msi_integration'
+            example:
+              organization_id: 1
+              id: 1
+              paused: false
+              disabled: false
+              type: elasticsearch
+              brand_name: Elasticsearch
+              msi_version: v1
+              config:
+                meta_config: {}
+                conn_config:
+                  protocol: https
+                  port: 9200
+                  verify_ssl: false
+                  timeout: 30
+                  username: username
+                  host: host.com
+                runtime_config:
+                  queries:
+                  - "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%IPS%) OR destination.ip:(%IPS%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%HOSTNAMES%) OR destination.ip:(%HOSTNAMES%) OR\\nhost.hostname:(%HOSTNAMES%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"domain:(%DOMAINS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  - "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(sender:(%SENDERS%) OR recipient:(%RECIPIENTS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  alert_query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"@timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                  field_map:
+                    __default__:
+                      uid:
+                      - _id
+                      start_time:
+                      - _source.timestamp
+                      - _source.@timestamp
+                      description:
+                      - _source.kibana.alert.rule.name
+                      - _source.description
+                      - _source.message
+                      - _source.event.action
+                      - _source.alert.signature
+                      - _source.event.type
+                      - _source.rule.name
+                      src_ip:
+                      - _source.source.ip
+                      - _source.host.ip
+                      src_port:
+                      - _source.source.port
+                      dest_ip:
+                      - _source.destination.ip
+                      dest_port:
+                      - _source.destination.port
+                      url:
+                      - _source.domain
+                      email_sender:
+                      - _source.sender
+                      email_recipient:
+                      - _source.recipient
+                      email_subject:
+                      - _source.subject
+                      host:
+                      - _source.host.hostname
+                      - _source.host.name
+                      - _source.agent.name
+                      - __default__
+                      computer:
+                      - _source.computer
+                      - _source.agent.name
+                      - _source.host.hostname
+                      user:
+                      - _source.user
+                      sid:
+                      - _source.alert.signature_id
+                  alert_field_map:
+                    uid:
+                    - _id
+                    description:
+                    - _source.kibana.alert.rule.name
+                    - _source.description
+                    - _source.message
+                    - _source.event.action
+                    - _source.alert.signature
+                    - _source.event.type
+                    - _source.rule.name
+                    start_time:
+                    - _source.timestamp
+                    - _source.@timestamp
+                    - _source.hits.hits.0._source.timestamp
+                    - _source.hits.hits.0._source.@timestamp
+                    host:
+                    - _source.host.hostname
+                    - _source.host.name
+                    - _source.agent.name
+                    - __default__
+                    base_event_uids:
+                    - _source.base_event_uids
+                    - __default__
+                  max_pages: 100
+                  page_size: 500
+                queries_with_labels:
+                - name: IP Query
+                  query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%IPS%) OR destination.ip:(%IPS%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                - name: Hostname Query
+                  query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%HOSTNAMES%) OR destination.ip:(%HOSTNAMES%) OR\\nhost.hostname:(%HOSTNAMES%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                - name: DNS Query
+                  query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"domain:(%DOMAINS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+                - name: Email Query
+                  query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(sender:(%SENDERS%) OR recipient:(%RECIPIENTS%) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+              int_app_owned: null
+              msi_uuid: null
+              host: host.com
+              correlation_query_enabled: false
+              last_query_results_at: null
+              remote: false
+              node_id: null
+              updated_at: '2025-05-14T20:08:32.068Z'
+              time_adjustment: 0
+              name: elasticsearch updated
+              discovery_enabled: true
+              query_min_back: 15
+              delay_time: 0
+              correlation_query: ''
+              query_frequency: 30
+              correlation_query_frequency: 60
+              created_at: '2025-05-14T20:08:32.068Z'
+              last_query: null
+              save_suspect_events: false
+              query_results_limit: 10000
+              correlation_query_min_back: 60
+      responses:
+        '200':
+          description: Success
+      operationId: putMsiIntegrationsById
+      x-operation-id-source: derived
+    delete:
+      summary: Remove an existing MSI integration
+      tags:
+      - MSI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+      operationId: deleteMsiIntegrationsById
+      x-operation-id-source: derived
+  /msi_integrations/{id}/run_test_query:
+    post:
+      summary: Run a Test Query for an MSI Integration
+      description: The values for the var_config can be blank. Depending on the test query, filters can be hardcoded. If using a query with %VARIABLES%, var_config values should be supplied in order to substitute the %VARIABLES%
+      tags:
+      - MSI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 'Required for integration types that use a query
+
+                '
+              required:
+              - query
+              - var_config
+              properties:
+                query:
+                  type: string
+                var_config:
+                  type: object
+                  properties:
+                    ips:
+                      type: array
+                      items:
+                        type: string
+                    hostnames:
+                      type: array
+                      items:
+                        type: string
+                    domains:
+                      type: array
+                      items:
+                        type: string
+                    email_senders:
+                      type: array
+                      items:
+                        type: string
+                    email_recipients:
+                      type: array
+                      items:
+                        type: string
+                    user_accounts:
+                      type: array
+                      items:
+                        type: string
+                    start_time:
+                      type: string
+                    end_time:
+                      type: string
+            example:
+              query: "{\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"(source.ip:(%IPS%) OR destination.ip:(%IPS%)) AND @timestamp:[%START_TIME% TO %END_TIME%]\"\n    }\n  }\n}"
+              var_config:
+                hostnames:
+                - actor
+                start_time: '2025-05-14T20:23:04.668Z'
+                end_time: '2025-05-14T20:38:04.668Z'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example: []
+      operationId: postMsiIntegrationsByIdRunTestQuery
+      x-operation-id-source: derived
+  /msi_integrations/{id}/config_health:
+    get:
+      summary: Checks the MSI Integration configuration
+      description: Validates the configuration against the technology
+      tags:
+      - MSI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success - configuration is valid
+        '404':
+          description: Not Found using the id params
+        '500':
+          description: Error - configuration is invalid. Displays the error encountered
+      operationId: getMsiIntegrationsByIdConfigHealth
+      x-operation-id-source: derived
+  /msi_integrations/{type}/readme:
+    get:
+      summary: Returns the readme for the MSI Integration
+      tags:
+      - MSI
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/msi_type'
+      responses:
+        '200':
+          description: Success
+      operationId: getMsiIntegrationsByTypeReadme
+      x-operation-id-source: derived
+  /msi_integrations/{type}/changelog:
+    get:
+      summary: Returns the changelog for the MSI Integration
+      tags:
+      - MSI
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/msi_type'
+      responses:
+        '200':
+          description: Success
+      operationId: getMsiIntegrationsByTypeChangelog
+      x-operation-id-source: derived
+  /msi_integrations/spec/{type}:
+    get:
+      summary: Returns the JSON schema for the MSI Integration
+      tags:
+      - MSI
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/msi_type'
+      responses:
+        '200':
+          description: Success
+      operationId: getMsiIntegrationsSpecByType
+      x-operation-id-source: derived
+components:
+  schemas:
+    msi_integration:
+      type: object
+      properties:
+        integration:
+          type: object
+          required:
+          - name
+          - organization_id
+          - config
+          properties:
+            name:
+              type: string
+            organization_id:
+              type: integer
+            disabled:
+              type: boolean
+            paused:
+              type: boolean
+            type:
+              type: string
+              description: Integration type
+              enum:
+              - alertlogic
+              - alien-vault
+              - anomali-security-analytics
+              - arcsight
+              - att-usm-anywhere
+              - aws-cloudtrail
+              - aws-cloudwatch
+              - aws-guardduty
+              - azure-log-analytics
+              - azure-sentinel
+              - better-stack-logs
+              - carbon-black-protection
+              - carbon-black-psc
+              - carbon-black-response
+              - checkpoint
+              - cisco-amp
+              - cisco-firepower
+              - clickhouse
+              - crowdstrike-logscale
+              - crowdstrike-next-gen-siem-search
+              - crowdstrike
+              - cybereason
+              - cylance
+              - darktrace
+              - devo
+              - duo
+              - elasticsearch
+              - endgame
+              - exabeam-analytics
+              - exabeam-cloud
+              - exabeam-datalake
+              - extrahop-enterprise
+              - extrahop-reveal360
+              - f5-threat-stack
+              - fortianalyzer
+              - google-bigquery
+              - google-chronicle-backstory
+              - google-cloud-logging
+              - graylog
+              - iboss
+              - juniper-jsa
+              - logrhythm-cloud
+              - logrhythm-elastic
+              - logrhythm-sql
+              - logzilla
+              - ms-defender-atp
+              - ms-graph-security
+              - netskope
+              - opensearch
+              - palo-alto-cortex-xdr
+              - palo-alto-cortex-xsiam
+              - palo-alto
+              - qradar
+              - rapid7-insightidr
+              - rsa-netwitness-logs-and-packets
+              - rsa-netwitness-respond
+              - secureworks-taegis-xdr
+              - security-onion-elk
+              - security-onion-elsa
+              - securonix
+              - sentinelone
+              - snowflake
+              - sophos-cloud
+              - splunk
+              - sql
+              - sumologic
+              - symantec-dlp
+              - symantec-ep
+              - symantec-es
+              - tanium-threat-response
+              - tipping-point
+              - trellix-edr-threats
+              - trellix-email-security-cloud
+              - trellix-endpoint-security
+              - trellix-enterprise-security-manager
+              - trellix-epolicy-orchestrator
+              - trellix-helix
+              - trellix-ips
+              - trellix-network-dlp
+              - trellix-network-security
+              - trend-micro-trend-vision-one
+              - vmware-appdefense
+            brand_name:
+              type: string
+            msi_version:
+              type: string
+              description: MSI version of Integration
+              enum:
+              - v1
+              - v2
+            node_id:
+              type: integer
+            discovery_enabled:
+              type: boolean
+            query_min_back:
+              type: integer
+            delay_time:
+              type: integer
+            query_frequency:
+              type: integer
+            save_suspect_events:
+              type: boolean
+            query_results_limit:
+              type: integer
+            correlation_query_enabled:
+              type: boolean
+            correlation_query:
+              type: string
+            correlation_query_frequency:
+              type: integer
+            config:
+              type: object
+              required:
+              - conn_config
+              - meta_config
+              - runtime_config
+              properties:
+                conn_config:
+                  type: object
+                meta_config:
+                  type: object
+                runtime_config:
+                  type: object
+    msi_type:
+      type: string
+      description: 'The MSI Integration type
+
+        '
+      enum:
+      - alertlogic-v1
+      - alien-vault-v1
+      - anomali-security-analytics-v1
+      - arcsight-v1
+      - att-usm-anywhere-v1
+      - aws-cloudtrail-v1
+      - aws-cloudwatch-v1
+      - aws-guardduty-v1
+      - azure-log-analytics-v1
+      - azure-sentinel-v1
+      - better-stack-logs-v1
+      - carbon-black-protection-v1
+      - carbon-black-psc-v1
+      - carbon-black-response-v1
+      - checkpoint-v1
+      - cisco-amp-v1
+      - cisco-firepower-v1
+      - cisco-firepower-v2
+      - clickhouse-v1
+      - crowdstrike-logscale-v1
+      - crowdstrike-next-gen-siem-search-v1
+      - crowdstrike-v1
+      - crowdstrike-v2
+      - cybereason-v1
+      - cylance-v1
+      - darktrace-v1
+      - devo-v1
+      - duo-v1
+      - elasticsearch-v1
+      - endgame-v1
+      - exabeam-analytics-v1
+      - exabeam-cloud-v1
+      - exabeam-datalake-v1
+      - extrahop-enterprise-v1
+      - extrahop-reveal360-v1
+      - f5-threat-stack-v1
+      - fortianalyzer-v1
+      - google-bigquery-v1
+      - google-chronicle-backstory-v1
+      - google-chronicle-backstory-v2
+      - google-cloud-logging-v1
+      - graylog-v1
+      - iboss-v1
+      - juniper-jsa-v1
+      - logrhythm-cloud-v1
+      - logrhythm-elastic-v1
+      - logrhythm-sql-v1
+      - logzilla-v1
+      - ms-defender-atp-v1
+      - ms-defender-atp-v2
+      - ms-graph-security-v1
+      - netskope-v1
+      - netskope-v2
+      - opensearch-v1
+      - palo-alto-cortex-xdr-v1
+      - palo-alto-cortex-xsiam-v1
+      - palo-alto-v1
+      - qradar-v1
+      - rapid7-insightidr-v1
+      - rsa-netwitness-logs-and-packets-v1
+      - rsa-netwitness-respond-v1
+      - rsa-netwitness-respond-v2
+      - secureworks-taegis-xdr-v1
+      - security-onion-elk-v1
+      - security-onion-elsa-v1
+      - securonix-v1
+      - sentinelone-v1
+      - snowflake-v1
+      - sophos-cloud-v1
+      - splunk-v1
+      - sql-v1
+      - sumologic-v1
+      - symantec-dlp-v1
+      - symantec-ep-v1
+      - symantec-es-v1
+      - tanium-threat-response-v1
+      - tipping-point-v1
+      - trellix-edr-threats-v1
+      - trellix-email-security-cloud-v1
+      - trellix-endpoint-security-v1
+      - trellix-enterprise-security-manager-v1
+      - trellix-enterprise-security-manager-v2
+      - trellix-epolicy-orchestrator-v1
+      - trellix-helix-v1
+      - trellix-ips-v1
+      - trellix-network-dlp-v1
+      - trellix-network-security-v1
+      - trellix-network-security-v2
+      - trend-micro-trend-vision-one-v1
+      - vmware-appdefense-v1
+x-refined-from:
+- mandiant-msv-openapi.yml
+- mandiant-msv-openapi.yml

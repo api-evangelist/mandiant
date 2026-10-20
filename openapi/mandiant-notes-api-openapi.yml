@@ -1,0 +1,230 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Notes API
+  version: 1.0.6
+  description: 'Operations tagged Notes across 2 of this provider''s published API definitions: mandiant-asm-openapi.yml, mandiant-asm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://{{base_url}}
+tags:
+- name: Notes
+paths:
+  /api/v1/notes/{item_type}/{item_uid}:
+    get:
+      tags:
+      - Notes
+      summary: Index
+      description: Lists all notes on an entity or issue.
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: issue
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Mon, 24 Apr 2023 19:32:00 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '887'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Notes for issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+                result:
+                - uuid: 1112f519-06a9-4e2c-845c-aa79996c804a
+                  dynamic_id: issue##c1ac6a07-fda8-4568-90c3-ea2ba6ec2535#2022-10-18T17:28:41Z
+                  collection_name: attacksurface_mw3tdwq
+                  created_by_user_uuid: c1ac6a07-fda8-4568-90c3-ea2ba6ec2535
+                  item_name: null
+                  item_uid: 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+                  item_type: issue
+                  note: '- testing a note that supports markdown
+
+                    - and has some neat new features'
+                  uid: a67d6376f53176204957185bdc54d65bc6021b1d75aa88cc779de901a13ae833
+                  created_at: '2022-10-18T17:28:41.128Z'
+                  updated_at: '2022-10-18T00:00:00.000Z'
+                  collection_id: 132956
+                  created_by_user_id: 10354
+                  created_by_user:
+                    email: Name@domain.app
+                    printable_name: FirstName LastName
+                    uuid: c1ac6a07-df89-1258-90c3-ea2ba6ec2535
+      operationId: getApiV1NotesByItemTypeByItemUid
+      x-operation-id-source: derived
+    post:
+      tags:
+      - Notes
+      summary: Create
+      description: Creates a note on an entity or issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                note_text: '- testing a note that supports markdown
+
+                  - and has some neat new features'
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: issue
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+      responses:
+        undefined:
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "{\n    \"success\": true,\n    \"message\": \"Note add queued for issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459\",\n    \"result\": true\n}"
+      operationId: postApiV1NotesByItemTypeByItemUid
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/notes/{item_type}/{item_uid}/{note_uid}:
+    delete:
+      tags:
+      - Notes
+      summary: Delete
+      description: Deletes all notes on an entity or issue.
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: issue
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+      - name: note_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: uid of note from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: ee74ee7d3c06791bf984480810169ab123d97541b39afd623bd08b3981450d93
+      responses:
+        undefined:
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "{\n    \"success\": true,\n    \"message\": \"Note remove queued for ee74ee7d3c06791bf984480810169ab123d97541b39afd623bd08b3981450d93 on issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459\",\n    \"result\": true\n}"
+      operationId: deleteApiV1NotesByItemTypeByItemUidByNoteUid
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+x-refined-from:
+- mandiant-asm-openapi.yml
+- mandiant-asm-openapi.yml

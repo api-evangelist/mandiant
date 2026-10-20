@@ -1,0 +1,5164 @@
+openapi: 3.0.0
+info:
+  title: ASM V1 API (Public)
+  description: >-
+    All endpoints require the following header:
+
+
+    - INTRIGUE_ACCESS_KEY : {{intrigue_access_key}}
+
+
+    - INTRIGUE_SECRET_KEY : {{intrigue_secret_key}}
+
+
+    Most endpoints will require specifying a project ID with the following
+    header name:
+
+
+    - PROJECT_ID : {{project_id}}
+
+
+    API keys can be generated in the platform by any user under their account
+    settings.
+
+
+    The {{base_url}} is expected to be
+    [https://asm-api.advantage.mandiant.com,](https://asm-api.advantage.mandiant.com,)
+    unless otherwise specified.
+  version: 1.0.6
+servers:
+  - url: http://{{base_url}}
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+tags:
+  - name: Projects
+    description: >-
+      Projects are the most foundational unit of organization in the ASM
+      platform. Collections exist within one and only one project.
+  - name: Collections
+    description: >-
+      Collections live under a project and are another foundational unit of
+      organization in the ASM platform. They define the process of collecting
+      entities, issues and technologies. All entities, issues and technologies
+      live within one and only one collection (and its corresponding project).
+  - name: Collection Runs
+  - name: Entities
+  - name: Issues
+  - name: Time Series
+  - name: Technologies
+  - name: Notes
+  - name: Tags
+  - name: Seeds
+    description: deletes a user entity / seed
+  - name: Integrations
+    description: >-
+      Add your integration(s) here. Once added you can associate them to a
+      collection within the Integrations Collections section.
+  - name: Integration Collections
+    description: Configure Collections with integrations for Cloud credential associations.
+  - name: Library
+paths:
+  /api/v1/projects:
+    get:
+      tags:
+        - Projects
+      summary: Index
+      description: List all projects
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Projects
+                result:
+                  - id: 6797
+                    created_at: '2022-08-18T16:10:20.842Z'
+                    uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    icon: 🏡
+                    role: owner
+                    name: ASMQA_AttackSurfaceAPP
+                    owner_email: name@attacksurface.app
+                    description: null
+                    expired_at: null
+                    organization_name: ASMQA AttackSurfaceAPP
+                    organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                    plan_expires_at: '2025-09-17T00:00:00.000Z'
+                    plan_status: paid
+                    deleted_at: null
+                    deleted: false
+                    primary: false
+    post:
+      tags:
+        - Projects
+      summary: Create
+      description: |-
+        Create a new project
+
+        Body:
+
+        ``` json
+        {
+            "name" : "New Project Name"
+        }
+
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: New Project Name
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Projects
+                result:
+                  id: 7048
+                  created_at: '2022-09-09T16:20:11.576Z'
+                  uuid: bbc7b1dc-0d9f-4e3f-91a3-9746fcb91b35
+                  icon: null
+                  role: owner
+                  name: New Project Name
+                  owner_email: name@attacksurface.app
+                  description: null
+                  expired_at: null
+                  organization_name: ASMQA AttackSurfaceAPP
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  plan_expires_at: '2025-09-17T00:00:00.000Z'
+                  plan_status: paid
+                  deleted_at: null
+                  deleted: false
+                  primary: false
+  /api/v1/projects/{uuid}:
+    delete:
+      tags:
+        - Projects
+      summary: Delete
+      description: This api endpoint will delete a project.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid to delete from {{base_url}}/api/v1/projects'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Deleted Project
+                result:
+                  id: 7048
+                  created_at: '2022-09-09T16:20:11.576Z'
+                  uuid: bbc7b1dc-0d9f-4e3f-91a3-9746fcb91b35
+                  icon: null
+                  role: null
+                  name: New Project Name
+                  owner_email: null
+                  description: null
+                  expired_at: null
+                  organization_name: ASMQA AttackSurfaceAPP
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  plan_expires_at: '2025-09-17T00:00:00.000Z'
+                  plan_status: paid
+                  deleted_at: null
+                  deleted: false
+                  primary: false
+  /api/v1/user_collections:
+    get:
+      tags:
+        - Collections
+      summary: Index
+      description: >-
+        List all collections. if invalid, or no PROJECT_ID is passed, only
+        collections from top project are returned.
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:57:24 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=Xede4Yk68bG1B4jfDfuYebXyUGUmiICrwwp%2FXYhv8T%2Fs0Ef6CzOnBffKS2LIAyHQm7R87cV7S7%2BP1hcErLI6ljfWp0uqL3pTpXGVjGAuenxbVJiECvfxxcNVP73vhxuDlA%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74817676a8f886fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: User collections
+                result:
+                  - id: 132956
+                    uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    type: user_collection
+                    name: attacksurface_mw3tdwq
+                    following: null
+                    auto_refresh_schedule: daily
+                    workflow_name: null
+                    printable_name: Attacksurface_APP_QA
+                    tags: []
+                    last_updated: '2022-09-09T16:48:13.000Z'
+                    created_at: '2022-08-18T16:10:20.930Z'
+                    deleted: false
+                    deleted_at: null
+                    deleted_by: null
+                    local_icon_path: /branding/icons/org.png
+                    entity_count: 1
+                    new_entity_count: 1
+                    total_entity_count: 16
+                    issues_by_severity:
+                      '4': 1
+                      '5': 3
+                    notify_emails_new_entities: null
+                    notify_webhooks_new_entities: null
+                    pointer_collection_id: null
+                    pointer_collection_uuid: null
+                    config: null
+                    refreshing: false
+                    project_id: 6797
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    project_name: ASMQA_AttackSurfaceAPP
+                    owner_id: 6797
+                    owner_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    owner_type: project
+                    owner_name: ASMQA_AttackSurfaceAPP
+                    role: admin
+    post:
+      tags:
+        - Collections
+      summary: Create
+      description: >-
+        Create a new collection.
+
+        - workflow_name:
+            - external_discovery_and_assessment
+            - authenticated_cloud_discovery
+            - code_repository_discovery_and_assessment
+            - suspicious_domain_discovery
+            - mobile_app_discovery
+            - external_application_assessment
+            - third_party_workflow
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Test Collection
+                workflow_name: external_discovery_and_assessment
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:42:58 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '966'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection created!
+                result:
+                  id: 139738
+                  uuid: a161bde5-4611-43b2-b32a-9d8d8f8d62aa
+                  type: user_collection
+                  name: testcollection_ygkbmec
+                  following: null
+                  auto_refresh_schedule: daily
+                  workflow_name: external_discovery_and_assessment
+                  workflow_pretty_name: External Discovery & Assessment
+                  printable_name: Test collection
+                  global_labels: []
+                  last_updated: '2018-01-01T00:00:00.000Z'
+                  created_at: '2023-02-17T22:42:52.655Z'
+                  deleted: false
+                  deleted_at: null
+                  deleted_by: null
+                  local_icon_path: /branding/icons/org.png
+                  entity_count: 0
+                  new_entity_count: 0
+                  total_entity_count: 0
+                  issues_by_severity:
+                    '0': 0
+                    '1': 0
+                    '2': 0
+                    '3': 0
+                    '4': 0
+                    '5': 0
+                  notify_emails_new_entities: null
+                  notify_webhooks_new_entities: null
+                  pointer_collection_id: null
+                  pointer_collection_uuid: null
+                  config:
+                    ingest:
+                      disabled_check_names:
+                    strict_scoping: true
+                  refreshing: null
+                  queue: null
+                  project_id: 1234
+                  project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                  project_name: Project_Name
+                  owner_id: 1234
+                  owner_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                  owner_type: project
+                  owner_name: Project_name
+  /api/v1/user_collections/{uuid}:
+    get:
+      tags:
+        - Collections
+      summary: Read
+      description: Show details for a specified collection
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid from {{base_url}}/api/v1/user_collections
+          example: a161bde5-4611-43b2-b32a-9d8d8f8d62aa
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection retrieved!
+                result:
+                  id: 132956
+                  uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                  type: user_collection
+                  name: collectionname_mw3tdwq
+                  following: null
+                  auto_refresh_schedule: daily
+                  workflow_name: null
+                  printable_name: Collection Name
+                  tags: []
+                  last_updated: '2022-09-09T05:56:21.000Z'
+                  created_at: '2022-08-18T16:10:20.930Z'
+                  deleted: false
+                  deleted_at: null
+                  deleted_by: null
+                  local_icon_path: /branding/icons/org.png
+                  entity_count: 0
+                  new_entity_count: 0
+                  total_entity_count: 14
+                  issues_by_severity:
+                    '4': 1
+                    '5': 3
+                  notify_emails_new_entities: null
+                  notify_webhooks_new_entities: null
+                  pointer_collection_id: null
+                  pointer_collection_uuid: null
+                  config: null
+                  refreshing: false
+                  project_id: 1234
+                  project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                  project_name: Project Name
+                  owner_id: 1234
+                  owner_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                  owner_type: project
+                  owner_name: Project_name
+                  role: admin
+    delete:
+      tags:
+        - Collections
+      summary: Delete
+      description: Delete a collection
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid from {{base_url}}/api/v1/user_collections
+      responses:
+        undefined:
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |-
+                {
+                    "success": true,
+                    "message": "Collection permanently deleted!",
+                    "result": true
+                }
+  /api/v1/user_collections/{uuid}/archive:
+    patch:
+      tags:
+        - Collections
+      summary: Archive
+      description: Archive a collection
+      requestBody:
+        content: {}
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection archived
+                result: true
+  /api/v1/user_collections/{uuid}/unarchive:
+    patch:
+      tags:
+        - Collections
+      summary: Unarchive
+      description: Unarchive a collection
+      requestBody:
+        content: {}
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid from {{base_url}}/api/v1/user_collections
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: false
+                message: Collection unarchived
+                result: null
+  /api/v1/collections/{collection_uuid}/collection_runs:
+    get:
+      tags:
+        - Collection Runs
+      summary: Index
+      description: Returns up to last 10 collection scans
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: ' {{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: ' {{intrigue_secret_key}}'
+        - name: collection_uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/user_collections'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection runs retrieved!
+                result:
+                  - id: 660929
+                    uuid: 578b4a28-bd7e-4436-a661-91b52e757ce3
+                    status: finished
+                    priority: 400
+                    duration: 2126
+                    entity_count: 18
+                    created_at: '2022-09-09T00:02:30.357Z'
+                    started_at: '2022-09-09T05:20:55.000Z'
+                    finished_at: '2022-09-09T05:56:21.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-57-control-0
+                  - id: 660517
+                    uuid: ac553570-58d9-420d-9ded-abc6944d7446
+                    status: finished
+                    priority: 510
+                    duration: 639
+                    entity_count: 14
+                    created_at: '2022-09-08T20:42:03.179Z'
+                    started_at: '2022-09-08T20:42:22.000Z'
+                    finished_at: '2022-09-08T20:53:01.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: c1ac6a07-fda8-4568-90c3-ea2ba6ec2535
+                    created_by_email: dallas@attacksurface.app
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-7-control-0
+                  - id: 660427
+                    uuid: db989601-bc40-46f9-99f2-aef3eda4204f
+                    status: finished
+                    priority: 400
+                    duration: 2036
+                    entity_count: 20
+                    created_at: '2022-09-08T00:02:38.112Z'
+                    started_at: '2022-09-08T12:20:42.000Z'
+                    finished_at: '2022-09-08T12:54:38.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-77-control-0
+                  - id: 659932
+                    uuid: b0ea8329-59c4-4209-8363-8fcd92bfb4cf
+                    status: finished
+                    priority: 400
+                    duration: 2265
+                    entity_count: 20
+                    created_at: '2022-09-07T00:02:31.016Z'
+                    started_at: '2022-09-07T07:13:48.000Z'
+                    finished_at: '2022-09-07T07:51:33.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-58-control-0
+                  - id: 659418
+                    uuid: 07b23ebf-406d-43ef-adfc-a1c2242089ec
+                    status: finished
+                    priority: 400
+                    duration: 2490
+                    entity_count: 23
+                    created_at: '2022-09-06T00:02:29.329Z'
+                    started_at: '2022-09-06T05:46:09.000Z'
+                    finished_at: '2022-09-06T06:27:39.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-9-control-0
+                  - id: 658941
+                    uuid: 5fef2ec6-cd2a-41eb-9fbb-f7513a1da95a
+                    status: finished
+                    priority: 400
+                    duration: 2730
+                    entity_count: 23
+                    created_at: '2022-09-05T00:02:07.105Z'
+                    started_at: '2022-09-05T07:57:22.000Z'
+                    finished_at: '2022-09-05T08:42:52.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-92-control-0
+                  - id: 658518
+                    uuid: a0d99fd6-ddcf-4814-8db0-6cb2fa24e4a0
+                    status: finished
+                    priority: 400
+                    duration: 268
+                    entity_count: 23
+                    created_at: '2022-09-04T00:02:42.206Z'
+                    started_at: '2022-09-04T09:40:39.000Z'
+                    finished_at: '2022-09-04T09:45:07.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-41-control-0
+                  - id: 658094
+                    uuid: 75a96480-d61a-467f-8d61-db0c1e9ca633
+                    status: finished
+                    priority: 400
+                    duration: 2356
+                    entity_count: 23
+                    created_at: '2022-09-03T00:02:18.279Z'
+                    started_at: '2022-09-03T14:11:25.000Z'
+                    finished_at: '2022-09-03T14:50:41.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-86-control-0
+                  - id: 657633
+                    uuid: 83f9a245-683c-4508-b0bd-7d8aa10fa3e9
+                    status: finished
+                    priority: 400
+                    duration: 1325
+                    entity_count: 22
+                    created_at: '2022-09-02T00:02:23.698Z'
+                    started_at: '2022-09-02T09:18:08.000Z'
+                    finished_at: '2022-09-02T09:40:13.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-3-control-0
+                  - id: 657174
+                    uuid: 78d9926f-dfaa-4698-8f67-3affea5acfde
+                    status: finished
+                    priority: 400
+                    duration: 1996
+                    entity_count: 27
+                    created_at: '2022-09-01T00:02:35.438Z'
+                    started_at: '2022-09-01T12:56:31.000Z'
+                    finished_at: '2022-09-01T13:29:47.000Z'
+                    collection_name: Attacksurface_APP_QA
+                    collection_type: user_collection
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_by_uuid: 8c92ef9b-c4c5-4ea2-8340-93e5ed53b9ea
+                    created_by_email: jcran@intrigue.io
+                    project_name: ASMQA_AttackSurfaceAPP
+                    project_uuid: be884e25-a0bb-4836-a836-df5eab176186
+                    engine: engine-group-88-control-0
+    post:
+      tags:
+        - Collection Runs
+      summary: Create
+      description: This will schedule a scan for the collection entered
+      requestBody:
+        content: {}
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: ' {{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: ' {{intrigue_secret_key}}'
+        - name: collection_uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            Required: uuid of collection from
+            {{base_url}}/api/v1/user_collections
+          example: f33be380-13b7-46b0-a20d-cb2e1f0c3dcb
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection scan
+                result: true
+  /api/v1/search/entities/{search_string}:
+    get:
+      tags:
+        - Entities
+      summary: Search Entities
+      description: >-
+        Search Endpoint for all entity data. If no operator is used, "name"
+        field is searched. This response is limited to 10,000 items. Results are paginated.
+
+
+        Valid Search Keywords ('**search_string' parameter)**:
+
+
+        - collection:intrigue_123k221
+            
+        - type:string
+            
+            - ApiEndpoint, AppEndpoint, AutonomousSystem, AwsEC2Instance, AwsRdsDbInstance, AwsS3Bucket, AzureStorageAccount, AzureVirtualMachine, DnsRecord, Domain, EmailAddress, GcpApiGateway, GcpAppEngineApplication, GcpCloudFunction, GcpCloudSQLInstance, GcpComputeEngineInstance, GcpStorageBucket, GithubAccount, GithubRepository, IpAddress, Nameserver, NetBlock, NetworkService, SslCertificate, UniqueKeyword, UniqueToken, Uri
+                
+        - name:string
+            
+        - hidden:false | true
+            
+        - tag:tagname
+            
+        - country:us (alpha-2 country coded)
+            
+        - uid:12345
+            
+        - last_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - last_seen_before:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - first_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - scoped:true | false
+            
+        - http_code:404
+            
+        - http_auth:true | false
+            
+        - http_auth_basic:true | false
+            
+        - http_auth_ntlm:true | false
+            
+        - http_title:string
+            
+        - http_forms:true | false
+            
+        - http_cookie
+            
+        - technology:jquery
+            
+        - cloud:true | false
+            
+        - cloud_provider
+            
+        - network
+            
+        - port_tcp
+            
+        - port_udp
+            
+        - port_count_lte:1
+            
+        - port_count_gte:1
+            
+        - issue_count_lte:1
+            
+        - issue_count_gte:1
+            
+        - vuln:cve
+            
+        - vuln_count_gte:1
+            
+        - vuln_count_lte:1
+            
+        - critical_or_high:true | false
+            
+        - resolves_to:string
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+          description: >-
+            Optional: Used to control how many results returned per page
+            <default 50, max 1000> 
+          example: '100'
+        - name: page_token
+          in: query
+          schema:
+            type: string
+          description: >-
+            Optional: Used to get the next page of results. Use the value from
+            next_page_token in results. The next_page_token will change with
+            each new page. When using page_token do not use the "page" key. 
+          example: >-
+            eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJaaXRVdGVIOV9ORUNlY2RnIiwidGFnIjoiN0JWUnk0QjRXalNTN1dCWmMwY2FWdyJ9.dpg0fRevYn8P6TocpJ9DUSxVFurrYXqaXuqGI8CaK2o.NoNoFUbHyAEh6ckk.3hOnO4BKO57sBoTvCCxrK_QJLxFZKRID98b9MklxR1FpZW2dZpNEQHSilyXaWAwC6-qXX5hL6Xr0SNQGyWFNHQp2GFmAzAaBalRpohwB1ADZ6ALj93juPChmaQLjsfTQOEFOnVdFhxx_wo_cfXWqGUn_SIxcm309dHT9-SvbNF7XtDaZ6U4sg3F7NORR8lKTyrCQvf2l4itOw0HAKxePav1ys_tIiTJx4ct-utmIYg6eB8vjVpDflhblQe7_JqlDTbI8JWX4GqL2tqmDvCHcpxOiSPPENzYV2D-C1xoTRCctfaZRh9BERs_cFA.OmkBu4OHPgXcnATiO5FcCw
+        - name: search_string
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            Example with multiple keywords. If no string is entered all entities
+            for the project will be returned
+          example: >-
+            collection:collectionname_a6mz56o first_seen_after:2022-01-01
+            last_seen_before:last_refresh
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:00:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '4760'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Search completed!
+                result:
+                  search:
+                    search_body:
+                      query:
+                        bool:
+                          must:
+                            - bool:
+                                should:
+                                  - match:
+                                      summary.scoped:
+                                        query: 'true'
+                                        operator: AND
+                                minimum_should_match: 1
+                            - range:
+                                first_seen:
+                                  gte: '2022-01-01T00:00:00Z'
+                          filter:
+                            bool:
+                              should:
+                                - bool:
+                                    must:
+                                      - match:
+                                          collection: collectionname_a6mz56o
+                                      - range:
+                                          last_seen:
+                                            lte: '2023-01-31T18:59:39Z'
+                      aggs:
+                        collection_bucket:
+                          terms:
+                            field: collection
+                            size: 10
+                        entity_type_bucket:
+                          terms:
+                            field: type.raw
+                            size: 25
+                        scoped_bucket:
+                          terms:
+                            field: scoped
+                            size: 3
+                        issues_severity_1_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.1
+                        issues_severity_2_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.2
+                        issues_severity_3_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.3
+                        issues_severity_4_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.4
+                        issues_severity_5_bucket:
+                          sum:
+                            field: summary.issues.current_by_severity.5
+                        country_code_bucket:
+                          terms:
+                            field: summary.geolocation.country_code.raw
+                            size: 10
+                        technolgy_bucket:
+                          terms:
+                            field: summary.technology.cpes.cpe.raw
+                            size: 10
+                      sort:
+                        - last_seen: asc
+                        - _doc
+                    search_string: >-
+                      collection:collectionname_a6mz56o
+                      first_seen_after:2022-01-01 last_seen_before:last_refresh
+                    search_type: entities
+                    sort_direction: asc
+                    sort_field: last_seen
+                    group_by_field: null
+                  total_hits: 4323
+                  timed_out: false
+                  more: true
+                  page: 0
+                  page_size: 1
+                  total_pages: 4323
+                  hits:
+                    - id: >-
+                        1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+                      dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                      alias_group: null
+                      aliases: null
+                      hidden: false
+                      name: 192.168.1.109
+                      type: Intrigue::Entity::IpAddress
+                      seed: null
+                      first_seen: '2022-10-05T19:27:33Z'
+                      last_seen: '2022-10-05T19:27:33Z'
+                      collection: collectionname_a6mz56o
+                      collection_type: user_collection
+                      collection_naics: null
+                      collection_uuid: f11e71db-d12d-4733-a19e-b8742ed7eb70
+                      organization_uuid: 075811c8-fe6f-412f-a071-34a7342c16a3
+                      tags: []
+                      issues: []
+                      exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                      summary:
+                        scoped: true
+                        issues:
+                          current_by_severity: {}
+                          current_with_cve: 0
+                          all_time_by_severity: {}
+                          current_count: 0
+                          all_time_count: 0
+                          critical_or_high: false
+                        task_results:
+                          - search_shodan
+                          - enrich/uri
+                        geolocation:
+                          city: Macenta
+                          country_code: GN
+                          country_name: null
+                          latitude: 8.54829
+                          longitude: -9.48282
+                          asn: null
+                        ports:
+                          count: 1
+                          tcp:
+                            - 80
+                          udp: []
+                        resolutions: []
+                        network:
+                          name: Namecheap, Inc.
+                          asn: 22612
+                          route: null
+                          type: null
+                        technology:
+                          cloud: false
+                          cloud_providers: []
+                          cpes: []
+                          technologies: []
+                          technology_labels: []
+                  aggregations:
+                    scoped_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets: []
+                    issues_severity_1_bucket:
+                      value: 1114
+                    collection_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: collectionname_a6mz56o
+                          doc_count: 4323
+                    technolgy_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 2971
+                      buckets:
+                        - key: 'cpe:2.3:s:cloudflare:cloudflare::'
+                          doc_count: 615
+                        - key: 'cpe:2.3:a:php:php::'
+                          doc_count: 185
+                        - key: 'cpe:2.3:a:jquery:jquery:1.10.2:'
+                          doc_count: 145
+                        - key: 'cpe:2.3:a:apache:http_server::'
+                          doc_count: 140
+                        - key: 'cpe:2.3:a:php:php:7.1.33:'
+                          doc_count: 136
+                        - key: 'cpe:2.3:a:apache:http_server:2.4.38:'
+                          doc_count: 129
+                        - key: >-
+                            cpe:2.3:s:the_open_graph_protocol:the_open_graph_protocol::
+                          doc_count: 121
+                        - key: 'cpe:2.3:a:openbsd:openssh::'
+                          doc_count: 108
+                        - key: 'cpe:2.3:a:ssh:ssh:2.0:'
+                          doc_count: 108
+                        - key: 'cpe:2.3:a:google:tag_manager::'
+                          doc_count: 106
+                    entity_type_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: Intrigue::Entity::NetworkService
+                          doc_count: 2275
+                        - key: Intrigue::Entity::Uri
+                          doc_count: 743
+                        - key: Intrigue::Entity::SslCertificate
+                          doc_count: 582
+                        - key: Intrigue::Entity::IpAddress
+                          doc_count: 531
+                        - key: Intrigue::Entity::DnsRecord
+                          doc_count: 118
+                        - key: Intrigue::Entity::UniqueToken
+                          doc_count: 41
+                        - key: Intrigue::Entity::ApiEndpoint
+                          doc_count: 22
+                        - key: Intrigue::Entity::AwsS3Bucket
+                          doc_count: 7
+                        - key: Intrigue::Entity::PreCertificate
+                          doc_count: 4
+                    country_code_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: US
+                          doc_count: 3141
+                        - key: CA
+                          doc_count: 329
+                        - key: BR
+                          doc_count: 9
+                        - key: DE
+                          doc_count: 8
+                        - key: HK
+                          doc_count: 8
+                        - key: GN
+                          doc_count: 2
+                        - key: VG
+                          doc_count: 2
+                    issues_severity_5_bucket:
+                      value: 371
+                    issues_severity_4_bucket:
+                      value: 70
+                    issues_severity_3_bucket:
+                      value: 239
+                    issues_severity_2_bucket:
+                      value: 59
+                  next_page_token: >-
+                    eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJDMmhPQlRweE5jT2psUTNlIiwidGFnIjoiTGpqaFhvQ1F0RWZjXzdJTkt4ZG5XZyJ9.MmWAi13CT942tNOv07i7l40wt9wm4XKt9PZ10x34cu0.0GDiGDyp6Snff9mk.MVB3X0pjYjkN8-9-glzlVQl5VjsAMkxtkFN_A8ZELCUGnpSg-pUEfMntNZ4iglMLk7amm4Bh7saZ2QGzNRLCmGcwIxlmSqTWqB1UrSRRkdMpHec5O1EdAyh41SK4B2Vh8DnTnBwLQFYdExi82oNobIX5tWdJmVKdsAFFm7F_0gW1J2TR49HreXyXxv5UtCRvFf3FlqvbPzWEO6cyQ8eMUuNEGvLi_F5YncAfxwsjuNY-FHk-TUl0aUOEj3mD4ZnaokFI4HK6SB95SqJ7WCFSf3iSulVSMihnuJ7e0V_YCS9Lrk8n6DSOHdPelQ.-Z1v3MQn335tNg7FcflqPA
+  /api/v1/entities/{entity_uid}:
+    get:
+      tags:
+        - Entities
+      summary: Get Detail
+      description: Obtains an individual entity's searchable details
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: entity_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: id from {{base_url}}/api/v1/search/entities/'
+          example: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:08:18 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '6134'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: successfully returned entity
+                result:
+                  uuid: 89fcba93-ddc9-44a6-a78c-615db734aa23
+                  dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                  collection_name: collectionname_a6mz56o
+                  alias_group: null
+                  aliases: null
+                  allow_list: true
+                  ancestors:
+                    - name: 192.168.1.109
+                      type: Intrigue::Entity::IpAddress
+                  category: null
+                  collection_naics: null
+                  confidence: null
+                  deleted: false
+                  deny_list: false
+                  details:
+                    name: 192.168.1.109
+                    ports:
+                      - number: 80
+                        protocol: tcp
+                    version: 4
+                    net_name: ''
+                    whitelist: true
+                    geolocation:
+                      asn:
+                        asn: 22612
+                        isp: Namecheap
+                        name: Namecheap, Inc.
+                        organization: Web-hosting.com
+                        connection_type: Corporate
+                      city: Macenta
+                      postal: null
+                      country: Guinea
+                      latitude: 8.53829
+                      continent: Africa
+                      longitude: -9.47282
+                      time_zone: Africa/Conakry
+                      country_code: GN
+                      continent_code: AF
+                    network.asn: AS22612
+                    network.rir: ARIN
+                    resolutions: []
+                    cloud_hosted: false
+                    network.name: ''
+                    network.block: 192.168.1.0/21
+                    cloud_providers: []
+                    whois_full_text: "\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\nNetRange:       192.168.1.0 - 192.168.1.255\nCIDR:           192.168.1.0/21\nNetName:        NCNET-3\nNetHandle:      NET-192-64-112-0-1\nParent:         NET192 (NET-192-0-0-0-0)\nNetType:        Direct Allocation\nOriginAS:       AS16626, AS174, AS3356, AS4323, AS22612, AS32421\nOrganization:   Namecheap, Inc. (NAMEC-4)\nRegDate:        2012-12-17\nUpdated:        2015-03-24\nComment:        http://namecheap.com\r\nComment:        for any abuse please use: abuse@namecheap.com\nRef:            https://rdap.arin.net/registry/ip/192.168.1.0\n\n\nOrgName:        Namecheap, Inc.\nOrgId:          NAMEC-4\nAddress:        11400 W. Olympic Blvd. Suite 200\nCity:           Los Angeles\nStateProv:      CA\nPostalCode:     90064\nCountry:        US\nRegDate:        2011-01-28\nUpdated:        2017-01-28\nRef:            https://rdap.arin.net/registry/entity/NAMEC-4\n\nReferralServer:  rwhois://whois.namecheaphosting.com:4321\n\nOrgTechHandle: TECHT4-ARIN\nOrgTechName:   Tech team\nOrgTechPhone:  +1-661-310-2107 \nOrgTechEmail:  tech@namecheaphosting.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/TECHT4-ARIN\n\nOrgTechHandle: EFIME-ARIN\nOrgTechName:   Efimenko, Igor \nOrgTechPhone:  +1-323-375-2822 \nOrgTechEmail:  igor.e@namecheap.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/EFIME-ARIN\n\nOrgAbuseHandle: ABUSE2885-ARIN\nOrgAbuseName:   Abuse team\nOrgAbusePhone:  +1-323-375-2822 \nOrgAbuseEmail:  abuse@namecheaphosting.com\nOrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2885-ARIN\n\n\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\n%rwhois V-1.0,V-1.5:00090h:00 billing.web-hosting.com (Ubersmith RWhois Server V-4.5.5)\nautharea=192.168.1.0/24\nxautharea=192.168.1.0/24\nnetwork:Class-Name:network\nnetwork:Auth-Area:192.168.1.0/24\nnetwork:ID:NET-79088.192.168.1.0/24\nnetwork:Network-Name:anycast-edge-fwd-range\nnetwork:IP-Network:192.168.1.0/24\nnetwork:IP-Network-Block:192.168.1.0 - 192.168.1255\nnetwork:Org-Name:Web-hosting.com\nnetwork:Street-Address:\nnetwork:City:Atlanta\nnetwork:State:GA\nnetwork:Postal-Code:30303/3030\nnetwork:Country-Code:US\nnetwork:Tech-Contact:MAINT-79088.192.168.1.0/24\nnetwork:Created:20190523134201000\nnetwork:Updated:20190523163005000\nnetwork:Updated-By:net-admin@namecheap.com\ncontact:POC-Name:Network team\ncontact:POC-Email:net-admin@namecheap.com\ncontact:POC-Phone:\ncontact:Tech-Name:Network team\ncontact:Tech-Email:net-admin@namecheap.com\ncontact:Tech-Phone:\ncontact:Abuse-Name:Abuse team\ncontact:Abuse-Email:abuse@namecheaphosting.com\n%ok\n"
+                    network.country_code: US
+                    exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                    network.allocation_date: '2012-12-17'
+                  details_file: >-
+                    data/v4/collectionname_a6mz56o/2022_10_05/collectionname_a6mz56o/entities/1b3e614b751e35dfab02737d474e133e862ef80c.json
+                  description: null
+                  first_seen: '2022-10-05T19:27:33.000Z'
+                  hidden: false
+                  last_seen: '2022-10-05T19:27:33.000Z'
+                  name: 192.168.14109
+                  scoped: true
+                  scoped_reason: allow_list_override
+                  seed: null
+                  source: null
+                  status: null
+                  task_results:
+                    - name: search_shodan_on_192.168.1.109
+                      task: search_shodan
+                      depth: 4
+                      entity_name: 192.168.1.109
+                      entity_type: Intrigue::Entity::IpAddress
+                    - name: enrich/uri_on_http://192.168.1.109:80
+                      task: enrich/uri
+                      depth: 4
+                      entity_name: http://192.168.1.109:80
+                      entity_type: Intrigue::Entity::Uri
+                  type: Intrigue::Entity::IpAddress
+                  uid: >-
+                    1fb70436b2fa66a62ee1b1b989eaddb871a1f573287fd5128bf509a9f9b0140e
+                  created_at: '2022-10-05T19:28:27.973Z'
+                  updated_at: '2022-10-05T19:28:27.978Z'
+                  collection_id: 134840
+                  elasticsearch_mappings_hash: null
+                  collection: collectionname_a6mz56o
+                  collection_uuid: f12c71db-d34d-4733-a19e-b8742ed7eb70
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  collection_type: user_collection
+                  fingerprint: []
+                  summary:
+                    scoped: true
+                    issues:
+                      current_with_cve: 0
+                      current_by_severity: {}
+                      all_time_by_severity: {}
+                      current_count: 0
+                      all_time_count: 0
+                      critical_or_high: false
+                    task_results:
+                      - search_shodan
+                      - enrich/uri
+                    geolocation:
+                      city: Macenta
+                      country_code: GN
+                      country_name: null
+                      latitude: 8.53829
+                      longitude: -9.47282
+                      asn: null
+                    ports:
+                      tcp:
+                        - 80
+                      udp: []
+                      count: 1
+                    resolutions: []
+                    network:
+                      name: Namecheap, Inc.
+                      asn: 22612
+                      route: null
+                      type: null
+                    technology:
+                      cloud: false
+                      cloud_providers: []
+                      cpes: []
+                      technologies: []
+                      technology_labels: []
+                  tags: []
+  /api/v1/entities/{entity_uid}/raw:
+    get:
+      tags:
+        - Entities
+      summary: Get Full Detail
+      description: Obtains an individual entity's full details
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: entity_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: id from {{base_url}}/api/v1/search/entities/'
+          example: 1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:13:23 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '6092'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: successfully returned entity
+                result:
+                  uuid: 89fcba93-ddc9-44a6-a78c-615db734aa23
+                  dynamic_id: Intrigue::Entity::IpAddress#192.168.1.109
+                  collection_name: collectionname_a6mz56o
+                  alias_group: 209583
+                  aliases:
+                    - 192.168.1.109
+                  allow_list: true
+                  ancestors:
+                    - type: Intrigue::Entity::IpAddress
+                      name: 192.168.1.109
+                  category: null
+                  collection_naics: null
+                  confidence: null
+                  deleted: false
+                  deny_list: false
+                  details:
+                    name: 192.168.1.109
+                    ports:
+                      - number: 80
+                        protocol: tcp
+                    version: 4
+                    net_name: ''
+                    whitelist: true
+                    geolocation:
+                      asn:
+                        asn: 22612
+                        isp: Namecheap
+                        name: Namecheap, Inc.
+                        organization: Web-hosting.com
+                        connection_type: Corporate
+                      city: Macenta
+                      postal: null
+                      country: Guinea
+                      latitude: 8.53829
+                      continent: Africa
+                      longitude: -9.47282
+                      time_zone: Africa/Conakry
+                      country_code: GN
+                      continent_code: AF
+                    network.asn: AS22612
+                    network.rir: ARIN
+                    resolutions: []
+                    cloud_hosted: false
+                    network.name: ''
+                    network.block: 192.64.112.0/21
+                    cloud_providers: []
+                    hidden_original: 192.168.1.109
+                    whois_full_text: "\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\nNetRange:       192.64.112.0 - 192.168.1.255\nCIDR:           192.64.112.0/21\nNetName:        NCNET-3\nNetHandle:      NET-192-64-112-0-1\nParent:         NET192 (NET-192-0-0-0-0)\nNetType:        Direct Allocation\nOriginAS:       AS16626, AS174, AS3356, AS4323, AS22612, AS32421\nOrganization:   Namecheap, Inc. (NAMEC-4)\nRegDate:        2012-12-17\nUpdated:        2015-03-24\nComment:        http://namecheap.com\r\nComment:        for any abuse please use: abuse@namecheap.com\nRef:            https://rdap.arin.net/registry/ip/192.64.112.0\n\n\nOrgName:        Namecheap, Inc.\nOrgId:          NAMEC-4\nAddress:        11400 W. Olympic Blvd. Suite 200\nCity:           Los Angeles\nStateProv:      CA\nPostalCode:     90064\nCountry:        US\nRegDate:        2011-01-28\nUpdated:        2017-01-28\nRef:            https://rdap.arin.net/registry/entity/NAMEC-4\n\nReferralServer:  rwhois://whois.namecheaphosting.com:4321\n\nOrgTechHandle: TECHT4-ARIN\nOrgTechName:   Tech team\nOrgTechPhone:  +1-661-310-2107 \nOrgTechEmail:  tech@namecheaphosting.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/TECHT4-ARIN\n\nOrgTechHandle: EFIME-ARIN\nOrgTechName:   Efimenko, Igor \nOrgTechPhone:  +1-323-375-2822 \nOrgTechEmail:  igor.e@namecheap.com\nOrgTechRef:    https://rdap.arin.net/registry/entity/EFIME-ARIN\n\nOrgAbuseHandle: ABUSE2885-ARIN\nOrgAbuseName:   Abuse team\nOrgAbusePhone:  +1-323-375-2822 \nOrgAbuseEmail:  abuse@namecheaphosting.com\nOrgAbuseRef:    https://rdap.arin.net/registry/entity/ABUSE2885-ARIN\n\n\n#\n# ARIN WHOIS data and services are subject to the Terms of Use\n# available at: https://www.arin.net/resources/registry/whois/tou/\n#\n# If you see inaccuracies in the results, please report at\n# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/\n#\n# Copyright 1997-2022, American Registry for Internet Numbers, Ltd.\n#\n\n\n%rwhois V-1.0,V-1.5:00090h:00 billing.web-hosting.com (Ubersmith RWhois Server V-4.5.5)\nautharea=192.168.1.0/24\nxautharea=192.168.1.0/24\nnetwork:Class-Name:network\nnetwork:Auth-Area:192.168.1.0/24\nnetwork:ID:NET-79088.192.168.1.0/24\nnetwork:Network-Name:anycast-edge-fwd-range\nnetwork:IP-Network:192.168.1.0/24\nnetwork:IP-Network-Block:192.168.1.0 - 192.168.1.255\nnetwork:Org-Name:Web-hosting.com\nnetwork:Street-Address:\nnetwork:City:Atlanta\nnetwork:State:GA\nnetwork:Postal-Code:30303/3030\nnetwork:Country-Code:US\nnetwork:Tech-Contact:MAINT-79088.192.168.1.0/24\nnetwork:Created:20190523134201000\nnetwork:Updated:20190523163005000\nnetwork:Updated-By:net-admin@namecheap.com\ncontact:POC-Name:Network team\ncontact:POC-Email:net-admin@namecheap.com\ncontact:POC-Phone:\ncontact:Tech-Name:Network team\ncontact:Tech-Email:net-admin@namecheap.com\ncontact:Tech-Phone:\ncontact:Abuse-Name:Abuse team\ncontact:Abuse-Email:abuse@namecheaphosting.com\n%ok\n"
+                    network.country_code: US
+                    extended_path_to_seed: []
+                    exfil_lookup_identifier: 61539b426980b7959a65f017657025ab
+                    network.allocation_date: '2012-12-17'
+                  details_file: >-
+                    data/v4/collectionname_a6mz56o/2022_10_05/collectionname_a6mz56o/entities/1b3e614b751e35dfab02737d474e133e862ef80c.json
+                  description: null
+                  first_seen: '2022-10-05T19:27:33.000Z'
+                  hidden: false
+                  last_seen: '2022-10-05T19:27:33.000Z'
+                  name: 192.168.1.109
+                  scoped: true
+                  scoped_reason: allow_list_override
+                  seed: true
+                  source: null
+                  status: null
+                  task_results: []
+                  type: Intrigue::Entity::IpAddress
+                  uid: >-
+                    1f7b1b98a62ee28bf509871a1f573287fd51b70436b2fa6a9f9b0140e9eaddb6
+                  created_at: '2022-10-05T19:28:27.973Z'
+                  updated_at: '2022-10-05T19:28:27.978Z'
+                  collection_id: 134840
+                  elasticsearch_mappings_hash: null
+                  collection: collectionname_a6mz56o
+                  collection_uuid: f12c71db-d34d-4733-a19e-b8742ed7eb70
+                  organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                  collection_type: user_collection
+                  fingerprint: []
+                  summary:
+                    scoped: true
+                    issues:
+                      current_with_cve: 0
+                      current_by_severity: {}
+                      all_time_by_severity: {}
+                      current_count: 0
+                      all_time_count: 0
+                      critical_or_high: false
+                    task_results:
+                      - search_shodan
+                      - enrich/uri
+                    geolocation:
+                      city: Macenta
+                      country_code: GN
+                      country_name: null
+                      latitude: 8.53829
+                      longitude: -9.47282
+                      asn: null
+                    ports:
+                      tcp:
+                        - 80
+                      udp: []
+                      count: 1
+                    resolutions: []
+                    network:
+                      name: Namecheap, Inc.
+                      asn: 22612
+                      route: null
+                      type: null
+                    technology:
+                      cloud: false
+                      cloud_providers: []
+                      cpes: []
+                      technologies: []
+                      technology_labels: []
+                  tags: []
+                  id: 243399
+                  scoped_at: 2022-10-05 19:10:28 +0000
+                  detail_string: ' | Macenta GN |  Open Ports: 1 |  PTR: '
+                  enrichment_tasks:
+                    - enrich/ip_address
+                  generated_at: '2022-10-05T19:27:36Z'
+  /api/v1/search/issues/{search_string}:
+    get:
+      tags:
+        - Issues
+      summary: Search Issues
+      description: >-
+        Search Endpoint for all issue data. If no operator is used, "name"
+        field is searched. This response is limited to 10,000 items. Results are paginated.
+
+
+        Valid Search Keywords ('**search_string' parameter)**:
+
+
+        - collection:name_123k221
+            
+        - name:string
+            
+        - uid:12345
+            
+        - tag:tag_name
+            
+        - last_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - YYYY-MM-DD
+                
+            - configured_scan_count
+                
+        - last_seen_before:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - YYYY-MM-DD
+                
+            - configured_scan_count
+                
+        - first_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - YYYY-MM-DD
+                
+            - configured_scan_count
+                
+        - entity_uid:12345
+            
+        - entity_type:string
+            
+            - ApiEndpoint, AppEndpoint, AutonomousSystem, AwsEC2Instance, AwsRdsDbInstance, AwsS3Bucket, AzureStorageAccount, AzureVirtualMachine, DnsRecord, Domain, EmailAddress, GcpApiGateway, GcpAppEngineApplication, GcpCloudFunction, GcpCloudSQLInstance, GcpComputeEngineInstance, GcpStorageBucket, GithubAccount, GithubRepository, IpAddress, Nameserver, NetBlock, NetworkService, SslCertificate, UniqueKeyword, UniqueToken, Uri
+                
+        - entity_name:string
+            
+        - scoped:true | false
+            
+        - severity:integer 1-5
+            
+        - severity_lte:integer 1-5
+            
+        - severity_gte:integer 1-5
+            
+        - status_new:open or closed
+            
+        - status:string
+            
+            - open_triaged, open_in_progress, closed_mitigated, closed_resolved, closed_duplicate, closed_out_of_scope, closed_benign, closed_risk_accepted, closed_false_positive, closed_no_reproduce, closed_tracked_externally
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+          description: >-
+            Optional: Used to control how many results returned per page
+            <default 50, max 1000> 
+          example: '1'
+        - name: page_token
+          in: query
+          schema:
+            type: string
+          description: >-
+            Optional: Used to get the next page of results. Use the value from
+            next_page_token in results. The next_page_token will change with
+            each new page. When using page_token do not use the "page" key. 
+          example: >
+            eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJaaXRVdGVIOV9ORUNlY2RnIiwidGFnIjoiN0JWUnk0QjRXalNTN1dCWmMwY2FWdyJ9.dpg0fRevYn8P6TocpJ9DUSxVFurrYXqaXuqGI8CaK2o.NoNoFUbHyAEh6ckk.3hOnO4BKO57sBoTvCCxrK_QJLxFZKRID98b9MklxR1FpZW2dZpNEQHSilyXaWAwC6-qXX5hL6Xr0SNQGyWFNHQp2GFmAzAaBalRpohwB1ADZ6ALj93juPChmaQLjsfTQOEFOnVdFhxx_wo_cfXWqGUn_SIxcm309dHT9-SvbNF7XtDaZ6U4sg3F7NORR8lKTyrCQvf2l4itOw0HAKxePav1ys_tIiTJx4ct-utmIYg6eB8vjVpDflhblQe7_JqlDTbI8JWX4GqL2tqmDvCHcpxOiSPPENzYV2D-C1xoTRCctfaZRh9BERs_cFA.OmkBu4OHPgXcnATiO5FcCw
+        - name: search_string
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            Example with multiple keywords. If no string is entered all issues
+            for the project will be returned
+          example: >-
+            collection:collectionname_a6mz56o first_seen_after:2022-01-01
+            last_seen_before:last_refresh
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:17:48 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '3908'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Search completed!
+                result:
+                  search:
+                    search_body:
+                      query:
+                        bool:
+                          must:
+                            range:
+                              first_seen:
+                                gte: '2022-01-01T00:00:00Z'
+                          filter:
+                            bool:
+                              should:
+                                - bool:
+                                    must:
+                                      - match:
+                                          collection: collectionname_a6mz56o
+                                      - range:
+                                          last_seen:
+                                            lte: '2023-01-31T18:59:39Z'
+                      aggs:
+                        collection_bucket:
+                          terms:
+                            field: collection
+                            size: 10
+                        confidence:
+                          terms:
+                            field: summary.confidence
+                            size: 3
+                        issue_name_bucket:
+                          terms:
+                            field: name.raw
+                            size: 10
+                        severity_bucket:
+                          terms:
+                            field: summary.severity
+                            size: 5
+                        status_bucket:
+                          terms:
+                            field: summary.status
+                            size: 10
+                        status_new_bucket:
+                          terms:
+                            field: summary.status_new.raw
+                            size: 10
+                        ticket_list_bucket:
+                          terms:
+                            field: summary.ticket_list.raw
+                            size: 50
+                      sort:
+                        - last_seen: asc
+                        - _doc
+                    search_string: >-
+                      collection:collectionname_a6mz56o
+                      first_seen_after:2022-01-01 last_seen_before:last_refresh
+                    search_type: issues
+                    sort_direction: asc
+                    sort_field: last_seen
+                    group_by_field: null
+                  total_hits: 3945
+                  timed_out: false
+                  more: true
+                  page: 0
+                  page_size: 1
+                  total_pages: 3945
+                  hits:
+                    - id: >-
+                        2e0134b5b346a5d0a9d5ee0efe7dfb69dfcc5c1cf65a6df63568f85dc587a120
+                      alias_group: '86373'
+                      dynamic_id: 21852016
+                      name: inferred_cve_2019_10081
+                      first_seen: '2022-10-07T17:36:37.000Z'
+                      last_seen: '2022-10-07T17:36:37.000Z'
+                      collection: collectionname_a6mz56o
+                      collection_type: user_collection
+                      collection_uuid: f12c71db-d34d-4733-a19e-b8742ed7eb70
+                      organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                      entity_type: Intrigue::Entity::Uri
+                      entity_name: https://www.gridability.eu:443
+                      entity_uid: >-
+                        2a7cdfb23b2253a9ea4cc88962e0b7cd9b1622f7d44e56f675a8700b934d1f51
+                      upstream: intrigue
+                      summary:
+                        pretty_name: >-
+                          Apache HTTPD 2.4.39 mod_http2 Resource Exhaustion
+                          Vulnerability (Inferred CVE-2019-10081)
+                        severity: 2
+                        scoped: true
+                        confidence: potential
+                        status: open_new
+                        category: unknown
+                        identifiers:
+                          - name: CVE-2019-10081
+                            type: CVE
+                        status_new: open
+                        status_new_detailed: new
+                        ticket_list: []
+                      tags: []
+                  aggregations:
+                    severity_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: '1'
+                          doc_count: 1697
+                        - key: '3'
+                          doc_count: 798
+                        - key: '2'
+                          doc_count: 726
+                        - key: '5'
+                          doc_count: 569
+                        - key: '4'
+                          doc_count: 155
+                    ticket_list_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets: []
+                    issue_name_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 2220
+                      buckets:
+                        - key: inferred_cve_2021_40438
+                          doc_count: 265
+                        - key: inferred_cve_2020_11022
+                          doc_count: 248
+                        - key: inferred_cve_2020_11023
+                          doc_count: 248
+                        - key: inferred_cve_2019_11358
+                          doc_count: 237
+                        - key: inferred_cve_2015_9251
+                          doc_count: 206
+                        - key: deprecated_ssl_protocol_detected
+                          doc_count: 178
+                        - key: weak_ssl_ciphers_enabled
+                          doc_count: 99
+                        - key: wordpress_api_exposed
+                          doc_count: 88
+                        - key: wordpress_admin_login_exposed
+                          doc_count: 81
+                        - key: wordpress_user_info_leak
+                          doc_count: 75
+                    status_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: open_new
+                          doc_count: 3940
+                        - key: open_triaged
+                          doc_count: 3
+                        - key: closed_benign
+                          doc_count: 1
+                        - key: closed_tracked_externally
+                          doc_count: 1
+                    collection_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: collectionname_a6mz56o
+                          doc_count: 3945
+                    confidence:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: potential
+                          doc_count: 2834
+                        - key: confirmed
+                          doc_count: 1111
+                    status_new_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: open
+                          doc_count: 3943
+                        - key: closed
+                          doc_count: 2
+                  next_page_token: >-
+                    eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJDMmhPQlRweE5jT2psUTNlIiwidGFnIjoiTGpqaFhvQ1F0RWZjXzdJTkt4ZG5XZyJ9.MmWAi13CT942tNOv07i7l40wt9wm4XKt9PZ10x34cu0.0GDiGDyp6Snff9mk.MVB3X0pjYjkN8-9-glzlVQl5VjsAMkxtkFN_A8ZELCUGnpSg-pUEfMntNZ4iglMLk7amm4Bh7saZ2QGzNRLCmGcwIxlmSqTWqB1UrSRRkdMpHec5O1EdAyh41SK4B2Vh8DnTnBwLQFYdExi82oNobIX5tWdJmVKdsAFFm7F_0gW1J2TR49HreXyXxv5UtCRvFf3FlqvbPzWEO6cyQ8eMUuNEGvLi_F5YncAfxwsjuNY-FHk-TUl0aUOEj3mD4ZnaokFI4HK6SB95SqJ7WCFSf3iSulVSMihnuJ7e0V_YCS9Lrk8n6DSOHdPelQ.-Z1v3MQn335tNg7FcflqPA
+  /api/v1/issues/{id}:
+    get:
+      tags:
+        - Issues
+      summary: Get Detail
+      description: Gets an individual entity's details
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 22:22:45 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '2099'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: successfully returned issue
+                result:
+                  uuid: 9fc77fef-6362-4aef-a154-0ab4a058d5de
+                  dynamic_id: 6437944
+                  entity_uid: >-
+                    a4cfa1f3c7864d343f8b9568248ad7550400598ddf10ea18959c860ca6253a01
+                  alias_group: '1156748'
+                  category: misconfiguration
+                  confidence: confirmed
+                  description: >-
+                    This server is configured to allow a deprecated ssl / tls
+                    protocol.
+                  details:
+                    name: deprecated_ssl_protocol_detected
+                    added: '2020-01-01'
+                    proof:
+                      details:
+                        type: tls
+                        enabled: '1'
+                        version: '1.1'
+                      description: Target supports deprecated protocol tls with version 1.1
+                    source: tls:1.1
+                    category: misconfiguration
+                    severity: '5'
+                    references:
+                      - uri: >-
+                          https://tools.ietf.org/id/draft-moriarty-tls-oldversions-diediedie-00.html
+                        type: description
+                    description: >-
+                      This server is configured to allow a deprecated ssl / tls
+                      protocol.
+                    pretty_name: Deprecated SSL/TLS Protocol Detected
+                    remediation: >-
+                      Disable the weak protocol according the the instructions
+                      for your web server.
+                  first_seen: '2022-08-18T17:12:20.000Z'
+                  identifiers: null
+                  last_seen: '2022-08-23T20:05:56.000Z'
+                  name: deprecated_ssl_protocol_detected
+                  pretty_name: Deprecated SSL/TLS Protocol Detected
+                  scoped: true
+                  severity: 5
+                  source: null
+                  status: open_triaged
+                  ticket_list: null
+                  type: standard
+                  uid: >-
+                    8e02af6c136f297aa8fece36726a6d659bf59f512ca8a90350d93038215a19d7
+                  upstream: tls:1.1
+                  created_at: '2022-09-25T05:21:20.000Z'
+                  updated_at: '2023-02-11T17:39:17.810Z'
+                  entity_id: 186794841
+                  collection_id: 132956
+                  elasticsearch_mappings_hash: null
+                  collection: collectionname_mw3tdwq
+                  collection_type: user_collection
+                  collection_uuid: cb502f1e-10a8-4520-a620-e02614526ee9
+                  organization_uuid: 092c7588-fe6f-454e-a071-34a7342c16a3
+                  entity_name: https://domain.app:443
+                  entity_type: Intrigue::Entity::Uri
+                  summary:
+                    pretty_name: Deprecated SSL/TLS Protocol Detected
+                    severity: 5
+                    scoped: true
+                    confidence: confirmed
+                    status: open_triaged
+                    category: misconfiguration
+                    identifiers: null
+                    status_new: open
+                    status_new_detailed: triaged
+                    ticket_list: null
+                  tags: []
+  /api/v1/issues/{id}/status:
+    post:
+      tags:
+        - Issues
+      summary: Set Status
+      description: >-
+        Set status on an individual entity. The body takes a json input with a
+        single 'status' field.
+
+
+        Values for Payload status:
+
+
+        - open_new
+
+        - open_triaged
+
+        - open_in_progress
+
+        - closed_resolved
+
+        - closed_duplicate
+
+        - closed_out_of_scope
+
+        - closed_benign
+
+        - closed_risk_accepted
+
+        - closed_false_positive
+
+        - closed_no_repro
+
+        - closed_tracked_externally
+
+        - closed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                status: open_triaged
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: id from {{base_url}}/api/v1/search/issues/'
+      responses:
+        undefined:
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Successfully reported status as open_triaged
+                result: true
+  /api/v1/time_series/point_in_time/entities/{uid}:
+    get:
+      tags:
+        - Time Series
+      summary: Get Entity point in time
+      description: >-
+        Returns entity details of an entity for a specific point in time.
+
+
+        | **Key** | Format | **Notes** |
+
+        | --- | --- | --- |
+
+        | uid | string | required  <br>  <br>id or uuid from
+        [https://asm-api.advantage.mandiant.com/api/v1/search/entities/:search_string](https://asm-api.advantage.mandiant.com/api/v1/search/entities/:search_string)
+        |
+
+        | point_in_time | YYYY-MM-DD or ISO8601 timestamp string (UTC) |
+        required  <br>  <br>Results from from
+        [https://asm-api.advantage.mandiant.com/api/v1/time_series/points_in_time/entities/:uid?start=](https://asm-api.advantage.mandiant.com/api/v1/time_series/points_in_time/entities/:uid?start=) 
+        <br>  <br>  <br>Example: 2023-06-26T09:50:20Z, or YYYY-MM-DD |
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: point_in_time
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z 
+
+            From
+            {{base_url}}/api/v1/time_series/points_in_time/entities/:uid?start=
+          example: '2023-07-23'
+        - name: uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: id or uuid from {{base_url}}/api/v1/search/entities/:search_string
+          example: 28abaa9fea296764a8da0f76832056773852f5f82ae553769fd3b462a46bc205
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 18 Aug 2023 20:12:29 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '7167'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  entity:
+                    uid: >-
+                      28abaa9fea296764a8da0f76832056773852f5f82ae553769fd3b462a46bc205
+                    name: https://attacksurface.app:8443
+                    seed: false
+                    tags: []
+                    type: Intrigue::Entity::Uri
+                    uuid: 52a1e3fb-0f83-4186-bbb7-15218cc8cdaa
+                    hidden: false
+                    scoped: true
+                    source: null
+                    status: null
+                    aliases: null
+                    deleted: false
+                    details:
+                      asn: null
+                      ssl: 1
+                      uri: https://attacksurface.app:8443
+                      code: '403'
+                      port: 8443
+                      forms: false
+                      title: CNAME Cross-User Banned | Cloudflare
+                      verbs: null
+                      cookies: null
+                      headers:
+                        - 'date: Sat, 22 Jul 2023 04:35:01 GMT'
+                        - 'content-type: text/html; charset=UTF-8'
+                        - 'content-length: 6282'
+                        - >-
+                          report-to:
+                          {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=S73LNOORxYqJ7nlhuLVyKFRWA1NDKf7l45RmVQgHiaRAUf3pyrEVvjAwmkWTpkv0BqG4AjwQkd%2FDADXSOPIEwOuKWVPMHQ4ZkTbZRr1pPmMwbT0JfAlXcR%2BoFiWJn8zJPkmtfQm794Kh"}],"group":"cf-nel","max_age":604800}
+                        - >-
+                          nel:
+                          {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+                        - 'x-frame-options: SAMEORIGIN'
+                        - 'referrer-policy: same-origin'
+                        - >-
+                          cache-control: private, max-age=0, no-store, no-cache,
+                          must-revalidate, post-check=0, pre-check=0
+                        - 'expires: Thu, 01 Jan 1970 00:00:01 GMT'
+                        - 'server: cloudflare'
+                        - 'cf-ray: 7ea8f97ff9d7081e-IAD'
+                        - 'alt-svc: h3=":8443"; ma=86400'
+                      host_id: 9416579
+                      net_geo: US
+                      scripts:
+                        - https://performance.radar.cloudflare.com/beacon.js
+                      service: https
+                      auth.2fa: true
+                      auth.any: false
+                      dom_sha1: 4272956ee10a520790a681365631f1617b5c122c
+                      net_name: ''
+                      protocol: tcp
+                      alt_names:
+                        - attacksurface.app
+                        - attacksurface.app
+                      auth.ntlm: false
+                      generator: null
+                      auth.basic: false
+                      auth.forms: false
+                      ip_address: 2606:4700:3035::6815:807
+                      favicon_md5: null
+                      fingerprint:
+                        - cpe: 'cpe:2.3:s:cloudflare:cloudflare::'
+                          hide: false
+                          tags:
+                            - CDN
+                            - WAF
+                            - PaaS
+                          type: fingerprint
+                          tasks: null
+                          issues: null
+                          method: ident
+                          update: null
+                          vendor: Cloudflare
+                          product: Cloudflare
+                          version: null
+                          inference: false
+                          description: Cloudflare - Headers Match
+                          match_logic: any
+                          positive_matches:
+                            - match_type: content_headers
+                              match_content: (?i-mx:^cf(-)?ray:)
+                            - match_type: content_headers
+                              match_content: (?i-mx:^cf-ray:)
+                            - match_type: content_headers
+                              match_content: '(?i-mx:^server: cloudflare$)'
+                      geolocation:
+                        city: Toronto
+                        postal: M5A
+                        country: Canada
+                        latitude: 43.6532
+                        continent: North America
+                        longitude: -79.3832
+                        time_zone: America/Toronto
+                        country_code: CA
+                        continent_code: NA
+                      api_endpoint: false
+                      cloud_hosted: true
+                      favicon_sha1: null
+                      domain_cookies: null
+                      redirect_chain: []
+                      redirect_count: 0
+                      cloud_providers:
+                        - Cloudflare
+                      net_country_code: null
+                      certificate_chain:
+                        - expiration: 2023-09-30 10:16:38 +0000 UTC
+                          issuerCommonName: GTS CA 1P5
+                          subjectCommonName: attacksurface.app
+                          signatureAlgorithm: SHA256-RSA
+                          certificateAuthority: false
+                        - expiration: 2027-09-30 00:00:42 +0000 UTC
+                          issuerCommonName: GTS Root R1
+                          subjectCommonName: GTS CA 1P5
+                          signatureAlgorithm: SHA256-RSA
+                          certificateAuthority: true
+                        - expiration: 2028-01-28 00:00:42 +0000 UTC
+                          issuerCommonName: GlobalSign Root CA
+                          subjectCommonName: GTS Root R1
+                          signatureAlgorithm: SHA256-RSA
+                          certificateAuthority: true
+                      screenshot_exists: true
+                      cloud_fingerprints:
+                        - cloudflare
+                      response_data_hash: l2uJoJvtMPtz47QOjh3Fyx2A5dMp2Y6YLIr8C0AWZeU=
+                      exfil_lookup_identifier: 1f1ff837b6c05d37ad393e3d2daf6821
+                    summary:
+                      http:
+                        auth:
+                          2fa: true
+                          any: false
+                          ntlm: false
+                          basic: false
+                          forms: false
+                        code: 403
+                        title: CNAME Cross-User Banned | Cloudflare
+                        content:
+                          hash: null
+                          forms: false
+                          favicon_hash: null
+                      ports:
+                        tcp:
+                          - 8443
+                        udp: []
+                        count: 1
+                      vulns:
+                        vulns: []
+                        current_count: 0
+                      issues:
+                        current_count: 2
+                        all_time_count: 2
+                        critical_or_high: false
+                        current_with_cve: 0
+                        current_by_severity:
+                          '5': 2
+                        all_time_by_severity:
+                          '5': 2
+                      scoped: true
+                      network:
+                        asn: null
+                        name: ''
+                        type: null
+                        route: null
+                      technology:
+                        cpes:
+                          - cpe: 'cpe:2.3:s:cloudflare:cloudflare::'
+                            detection_method: Cloudflare - Headers Match
+                          - cpe: 'cpe:2.3:s:attacksurface:attacksurface::'
+                            detection_method: 'Host DNS Resolution: subfinder'
+                        cloud: true
+                        technologies:
+                          - Cloudflare
+                          - Attacksurface
+                        cloud_providers:
+                          - Cloudflare
+                        technology_labels:
+                          - CDN
+                          - PaaS
+                          - WAF
+                          - enterprise software
+                          - hosting
+                          - security
+                          - technology
+                      geolocation:
+                        asn: null
+                        city: Toronto
+                        latitude: 43.6532
+                        longitude: -79.3832
+                        country_code: CA
+                        country_name: null
+                      task_results:
+                        - port_scan
+                        - port_scan_lambda
+                        - search_shodan_ranger
+                        - port_scan
+                        - port_scan_lambda
+                        - search_shodan_ranger
+                      screenshot_exists: true
+                    category: null
+                    ancestors:
+                      - name: attacksurface.app
+                        type: Intrigue::Entity::Domain
+                    deny_list: false
+                    last_seen: '2023-07-22T06:19:37.000Z'
+                    allow_list: false
+                    collection: broadscopeenabled_g6zjj10
+                    confidence: null
+                    created_at: '2023-04-20T16:47:46.856Z'
+                    dynamic_id: Intrigue::Entity::Uri#https://attacksurface.app:8443
+                    first_seen: '2023-04-20T16:47:03.000Z'
+                    updated_at: '2023-07-22T06:21:11.497Z'
+                    alias_group: 088de90f6772b88c94554175dea71bdbe542db40
+                    description: null
+                    fingerprint:
+                      - cpe: 'cpe:2.3:s:cloudflare:cloudflare::'
+                        hide: false
+                        tags:
+                          - CDN
+                          - WAF
+                          - PaaS
+                        type: fingerprint
+                        tasks: null
+                        issues: null
+                        method: ident
+                        update: null
+                        vendor: Cloudflare
+                        product: Cloudflare
+                        version: null
+                        inference: false
+                        description: Cloudflare - Headers Match
+                        match_logic: any
+                        local_icon_path: /assets/fingerprints/cloudflare.png
+                        positive_matches:
+                          - match_type: content_headers
+                            match_content: (?i-mx:^cf(-)?ray:)
+                          - match_type: content_headers
+                            match_content: (?i-mx:^cf-ray:)
+                          - match_type: content_headers
+                            match_content: '(?i-mx:^server: cloudflare$)'
+                    details_file: >-
+                      data/v5/broadscopeenabled_g6zjj10/2023_07_22_06_19_37/entities/dd31a13bb1d554c1e522fa7703ce8650d263b15d.json
+                    task_results:
+                      - name: port_scan_on_172.67.156.152
+                        task: port_scan
+                        depth: 4
+                        entity_name: 172.67.156.152
+                        entity_type: Intrigue::Entity::IpAddress
+                      - name: port_scan_lambda_on_172.67.156.152
+                        task: port_scan_lambda
+                        depth: 4
+                        entity_name: 172.67.156.152
+                        entity_type: Intrigue::Entity::IpAddress
+                      - name: search_shodan_ranger_on_172.67.156.152
+                        task: search_shodan_ranger
+                        depth: 4
+                        entity_name: 172.67.156.152
+                        entity_type: Intrigue::Entity::IpAddress
+                      - name: port_scan_on_104.21.8.7
+                        task: port_scan
+                        depth: 4
+                        entity_name: 104.21.8.7
+                        entity_type: Intrigue::Entity::IpAddress
+                      - name: port_scan_lambda_on_104.21.8.7
+                        task: port_scan_lambda
+                        depth: 4
+                        entity_name: 104.21.8.7
+                        entity_type: Intrigue::Entity::IpAddress
+                      - name: search_shodan_ranger_on_104.21.8.7
+                        task: search_shodan_ranger
+                        depth: 4
+                        entity_name: 104.21.8.7
+                        entity_type: Intrigue::Entity::IpAddress
+                    collection_id: 142553
+                    scoped_reason: allow_list_override
+                    collection_name: broadscopeenabled_g6zjj10
+                    collection_type: user_collection
+                    collection_uuid: 2ffc71a9-8588-4612-9a1c-95784e7b9b8e
+                    collection_naics: null
+                    organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                    elasticsearch_mappings_hash: 8ed8ab645a58aab29a6a36b4ab0512fa
+                  point_in_time: '2023-07-23T00:00:00.000Z'
+  /api/v1/time_series/points_in_time/entities/{uid}:
+    get:
+      tags:
+        - Time Series
+      summary: Get Entity points in time
+      description: Returns the dates of when an entity was seen.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z
+          example: '2023-07-16T08:36:54Z'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z
+          example: '2023-08-02T09:50:20Z'
+        - name: uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: id or uuid from {{base_url}}/api/v1/search/entities/:search_string
+          example: 28abaa9fea296764a8da0f76832056773852f5f82ae553769fd3b462a46bc205
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 18 Aug 2023 20:03:46 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '739'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  entity:
+                    uid: >-
+                      28abaa9fea296764a8da0f76832056773852f5f82ae553769fd3b462a46bc205
+                    points_in_time:
+                      - '2023-07-22T06:19:37Z'
+                      - '2023-07-23T09:54:03Z'
+                      - '2023-07-24T11:18:18Z'
+                      - '2023-07-25T10:18:06Z'
+                      - '2023-07-26T08:37:46Z'
+                      - '2023-07-27T12:15:42Z'
+                      - '2023-07-28T16:47:30Z'
+                      - '2023-07-29T06:31:11Z'
+                      - '2023-07-30T08:06:11Z'
+                      - '2023-08-01T00:37:56Z'
+                      - '2023-08-02T22:40:57Z'
+                      - '2023-08-03T11:55:00Z'
+                      - '2023-08-04T11:27:48Z'
+                      - '2023-08-05T05:33:34Z'
+                      - '2023-08-06T04:49:42Z'
+                      - '2023-08-08T01:20:45Z'
+                      - '2023-08-09T08:10:57Z'
+                      - '2023-08-10T02:11:53Z'
+                      - '2023-08-12T22:27:46Z'
+                      - '2023-08-14T02:34:19Z'
+                      - '2023-08-16T00:30:05Z'
+                      - '2023-08-17T05:59:09Z'
+                      - '2023-08-18T01:21:47Z'
+                  start: '2023-07-16T08:36:54Z'
+                  end: '2023-08-18T09:50:20Z'
+  /api/v1/time_series/point_in_time/issues/{uid}:
+    get:
+      tags:
+        - Time Series
+      summary: Get Issue point in time
+      description: >-
+        Returns issue details of an issue for a specific point in time.
+
+
+        | **Key** | Format | **Notes** |
+
+        | --- | --- | --- |
+
+        | uid | string | required  <br>  <br>id or uuid from
+        [https://asm-api.advantage.mandiant.com/api/v1/search/issues/:search_string](https://asm-api.advantage.mandiant.com/api/v1/search/issues/:search_string)
+        |
+
+        | point_in_time | YYYY-MM-DD or ISO8601 timestamp string (UTC) |
+        required  <br>  <br>Results from from
+        [https://asm-api.advantage.mandiant.com/api/v1/time_series/points_in_time/issues/:uid?start=](https://asm-api.advantage.mandiant.com/api/v1/time_series/points_in_time/issues/:uid?start=) 
+        <br>  <br>  <br>Example: 2023-06-26T09:50:20Z, or YYYY-MM-DD |
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: point_in_time
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z 
+          example: '2023-08-02'
+        - name: uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: id or uuid from {{base_url}}/api/v1/search/issues/:search_string
+          example: 9ae8bad035ed88b7f2cf7636fddd2b3edbee6ca4d308ac17ccbfa079ef600da0
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 18 Aug 2023 21:14:57 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '2415'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  issue:
+                    uid: >-
+                      9ae8bad035ed88b7f2cf7636fddd2b3edbee6ca4d308ac17ccbfa079ef600da0
+                    name: deprecated_ssl_protocol_detected
+                    tags: []
+                    type: standard
+                    uuid: 7cbdbac4-0b62-430d-a0a0-0bb83185fb12
+                    scoped: true
+                    source: intrigue
+                    status: open_new
+                    details:
+                      name: deprecated_ssl_protocol_detected
+                      added: '2020-01-01'
+                      proof:
+                        description: >-
+                          It has been identified that the target supports one or
+                          more deprecated protocols
+                        deprecated_protocols:
+                          - type: tls
+                            enabled: '1'
+                            version: '1.0'
+                          - type: tls
+                            enabled: '1'
+                            version: '1.1'
+                      status: confirmed
+                      category: misconfiguration
+                      severity: 5
+                      references:
+                        - uri: https://www.ssl.com/article/deprecating-early-tls/
+                          type: description
+                        - uri: >-
+                            https://support.globalsign.com/ssl/general-ssl/how-enable-or-disable-ssl-and-tls-versions
+                          type: remediation
+                      description: >-
+                        This server is configured to allow a deprecated ssl /
+                        tls protocol.
+                      pretty_name: Deprecated SSL/TLS Protocol Detected
+                      remediation: >-
+                        Disable the weak protocol according the instructions for
+                        your web server.
+                    summary:
+                      scoped: true
+                      status: open_new
+                      category: misconfiguration
+                      severity: 5
+                      confidence: confirmed
+                      status_new: open
+                      identifiers: null
+                      pretty_name: Deprecated SSL/TLS Protocol Detected
+                      ticket_list: []
+                      status_new_detailed: new
+                    category: misconfiguration
+                    severity: 5
+                    upstream: intrigue
+                    entity_id: 398829558
+                    last_seen: '2023-08-01T00:37:56.000Z'
+                    collection: broadscopeenabled_g6zjj10
+                    confidence: confirmed
+                    created_at: '2023-04-20T16:47:47.709Z'
+                    dynamic_id: 35906366
+                    entity_uid: >-
+                      28abaa9fea296764a8da0f76832056773852f5f82ae553769fd3b462a46bc205
+                    first_seen: '2023-04-20T16:47:03.000Z'
+                    updated_at: '2023-08-01T02:14:33.057Z'
+                    alias_group: '38'
+                    description: >-
+                      This server is configured to allow a deprecated ssl / tls
+                      protocol.
+                    entity_name: https://attacksurface.app:8443
+                    entity_type: Intrigue::Entity::Uri
+                    identifiers: null
+                    pretty_name: Deprecated SSL/TLS Protocol Detected
+                    ticket_list: []
+                    collection_id: 142553
+                    collection_type: user_collection
+                    collection_uuid: 2ffc71a9-8588-4612-9a1c-95784e7b9b8e
+                    epss_v2_score_lte: null
+                    organization_uuid: 075892c8-fe6f-454e-a071-34a7342c16a3
+                    cisa_known_exploited: false
+                    epss_v2_percentile_gte: null
+                    elasticsearch_mappings_hash: 2e1457527740b3d5d83404bcae8f15bf
+                  point_in_time: '2023-08-02T00:00:00.000Z'
+  /api/v1/time_series/points_in_time/issues/{uid}:
+    get:
+      tags:
+        - Time Series
+      summary: Get Issue points in time
+      description: Returns the dates of when an issue was seen.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: start
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z 
+          example: '2023-07-16'
+        - name: end
+          in: query
+          schema:
+            type: string
+          description: >-
+            required, YYYY-MM-DD or ISO8601 timestamp string (UTC), Example:
+            2023-06-16T09:50:20Z 
+          example: '2023-08-18'
+        - name: uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: id or uuid from {{base_url}}/api/v1/search/issues/:search_string
+          example: 9ae8bad035ed88b7f2cf7636fddd2b3edbee6ca4d308ac17ccbfa079ef600da0
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Fri, 18 Aug 2023 20:04:54 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '715'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  issue:
+                    uid: >-
+                      9ae8bad035ed88b7f2cf7636fddd2b3edbee6ca4d308ac17ccbfa079ef600da0
+                    points_in_time:
+                      - '2023-07-22T06:19:37Z'
+                      - '2023-07-23T09:54:03Z'
+                      - '2023-07-24T11:18:18Z'
+                      - '2023-07-25T10:18:06Z'
+                      - '2023-07-26T08:37:46Z'
+                      - '2023-07-27T12:15:42Z'
+                      - '2023-07-28T16:47:30Z'
+                      - '2023-07-29T06:31:11Z'
+                      - '2023-07-30T08:06:11Z'
+                      - '2023-08-01T00:37:56Z'
+                      - '2023-08-02T22:40:57Z'
+                      - '2023-08-03T11:55:00Z'
+                      - '2023-08-04T11:27:48Z'
+                      - '2023-08-05T05:33:34Z'
+                      - '2023-08-06T04:49:42Z'
+                      - '2023-08-08T01:20:45Z'
+                      - '2023-08-09T08:10:57Z'
+                      - '2023-08-10T02:11:53Z'
+                      - '2023-08-12T22:27:46Z'
+                      - '2023-08-14T02:34:19Z'
+                      - '2023-08-16T00:30:05Z'
+                      - '2023-08-17T05:59:09Z'
+                  start: '2023-07-16T00:00:00Z'
+                  end: '2023-08-18T00:00:00Z'
+  /api/v1/search/technologies/{search_string}:
+    get:
+      tags:
+        - Technologies
+      summary: Search Technologies
+      description: >-
+        Search Endpoint for all technology data. If no operator is used, "name"
+        field is searched. This response is limited to 10,000 items. Results are paginated.
+
+
+        Valid Search Keywords ('**search_string' parameter)**:
+
+
+        - collection:intrigue_123k221
+            
+        - name:google_analytics
+            
+        - label:wordpress_plugin
+            
+        - last_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - last_seen_before:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - first_seen_after:string
+            
+            - last_scan_count_1 (1-10)
+                
+            - last_refresh
+                
+            - configured_scan_count
+                
+            - YYYY-MM-DD
+                
+        - cpe_type:application or service, hardware, os
+            
+        - product:text
+            
+        - vendor:google
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: search_string
+          in: path
+          schema:
+            type: string
+          required: true
+          description: sample with multiple filters
+          example: cpe:"cpe:2.3:s:cloudflare:cloudflare::"
+      responses:
+        undefined:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Search completed!
+                result:
+                  search:
+                    search_body:
+                      query:
+                        bool:
+                          filter:
+                            - bool:
+                                should:
+                                  - match:
+                                      collection: collectinname_mw3tdwq
+                      aggs:
+                        collection_bucket:
+                          terms:
+                            field: collection
+                            size: 10
+                        vendor_bucket:
+                          terms:
+                            field: vendor
+                            size: 10
+                        product_bucket:
+                          terms:
+                            field: product
+                            size: 20
+                        label_bucket:
+                          terms:
+                            field: labels
+                            size: 20
+                      sort:
+                        - last_seen: asc
+                        - _doc
+                    search_string: ''
+                    search_type: technologies
+                    sort_direction: asc
+                    sort_field: last_seen
+                    group_by_field: null
+                  total_hits: 2
+                  timed_out: false
+                  more: false
+                  page: 0
+                  page_size: 50
+                  total_pages: 0
+                  hits:
+                    - id: >-
+                        1e3f72d7464444970f241dd3ee056456818d2ed51da1a2041c20da4a840c6314
+                      name: Cloudflare
+                      dynamic_id: 'cpe:2.3:s:cloudflare:cloudflare::'
+                      collection: collectionname_mw3tdwq
+                      collection_type: UserCollection
+                      collection_naics: []
+                      collection_uuid: null
+                      organization_uuid: null
+                      cpe: 'cpe:2.3:s:cloudflare:cloudflare::'
+                      cpe_type: service
+                      first_seen: '2022-08-18T21:07:16Z'
+                      last_seen: '2022-09-09T06:02:08Z'
+                      labels:
+                        - cdn
+                        - paas
+                        - waf
+                      vendor: Cloudflare
+                      product: Cloudflare
+                      version: ''
+                      update: ''
+                      unique_instance_count: 8
+                      instances:
+                        - >-
+                          36ef1c6be38e83da694a16aae40cf8bb9b437feef16062cd198ffd1fd8016757
+                        - >-
+                          2efe370ffbfdbd1a6a8b2f829261cb915f3de9cc58e0e62bf30f91163afe4aa6
+                        - >-
+                          e0adf7542a95bac4e27c3f262b8fa65c690ef21ec8fd29319aabf64cbd6635eb
+                        - >-
+                          88dc130e69d5ed2d220117f00bd19114266b518cf2a4c0a9a8abb774df724897
+                        - >-
+                          178391e700e4d16549b6976f239ba077b72662db5e9d34259f8cc637539fd394
+                        - >-
+                          c13b89223e6f034fa0fe9d56ed5badc0527c9c74a6df10c0ff4611a964a2127a
+                        - >-
+                          a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                        - >-
+                          27876b9959a1feef847cd3b05f8fd08086f60898179aa7b8b55b9fbf849a831f
+                      updated_at: '2022-09-09T06:02:16Z'
+                      collection_tags: []
+                    - id: >-
+                        0453aee6881543d07c1bb2ec0f4de1a0ff0fc23ef089c5bd425e9c29db2dbfbf
+                      name: Attacksurface
+                      dynamic_id: 'cpe:2.3:s:attacksurface:attacksurface::'
+                      collection: collectionnname_mw3tdwq
+                      collection_type: UserCollection
+                      collection_naics: []
+                      collection_uuid: null
+                      organization_uuid: null
+                      cpe: 'cpe:2.3:s:attacksurface:attacksurface::'
+                      cpe_type: service
+                      first_seen: '2022-08-19T22:57:21Z'
+                      last_seen: '2022-09-09T06:02:09Z'
+                      labels: []
+                      vendor: Attacksurface
+                      product: Attacksurface
+                      version: ''
+                      update: ''
+                      unique_instance_count: 2
+                      instances:
+                        - >-
+                          88dc130e69d5ed2d220117f00bd19114266b518cf2a4c0a9a8abb774df724897
+                        - >-
+                          a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                      updated_at: '2022-09-09T06:02:16Z'
+                      collection_tags: []
+                  aggregations:
+                    collection_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: attacksurface_mw3tdwq
+                          doc_count: 2
+                    label_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: cdn
+                          doc_count: 1
+                        - key: paas
+                          doc_count: 1
+                        - key: waf
+                          doc_count: 1
+                    product_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: Attacksurface
+                          doc_count: 1
+                        - key: Cloudflare
+                          doc_count: 1
+                    vendor_bucket:
+                      doc_count_error_upper_bound: 0
+                      sum_other_doc_count: 0
+                      buckets:
+                        - key: Attacksurface
+                          doc_count: 1
+                        - key: Cloudflare
+                          doc_count: 1
+                  next_page_token: >-
+                    eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJDMmhPQlRweE5jT2psUTNlIiwidGFnIjoiTGpqaFhvQ1F0RWZjXzdJTkt4ZG5XZyJ9.MmWAi13CT942tNOv07i7l40wt9wm4XKt9PZ10x34cu0.0GDiGDyp6Snff9mk.MVB3X0pjYjkN8-9-glzlVQl5VjsAMkxtkFN_A8ZELCUGnpSg-pUEfMntNZ4iglMLk7amm4Bh7saZ2QGzNRLCmGcwIxlmSqTWqB1UrSRRkdMpHec5O1EdAyh41SK4B2Vh8DnTnBwLQFYdExi82oNobIX5tWdJmVKdsAFFm7F_0gW1J2TR49HreXyXxv5UtCRvFf3FlqvbPzWEO6cyQ8eMUuNEGvLi_F5YncAfxwsjuNY-FHk-TUl0aUOEj3mD4ZnaokFI4HK6SB95SqJ7WCFSf3iSulVSMihnuJ7e0V_YCS9Lrk8n6DSOHdPelQ.-Z1v3MQn335tNg7FcflqPA
+  /api/v1/notes/{item_type}/{item_uid}:
+    get:
+      tags:
+        - Notes
+      summary: Index
+      description: Lists all notes on an entity or issue.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: issue
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: Cowboy
+            Date:
+              schema:
+                type: string
+                example: Mon, 24 Apr 2023 19:32:00 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Content-Length:
+              schema:
+                type: integer
+                example: '887'
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: >-
+                  Notes for issue
+                  6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+                result:
+                  - uuid: 1112f519-06a9-4e2c-845c-aa79996c804a
+                    dynamic_id: >-
+                      issue##c1ac6a07-fda8-4568-90c3-ea2ba6ec2535#2022-10-18T17:28:41Z
+                    collection_name: attacksurface_mw3tdwq
+                    created_by_user_uuid: c1ac6a07-fda8-4568-90c3-ea2ba6ec2535
+                    item_name: null
+                    item_uid: >-
+                      6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+                    item_type: issue
+                    note: |-
+                      - testing a note that supports markdown
+                      - and has some neat new features
+                    uid: >-
+                      a67d6376f53176204957185bdc54d65bc6021b1d75aa88cc779de901a13ae833
+                    created_at: '2022-10-18T17:28:41.128Z'
+                    updated_at: '2022-10-18T00:00:00.000Z'
+                    collection_id: 132956
+                    created_by_user_id: 10354
+                    created_by_user:
+                      email: Name@domain.app
+                      printable_name: FirstName LastName
+                      uuid: c1ac6a07-df89-1258-90c3-ea2ba6ec2535
+    post:
+      tags:
+        - Notes
+      summary: Create
+      description: Creates a note on an entity or issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                note_text: |-
+                  - testing a note that supports markdown
+                  - and has some neat new features
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: issue
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+      responses:
+        undefined:
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |-
+                {
+                    "success": true,
+                    "message": "Note add queued for issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459",
+                    "result": true
+                }
+  /api/v1/notes/{item_type}/{item_uid}/{note_uid}:
+    delete:
+      tags:
+        - Notes
+      summary: Delete
+      description: Deletes all notes on an entity or issue.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: issue
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459
+        - name: note_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            uid of note from
+            {{base_url}}/api/v1/search/issues/collection:CollectionName or
+            {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: ee74ee7d3c06791bf984480810169ab123d97541b39afd623bd08b3981450d93
+      responses:
+        undefined:
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |-
+                {
+                    "success": true,
+                    "message": "Note remove queued for ee74ee7d3c06791bf984480810169ab123d97541b39afd623bd08b3981450d93 on issue 6b884a854d4998f787e1dde6b937f0ca63c844dcfe9558e1c2758cef0ca6d459",
+                    "result": true
+                }
+  /api/v1/tags/{item_type}/{item_uid}:
+    get:
+      tags:
+        - Tags
+      summary: Index
+      description: Lists all tags on an entity or issue.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: issue
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:53:04 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2BzqSiEYXA0ClzqPQPwwAAvNcyK5LMJDrpcF3hpdNcxhWw3BLBdmy%2B%2FQQVpFYE1ffgwH%2B4BvzacFRM%2BKC12jUK%2FEOJdngq0wvEl5yjY%2FWR84%2FjpJ24JhfbQVKl4YYxBoeXw%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 7481701ede0186fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: >-
+                  Tags for entity
+                  a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result:
+                  - test Tag
+    post:
+      tags:
+        - Tags
+      summary: Create
+      description: Creates a tag on an entity or issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tag_name: test Tag
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: entity
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:52:56 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=hSHZgQuoS%2FRsADhNivzzT2mHOCu6J8fnoLV59MvY%2B0QX0wmRFsSSG5yiv9rz%2Fl6PCAat65rppz%2BcI91QLnw0cuFD7FdEL6rrSsHqm%2BLqDJacJ9i0NyjR%2BO60MDU6QFimFA%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816fe9dc5886fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: >-
+                  Tag add queued for entity
+                  a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result: true
+  /api/v1/tags/{item_type}/{item_uid}/{tag_name}:
+    delete:
+      tags:
+        - Tags
+      summary: Delete
+      description: Deletes a tag on an issue
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: item_type
+          in: path
+          schema:
+            type: string
+          required: true
+          description: issue or entity
+          example: entity
+        - name: item_uid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            id from {{base_url}}/api/v1/search/issues/collection:CollectionName
+            or {{base_url}}/api/v1/search/entities/collection:CollectionName
+          example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+        - name: tag_name
+          in: path
+          schema:
+            type: string
+          required: true
+          description: tage name to delete
+          example: test Tag
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:53:16 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=xBLtmBD%2F2oGWQ%2BaECEYETZQxSLgt%2FywkSiCWHNqH2DxLseOwpu4aFVlieJf%2Beb%2FpjsYOHQJla1DbK9iD1r%2BcEqbxrKBgtseHz4Tvw3xwKffPIDIiw5MekVEc5NXq0FtBBQ%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 748170691eed86fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: >-
+                  tag remove queued for entity
+                  a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result: true
+  /api/v1/user_collections/{collection_uuid}/user_entities:
+    get:
+      tags:
+        - Seeds
+      summary: Index
+      description: endpoint to list user entities / seeds
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: collection_uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid from {{base_url}}/api/v1/user_collections
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:51:23 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=kmg2K%2Fahsbac5G1NECV8ZN0vwiYJRmXfLf1WJgU0kJiAfXziFiPICX1AXNvvz6gt1Fpa9x6tksDU%2BmR38lmlmGgtcwn20odEVEc1fIEqPYBQG7sCQJyzzSo8kedw2dmJ9w%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816da5f83086fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Collection entities retrieved!
+                result:
+                  - id: 1490825
+                    type: Domain
+                    name: attacksurface.app
+                    details: null
+                    claimed: false
+                    seed: true
+                    created_at: '2022-08-18T16:10:20.952Z'
+                    updated_at: '2022-08-18T16:10:20.952Z'
+                    last_modified: null
+    post:
+      tags:
+        - Seeds
+      summary: Create
+      description: >-
+        endpoint which creates a user entity (could be a seed or not) for a
+        collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                entities:
+                  - type: Domain
+                    name: ASM2.io
+                  - type: Domain
+                    name: ASM1.io
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: collection_uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid of collection from {{base_url}}/api/v1/user_collections
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:49:33 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=Adr%2BzXWfvZ0qIZlfmNtdt0jayyekR%2BUJ%2BKsPNxnP5kzID%2BO2QYw8KKvvZhv%2FWlUyoANl7bUDZBcD9%2Fa9Kcy7%2BpdIMfUJwRn8BvZQqPwq239GSqsEgyzoDaIMwHTW8pphEQ%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816af38c0286fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: User entities added to collection
+                result:
+                  - id: 1506950
+                    type: Domain
+                    name: ASM2.io
+                    details: null
+                    claimed: false
+                    seed: true
+                    created_at: '2022-09-09T16:49:33.093Z'
+                    updated_at: '2022-09-09T16:49:33.093Z'
+                    last_modified: null
+                  - id: 1506951
+                    type: Domain
+                    name: ASM1.io
+                    details: null
+                    claimed: false
+                    seed: true
+                    created_at: '2022-09-09T16:49:33.108Z'
+                    updated_at: '2022-09-09T16:49:33.108Z'
+                    last_modified: null
+  /api/v1/entities/{entity_id}:
+    delete:
+      tags:
+        - Seeds
+      summary: Delete
+      description: delete a user entity / seed
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+        - name: entity_id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: >-
+            id from
+            {{base_url}}/api/v1/user_collections/:collection_uuid/user_entities
+          example: '1504086'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:50:49 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=jZwNlAZeTzvDvbomdXDbSaghZocJuhcg9iNIZZ1xl3uUlAKZwaf%2BfhQ%2B3mxUAimm7gN4pUTIAQ7rLAiJXDy3jMNfHZmfWknDJOYpdAhw0jkbldvfQr3lTMsHKVM%2FxI3LcQ%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816cd1bc0186fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: User Entity deleted
+                result: true
+  /api/v1/projects/{uuid}/integrations:
+    post:
+      tags:
+        - Integrations
+      summary: Create
+      description: >-
+        Attack Surface Management currently supports the following integrations,
+        Use the samples in the post body:
+
+
+        _**GCP**_:
+
+
+        ``` json
+
+        {
+          "name": "Test GCP Integration",
+          "secrets": {
+            "service_account_email": "Email.Address@Service-Account-here.com"
+          },
+          "type": "GcpCredential"
+        }
+
+         ```
+
+        **Jira:**
+
+
+        ``` json
+
+        {
+            "name": "Test JIRA Integration",
+            "secrets": {
+                "jira_api_key": "APIKEYHERE",
+                "host": "hostname.com",
+                "username": "Email.Address@here.com"
+            },
+            "type": "jira"
+        }
+
+         ```
+
+        **Azure:**
+
+
+        ``` json
+
+        {
+            "name": "Test Azure Integration",
+            "secrets": {
+                "tenant_id": "TenantIdhere"
+            },
+            "type": "azure"
+        }
+
+         ```
+
+        **Github:**
+
+
+        ``` json
+
+        {
+            "name": "Test github Integration",
+            "secrets": {
+                "github_access_token": "TokenHere"
+            },
+            "type": "github"
+        }
+
+         ```
+
+        **Akamai:**
+
+
+        ``` json
+          {
+            "name": "Test akamai Integration",
+            "secrets": {
+                "client_secret": "SecretHere",
+                "host": "hosthere.com",
+                "access_token": "AccessTokenHere",
+                "client_token": "ClientTokenHere"
+            },
+            "type": "akamai"
+        }
+
+         ```
+
+        **Godaddy:**
+
+
+        ``` json
+
+        {
+            "name": "Test godaddy Integration",
+            "secrets": {
+                "api_key": "KeyHere",
+                "api_secret": "SecretHere"
+            },
+            "type": "godaddy"
+        }
+
+         ```
+
+        **Cloudflare:**
+
+
+        ``` json
+
+        {
+            "name": "Test cloudflare Integration",
+            "secrets": {
+                "cloudflare_api_key": "APIKeyHere"
+            },
+            "type": "cloudflare"
+        }
+
+         ```
+
+        **AWS Roles:**
+
+
+        ``` json
+
+        {
+            "name": "Test AwsCredential Integration",
+            "secrets": {
+                "aws_role_arn": "RoleHere"
+            },
+            "type": "AwsCredential"
+        }
+
+         ```
+
+        **AWS Keys:**
+
+
+        ``` json
+
+        {
+            "name": "Test AwsCredential Integration",
+            "secrets": {
+                "aws_access_key_id": "KeyHere",
+                "aws_secret_access_key": "SecretHere",
+            },
+            "type": "AwsCredential"
+        }
+
+         ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Test JIRA Integration
+                secrets:
+                  jira_api_key: APIKEYHERE
+                  host: hostname.com
+                  username: Email.Address@here.com
+                type: jira
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/projects'
+          example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Integrations
+      summary: Index
+      description: List all integrations configured for the project.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/projects'
+          example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:55:58 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=6RFtbjtxrFDWfaT6eJav0ILuL1NSITgAsTBtkDvHH%2F9PsY976wx0Gbbidu0oeyxV0z%2F97%2Bb2QYTHl2pcgs2Co4UXRWgqxrUHcK%2B0UIzIlGzhp8ArDF%2FCHqplLVoxbP3gLg%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 7481745a1af286fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  - id: 180
+                    uuid: 8bc49144-7704-4381-994c-2e7ada9fee98
+                    name: Github Integration 1
+                    description: ''
+                    type: github
+                    created_at: '2022-09-06T23:38:10.751Z'
+                    updated_at: '2022-09-06T00:00:00.000Z'
+                    user_email: >-
+                      Email not found or token is missing email access
+                      permissions.
+                  - id: 183
+                    uuid: f38fc0fa-a7e2-4501-89de-9e590659a68a
+                    name: Test github Integration
+                    description: ''
+                    type: github
+                    created_at: '2022-09-07T16:11:06.609Z'
+                    updated_at: '2022-09-07T00:00:00.000Z'
+                    user_email: >-
+                      Email not found or token is missing email access
+                      permissions.
+                  - id: 184
+                    uuid: 3fab6628-9f98-45b4-9285-9efea0b55d3e
+                    name: Test Azure Integration
+                    description: ''
+                    type: azure
+                    created_at: '2022-09-07T16:15:37.703Z'
+                    updated_at: '2022-09-07T00:00:00.000Z'
+  /api/v1/projects/{uuid}/integrations/jira/projects:
+    get:
+      tags:
+        - Integrations
+      summary: Jira projects
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/projects'
+          example: '{{project_uuid}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/integrations/{uuid}:
+    delete:
+      tags:
+        - Integrations
+      summary: Destroy
+      description: >-
+        Delete an existing integration. This cannot be undone!
+
+
+        To obtain a UUID for your integration, please see the GET Index query
+        first:
+
+
+        ![](https://content.pstmn.io/f577cdca-1f0b-49b5-9515-14872c74b4ca/SW50ZWdyYXRpb24gRGVzdHJveS5wbmc=)
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: uuid from {{base_url}}/api/v1/projects/:uuid/integrations
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:56:48 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=69B12vtYo6ovZcSmiGiV3P%2Fx9C3%2FZcFcSVtg6AzzSY7Pi96biQ20gax5GpOqlvySvDj%2FIYMEz1p7QXsgOM7lkFej%2FnVhHGRg%2BcC5j3Np6K4Jdf5j51%2F7bEVrsVs02elQBw%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 748175933d7886fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: false
+                message: Success
+                result: null
+  /api/v1/integration_collections:
+    get:
+      tags:
+        - Integration Collections
+      summary: Index
+      description: Returns current integrations assigned to collections.
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: PROJECT_ID
+          in: header
+          schema:
+            type: string
+          description: 'Required: id from {{base_url}}/api/v1/projects'
+          example: '{{project_id}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:54:43 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=DiZWkiz8tAvFdPtFnyIXqqZgD47jX3FKeoIqJTKvq6A3xdVKh2Y1fFcUOAPr2gh3htyIt9N9EwGNHy4qZmM6xloi6Gm8yZwapjy4DT1CeyP%2Bxo6LHb19sB1qeXNE%2FIL4ng%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74817284ef7c86fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  - id: 116
+                    uuid: b98ad9be-c38b-4b16-b0e0-1f464e7ede9a
+                    integration_id: 180
+                    integration_uuid: 8bc49144-7704-4381-994c-2e7ada9fee98
+                    integration_name: Github Integration 1
+                    integration_type: github
+                    integration_created_at: '2022-09-06T23:38:10.751Z'
+                    collection_id: 132956
+                    collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                    created_at: '2022-09-09T15:44:41.133Z'
+                    updated_at: '2022-09-09T00:00:00.000Z'
+  /api/v1/integration_collections/{uuid}:
+    delete:
+      tags:
+        - Integration Collections
+      summary: Destroy
+      description: >-
+        Removes integration from a Collection. Integration will not be deleted
+        from the platform.
+
+
+        UUID is of the integration_collection. found in
+        {{base_url}}/api/v1/integration_collections. This value is also
+        displayed in the post Create
+        {{base_url}}/api/v1/user_collections/:collection_uuid/integration_collections
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/integration_collections'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:55:23 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=9RC0aGZPWR0eLgOeYa6ku9vdmLmoIjoiQqdfn1BYLSZMjDsMbh1WaRfQxsRHCCiOuEnrGeMWKtyqwTZYyI2dRbU%2BXQCa%2B1ZkaO9CYUhBdUGmPuit9jVXWYkMhMPBZtHvYw%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74817380ba0c86fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: false
+                message: Success
+                result: null
+  /api/v1/user_collections/{collection_uuid}/integration_collections:
+    post:
+      tags:
+        - Integration Collections
+      summary: Create
+      description: >-
+        Assigns an existing integration to a collection. To create an
+        integration, see Integrations Section.
+
+
+        "integration_uuid" within the body can be found in
+        {{base_url}}/api/v1/projects/:uuid/integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                integration_uuid: ''
+      parameters:
+        - name: INTRIGUE_ACCESS_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_access_key}}'
+        - name: INTRIGUE_SECRET_KEY
+          in: header
+          schema:
+            type: string
+          example: '{{intrigue_secret_key}}'
+        - name: collection_uuid
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Required: uuid from {{base_url}}/api/v1/user_collections'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:56:07 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=4JX6CTHhqCDy04rb5XSFZbFugMBXgz%2FNux%2Fsk0vTjGKT2jwozSyDDDFxUfGv%2FN16LLAVglSqbIXsVtqbuKza0a10c4uhdErTYkIjPeQYaaFUNvo49EFkjn7G5eIM7NNrnw%3D%3D"}],"group":"cf-nel","max_age":604800}
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 748174938f0a86fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Success
+                result:
+                  id: 117
+                  uuid: b0258e9c-33a6-4987-b756-ff0c6f68ecdd
+                  integration_id: 180
+                  integration_uuid: 8bc49144-7704-4381-994c-2e7ada9fee98
+                  integration_name: Github Integration 1
+                  integration_type: github
+                  integration_created_at: '2022-09-06T23:38:10.751Z'
+                  collection_id: 132956
+                  collection_uuid: c1b502fe-1020-4a85-a620-e02614526ee9
+                  created_at: '2022-09-09T16:56:07.271Z'
+                  updated_at: '2022-09-09T00:00:00.000Z'
+  /api/library/entities:
+    get:
+      tags:
+        - Library
+      summary: Entities List
+      description: Returns types of entities.
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/entities/stats:
+    get:
+      tags:
+        - Library
+      summary: Entities Stats
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/issues:
+    get:
+      tags:
+        - Library
+      summary: Issues List
+      description: >-
+        View list of all issue types. Change Page value to display next 100
+        issues.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/issues/{issue_name}:
+    get:
+      tags:
+        - Library
+      summary: Issues List - Specific Isssue
+      description: Send a specific entity type, and get the definition
+      parameters:
+        - name: issue_name
+          in: path
+          schema:
+            type: string
+          required: true
+          example: missing_dmarc_policy
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 10 Mar 2021 16:37:45 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Set-Cookie:
+              schema:
+                type: string
+                example: >-
+                  rack.session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVG86HVJhY2s6OlNlc3Npb246OlNlc3Npb25JZAY6D0BwdWJsaWNfaWRJIkUxZDEwOWVjZjNhZjg2ZjQyZjVhMWU5NDIzNjQ2ODVhYjc5NWMwZTZlMTgyYjE0NzgyNjVmMTYzMDEyZGRkZTg2BjsARkkiFXBvc3Rfc2lnbmluX3BhdGgGOwBGIgwvc2lnbmlu--599b4fb47fdf41d17c27205eed3f5a751e993ea4;
+                  path=/; expires=Fri, 09 Apr 2021 16:37:45 GMT; HttpOnly
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            cf-request-id:
+              schema:
+                type: string
+                example: 08be99725300000f3e05850000000001
+            Expect-CT:
+              schema:
+                type: string
+                example: >-
+                  max-age=604800,
+                  report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+            Report-To:
+              schema:
+                type: string
+                example: >-
+                  {"max_age":604800,"group":"cf-nel","endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=VakeRmXj8nJPabhkHVXvRNJO0Z7fVKooBSDnFkUxS1Y0BKovdBNZCtfx5IJD3LENGk2rkZwYAFYU5CDfE%2BcAvuTkLQd8dotV28ZCMWyXX1Y%3D"}]}
+            NEL:
+              schema:
+                type: string
+                example: '{"max_age":604800,"report_to":"cf-nel"}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 62ddf8308b2b0f3e-DFW
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                result:
+                  added: '2020-01-01'
+                  name: missing_dmarc_policy
+                  pretty_name: Missing DMARC Policy
+                  category: misconfiguration
+                  source: DNS
+                  severity: 4
+                  status: confirmed
+                  description: >-
+                    DMARC is a policy (configured in a DNS record) that explains
+                    the email authentication practices for a given domain. When
+                    configured, it helps prevent spam and other abuses. In
+                    practice, it simply provides a receiving mail server (upon
+                    receipt of a new email) with enough information to 
+                    determine the validity of a sender. All domains configured
+                    to send email should implement DMARC, as it is one of the
+                    most important steps that can be taken to improve email
+                    deliverability.
+                  references:
+                    - type: description
+                      uri: >-
+                        https://www.sparkpost.com/resources/email-explained/dmarc-explained/
+                    - type: description
+                      uri: >-
+                        https://www.sonicwall.com/support/knowledge-base/what-is-a-dmarc-record-and-how-do-i-create-it-on-dns-server/170504796167071/
+  /api/library/issues/stats:
+    get:
+      tags:
+        - Library
+      summary: Issues Stats
+      description: 'Statistics about the issues, Total count, Count by category:'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/tasks:
+    get:
+      tags:
+        - Library
+      summary: Tasks List
+      description: View all tasks. Change Page value to display next 100
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/tasks/stats:
+    get:
+      tags:
+        - Library
+      summary: Tasks Stats
+      description: 'Returns a list of current task type count, and count by Author:'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/fingerprints:
+    get:
+      tags:
+        - Library
+      summary: Fingerprints List
+      description: Returns Technology fingerprints from Library.
+      parameters:
+        - name: sort
+          in: query
+          schema:
+            type: string
+          description: name, product, vendory, version
+          example: name
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: searches vendor and product fields
+          example: '"apache http server"'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/fingerprints/stats:
+    get:
+      tags:
+        - Library
+      summary: Fingerprint Stats
+      description: Statistics about the Fingerprint (ident) capabilities
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/issues/export/csv:
+    get:
+      tags:
+        - Library
+      summary: Issues List - Export as CSV
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/tasks/export/csv:
+    get:
+      tags:
+        - Library
+      summary: Tasks List - Export as CSV
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/library/catalog/stats:
+    get:
+      tags:
+        - Library
+      summary: Catalog Stats
+      description: Statistics about the Catalog
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

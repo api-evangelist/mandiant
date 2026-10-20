@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-run-job-schema.json",
+  "title": "run_job",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-ma-sv-openapi.yml#/components/schemas/run_job",
+  "type": "object",
+  "properties": {
+    "sim_id": {
+      "type": "integer",
+      "description": "ID of the Sequence or Evaulation to execute"
+    },
+    "schedule_run_now_selector": {
+      "type": "string",
+      "enum": [
+        "run_now",
+        "schedule"
+      ],
+      "description": "Selects whether the job should be run immediately or scheduled"
+    },
+    "schedule_job_datetime": {
+      "type": "string",
+      "description": "If the job is scheduled, this indicates what time it should start.  Must be a string of format `YYYY/MM/DD HH:MM UTC`\n"
+    },
+    "job_name": {
+      "type": "string",
+      "description": "Optional name for this job"
+    },
+    "repeat_job_selector": {
+      "type": "string",
+      "enum": [
+        "on"
+      ],
+      "description": "Optional.  If this job should be repeating then this param should a string equal to \"on\"\n"
+    },
+    "repeat_job_period_number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "This param is ignored if the job is not repeating but it's required if repeat_job_selector == \"on\".  It indicates the time interval to repeat the job.\n"
+    },
+    "repeat_job_period_type": {
+      "type": "string",
+      "enum": [
+        "seconds",
+        "minutes",
+        "hours",
+        "days"
+      ],
+      "description": "This param is ignored if the job is not repeating but it's required if repeat_job_selector == \"on\".  It indicates how the repeat_job_period_number should be interpreted as a time.  For example if repeat_job_period_number is 5 and repeat_job_period_type is \"minutes\", the job created will repeat every 5 minutes.\n"
+    },
+    "repeat_job_times_selector": {
+      "type": "string",
+      "enum": [
+        "number",
+        "indefinitely"
+      ],
+      "description": "This param is ignored if the job is not repeating.  If the job is repeating, it indicates whether it should repeat a fixed number of times, or indefinitely\n"
+    },
+    "repeat_job_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "If the job is repeating and repeat_job_times_selector is \"number\", then this param indicates how many times the job should repeat. For example, if this param is 3 then the job will run 4 times total - once for the initial run and then 3 repeats.\n"
+    },
+    "attack_node_id_1": {
+      "type": "string",
+      "description": "ID of the attack actor for the first step in the sequence/eval.  If the sequence/eval specified by the sim_id param has more than one step, then the attack and target actors would be selected with attack_node_id_X and target_node_X params, where X is the order of the step in the sequence/eval, starting from 1.\n"
+    },
+    "target_node_id_1": {
+      "type": "string",
+      "description": "ID of the target actor for the first step in the sequence/eval.  For sequences/evals with more than on step, the subsequent steps follow the same pattern of target_node_id_X as the attack_node_id_X\n"
+    },
+    "repeat_job_period_number_1": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "If the this job step should not repeat, then omit this param or leave it blank.  Otherwise, it works like the repeat_job_period_type param but for the specific step in the simulation.  Just like with the attack_node_X and target_node_X params, if a simulation has more than a single step then you can set the repeating attributes for each step by substituting the step order for X in the param name.\n"
+    },
+    "repeat_job_period_type_1": {
+      "type": "string",
+      "enum": [
+        "seconds",
+        "minutes",
+        "hours",
+        "days"
+      ],
+      "description": "Works like the repeat_job_period_type param, but for the specific step in the simulation.\n"
+    },
+    "repeat_job_times_selector_1": {
+      "type": "string",
+      "enum": [
+        "number",
+        "indefinitely"
+      ],
+      "description": "Works like the repeat_job_times_selector param, but for the specific step in the simulation.\n"
+    },
+    "repeat_job_count_1": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Works like the repeat_job_count param, but for the specific step in the simulation.\n"
+    }
+  }
+}

@@ -1,14 +1,16 @@
 aid: mandiant
+
 name: Mandiant
-description: Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense company whose
-  Mandiant Advantage platform exposes several authenticated REST APIs documented at docs.mandiant.com.
-  The Threat Intelligence (MATI) API v3 serves indicators, finished intelligence reports, threat actors,
-  malware families, vulnerabilities and campaigns; the Digital Threat Monitoring API surfaces exposed
-  credentials and brand/deep-and-dark-web threats; the Attack Surface Management API inventories an organization's
-  external assets; and the Security Validation (MSV) API drives automated testing of security controls.
-  These APIs authenticate with an API key and secret that is exchanged for a short-lived bearer access
-  token. Mandiant's frontline threat data now also powers Google Threat Intelligence alongside VirusTotal.
+
+description: Mandiant, now part of Google Cloud, is a threat intelligence and cyber defense company whose Mandiant Advantage platform exposes
+  several authenticated REST APIs documented at docs.mandiant.com. The Threat Intelligence (MATI) API v3 serves indicators, finished intelligence
+  reports, threat actors, malware families, vulnerabilities and campaigns; the Digital Threat Monitoring API surfaces exposed credentials and
+  brand/deep-and-dark-web threats; the Attack Surface Management API inventories an organization's external assets; and the Security Validation
+  (MSV) API drives automated testing of security controls. These APIs authenticate with an API key and secret that is exchanged for a short-lived
+  bearer access token. Mandiant's frontline threat data now also powers Google Threat Intelligence alongside VirusTotal.
+
 url: https://raw.githubusercontent.com/api-evangelist/mandiant/refs/heads/main/apis.yml
+
 deliveryModel:
   model: saas
   open_source: false
@@ -20,6 +22,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -32,19 +35,32 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://avatars.githubusercontent.com/mandiant
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - kleiner-perkins
-x-tier: stub
-x-tier-reason: portfolio-lead
+
+x-tier: profiled
+
+x-tier-reason: enrichment pass 2026-10-20 (local-v5; was portfolio-lead)
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-09-16'
+
 x-docs-platform: redoc
+
 x-docs-platform-confidence: medium
+
 x-docs-platform-checked: 2026-10-03
+
 tags:
 - Company
 - Security
@@ -55,39 +71,44 @@ tags:
 - Vulnerability Intelligence
 - Malware
 - Google Cloud
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 x-enrichment:
-  date: '2026-07-20'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 6
-  pass: local-v1
-apis:
-- name: Mandiant Threat Intelligence API v3
-  description: The Mandiant Advantage Threat Intelligence (MATI) API v3 provides programmatic access to
-    Mandiant's threat intelligence, including indicators of compromise, finished intelligence reports,
-    threat actors, malware families, vulnerabilities and campaigns. Requests authenticate with a bearer
-    access token obtained by exchanging an API key and secret.
-  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
-  baseURL: https://api.intelligence.mandiant.com
-  properties:
-  - type: Documentation
-    url: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
-  - type: Authentication
-    url: authentication/mandiant-authentication.yml
-- name: Mandiant Digital Threat Monitoring API
-  description: The Digital Threat Monitoring API surfaces exposed credentials, leaked data and brand/deep-and-dark-web
-    threats monitored by Mandiant Advantage. It is served from the Mandiant intelligence API host and
-    uses the same bearer-token authentication as the Threat Intelligence API.
-  humanURL: https://docs.mandiant.com/home/digital-threat-monitoring-api
-  baseURL: https://api.intelligence.mandiant.com
-  properties:
-  - type: Documentation
-    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  artifacts_added: 5
+  pass: local-v5
+
 common:
+- type: AgenticAccess
+  url: agentic-access/mandiant-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/mandiant-rate-limits.yml
+- type: Spectral
+  url: rules/mandiant-rules.yml
+- type: JSONLD
+  url: json-ld/mandiant-context.jsonld
+- type: Vocabulary
+  url: vocabulary/mandiant-vocabulary.yml
+- type: DataModel
+  url: data-model/mandiant-data-model.yml
+- type: ErrorCatalog
+  url: errors/mandiant-problem-types.yml
+- type: Conformance
+  url: conformance/mandiant-conformance.yml
+- type: Hosts
+  url: hosts/mandiant-hosts.yml
+- type: IntegrationEdges
+  url: integrations/mandiant-integration-edges.yml
+- type: Vendors
+  url: vendors/mandiant-vendors.yml
+- type: GettingStarted
+  url: https://docs.mandiant.com/home/eod-getting-started
 - type: Website
   url: https://mandiant.com
 - type: DeveloperPortal
@@ -112,5 +133,2678 @@ common:
   url: well-known/mandiant-well-known.yml
 - type: DomainSecurity
   url: security/mandiant-domain-security.yml
-- type: LLMsTxt
-  url: llms/mandiant-llms.txt
+
+apis:
+- name: Mandiant Threat Intelligence API v3
+  description: >-
+    The Mandiant Advantage Threat Intelligence (MATI) API v3 provides programmatic access to Mandiant's
+    threat intelligence, including indicators of compromise, finished intelligence reports, threat actors,
+    malware families, vulnerabilities and campaigns. Requests authenticate with a bearer access token
+    obtained by exchanging an API key and secret.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  properties:
+  - type: Documentation
+    url: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  - type: Authentication
+    url: authentication/mandiant-authentication.yml
+  aid: mandiant:mandiant-threat-intelligence-api-v3
+- aid: mandiant:mandiant-action-user-profiles-api
+  name: Mandiant Action user profiles API
+  description: >-
+    Action User Profiles allow running certain types of actions as other users.  For example, to run a
+    Host CLI action as a non-System or non-root user, you would configure an Action User Profile and select
+    it when running an action
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Action user profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-action-user-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-actions-api
+  name: Mandiant Actions API
+  description: >-
+    Actions are the smallest units MSV uses and simulate suspicious or malicious network traffic. They
+    can be combined to form Sequences and Evaluations.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-actions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-actors-api
+  name: Mandiant Actors API
+  description: The Actors API from Mandiant — 5 operation(s) for actors.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Actors
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-actors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-alert-analysis-api
+  name: Mandiant Alert Analysis API
+  description: The Alert Analysis API from Mandiant — 4 operation(s) for alert analysis.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Alert Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-alert-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-alert-audit-api
+  name: Mandiant Alert Audit API
+  description: The Alert Audit API from Mandiant — 2 operation(s) for alert audit.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Alert Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-alert-audit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-alerts-api
+  name: Mandiant Alerts API
+  description: The Alerts API from Mandiant — 5 operation(s) for alerts.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-analyze-api
+  name: Mandiant Analyze API
+  description: The Analyze API from Mandiant — 1 operation(s) for analyze.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Analyze
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-analyze-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-audit-logs-api
+  name: Mandiant Audit Logs API
+  description: >-
+    The Validation Platform Director has a consolidated audit log that tracks Validation Platform activity.
+    As a general overview, the type of data in the Audit log is captured below. Each record is categorized
+    using a Section and Action Type.
+
+
+    For a list of Section and Action Type values, see Audit Log Record Categorization. Some of the types
+    of data it captures includes:
+
+
+    * Security Content changes: Creating, Updating, and Deleting Actions, Sequences, Evaluations, Files
+
+    * Director changes: Updating admin settings; updating network devices; adding, updating, removing
+    notifications
+
+    * Instructions sent to the Actors: Check time sync, check version
+
+    * User Access: Login, Logout, Authentication failures
+
+    * Running Jobs
+
+    * Integrations: Adding, updating, removing Integrations
+
+    * User Actions: Users accessing reports
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-bulk-jobs-api
+  name: Mandiant Bulk Jobs API
+  description: >-
+    Bulk jobs can be created from a single Action with a list of source and
+
+    destination tags.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Bulk Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-bulk-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-cloud-profiles-api
+  name: Mandiant Cloud Profiles API
+  description: >-
+    Cloud profiles provide a secure way to use credentials when running cloud actions. They are made available
+    in your scripts as environment variables. Once entered, sensitive fields (such as secret keys) and
+    any custom values will not show up in the UI or API and are encrypted at rest.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Cloud Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-cloud-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-collection-runs-api
+  name: Mandiant Collection Runs API
+  description: The Collection Runs API from Mandiant — 1 operation(s) for collection runs.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Collection Runs
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-collection-runs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-collections-api
+  name: Mandiant Collections API
+  description: >-
+    Collections live under a project and are another foundational unit of organization in the ASM platform.
+    They define the process of collecting entities, issues and technologies. All entities, issues and
+    technologies live within one and only one collection (and its corresponding project).
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-dns-servers-api
+  name: Mandiant DNS Servers API
+  description: >-
+    DNS Servers provide addresses for actors to use as DNS servers in DNS query actions.  Individual DNS
+    query actions can specify one of the available DNS servers.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - DNS Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-dns-servers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-docs-api
+  name: Mandiant Docs API
+  description: The Docs API from Mandiant — 4 operation(s) for docs.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Docs
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-docs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-email-profiles-api
+  name: Mandiant Email Profiles API
+  description: >-
+    Email Profiles provide the valid email addresses and email servers that are used to send files for
+    email file transfer actions.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Email Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-email-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-email-rules-api
+  name: Mandiant Email rules API
+  description: Rules to use when determining the results of Email Actions
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Email rules
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-email-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-email-settings-api
+  name: Mandiant Email Settings API
+  description: The Email Settings API from Mandiant — 3 operation(s) for email settings.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Email Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-email-settings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-entities-api
+  name: Mandiant Entities API
+  description: The Entities API from Mandiant — 3 operation(s) for entities.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-entities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-event-filter-rules-api
+  name: Mandiant Event Filter Rules API
+  description: >-
+    The suppressed event filter rule API endpoints interact with the rules governing an event matching
+    a Job Action.
+
+
+    An suppressing or dropping EventFilterRule will prevent an Integration event from having a normal
+    relationship with a Job Action.  A suppressed or dropped event will not contribute
+
+    to the prevented/alerted/detected/missed set of statistics for a Job Action.  The event's relationship
+    will be considered suppressed or
+
+    dropped depending on the rule configuration and the global Director settings.
+
+
+    A kept EventFilterRule will override suppressing or dropping rules depending on the numerical priority.  This
+    can be used to establish "normal" or expected
+
+    event matching behavior.  For example, a priority 5 rule to suppress all events from Host CLI actions
+    can be overridden by a priority 3 rule
+
+    to keep all events from a particular Integration.
+
+
+    A Suppressing or Dropping EventFilterRule differ from a normal IntegrationEventFilter in the way the
+    event and the Job Action relate to each other.
+
+    * Events that are Suppressed or Dropped via EventFilterRules and not by IntegrationEventFilters will
+    not contribute any statistics to the Job Action, the event will not be considered a "real" event for
+    the Job Action, and
+
+    the only record that the event has any relationship at all to the Job Action is that there will be
+    a SuppressedEvent/DroppedEvent object created and attached to the Job Action
+
+    afterward.
+
+    * Events that are altered by the IntegrationEventFilter and not by EventFilterRules will still be
+    considered "real" events attached to the Job Action, however the event
+
+    cannot be considered "detected" by the Job Action.
+
+    * Events that are eligible to be Suppressed or Dropped by an EventFilterRule but also eligible to
+    be altered by an IntegrationEventFilter will be Suppressed or Dropped only.
+
+    The event will not be linked to the Job Action and therefore will not be considered detected (or prevented
+    or missed or anything)
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Event Filter Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-event-filter-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-event-suppression-api
+  name: Mandiant Event Suppression API
+  description: The suppressed event API endpoints provide accessors to suppress and drop events.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Event Suppression
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-event-suppression-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-file-library-api
+  name: Mandiant File Library API
+  description: File Library objects that can be attached to Actions.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - File Library
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-file-library-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-integration-api-tokens-api
+  name: Mandiant Integration API Tokens API
+  description: >-
+    Tokens to use when authenticating with the Integrations API.  When being used, the token must be in
+    the Authorization header as a bearer token like "Authorization: Bearer abc123"
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Integration API Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-integration-api-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-integration-collections-api
+  name: Mandiant Integration Collections API
+  description: Configure Collections with integrations for Cloud credential associations.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Integration Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-integration-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-integration-events-api
+  name: Mandiant Integration Events API
+  description: >-
+    Events that came from an integration configured on the Director.  This does not include events that
+    come from local logs for Host CLI Actions.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Integration Events
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-integration-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-integrations-api
+  name: Mandiant Integrations API
+  description: >-
+    Add your integration(s) here. Once added you can associate them to a collection within the Integrations
+    Collections section.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-issues-api
+  name: Mandiant Issues API
+  description: The Issues API from Mandiant — 3 operation(s) for issues.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-issues-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-job-actions-api
+  name: Mandiant Job Actions API
+  description: The result of running an action as part of a simulation. Belongs to a Job
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Job Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-job-actions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-job-api
+  name: Mandiant Job API
+  description: The Job API from Mandiant — 1 operation(s) for job.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Job
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-job-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-jobs-api
+  name: Mandiant Jobs API
+  description: >-
+    Jobs are the results of Actions, Evaluations, or Sequences that have been run.  They contain JobSteps
+    and JobActions
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-library-api
+  name: Mandiant Library API
+  description: The Library API from Mandiant — 12 operation(s) for library.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Library
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-library-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-mitre-att-ck-dashboard-api
+  name: Mandiant Mitre ATT&CK Dashboard API
+  description: ActionProfiles are statistical actions based on a metatag.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Mitre ATT&CK Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-mitre-att-ck-dashboard-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-monitor-definitions-api
+  name: Mandiant Monitor Definitions API
+  description: >-
+    Sequences or Evaluations that run periodically and generate notifications depending on result
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Monitor Definitions
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-monitor-definitions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-monitor-groups-api
+  name: Mandiant Monitor groups API
+  description: Groups to contain multiple Monitor Definitions
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Monitor groups
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-monitor-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-monitors-api
+  name: Mandiant Monitors API
+  description: The Monitors API from Mandiant — 7 operation(s) for monitors.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Monitors
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-monitors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-msi-api
+  name: Mandiant MSI API
+  description: The MSI API from Mandiant — 7 operation(s) for msi.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - MSI
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-msi-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-notes-api
+  name: Mandiant Notes API
+  description: The Notes API from Mandiant — 2 operation(s) for notes.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-notes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-notification-formats-api
+  name: Mandiant Notification formats API
+  description: >-
+    Monitors generate notifications of two different formats: email and syslog.  Notification formats
+    let you customize the messages sent when a monitor creates a notification.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Notification formats
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-notification-formats-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-notification-profiles-api
+  name: Mandiant Notification profiles API
+  description: >-
+    Notification profiles allow you to configure which monitors produce notifications and under what conditions
+    the notification is sent.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Notification profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-notification-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-ntp-servers-api
+  name: Mandiant NTP Servers API
+  description: >-
+    NTP Servers allow you to provide server addresses for actors to use to synchronize their time
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - NTP Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-ntp-servers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-organizations-api
+  name: Mandiant Organizations API
+  description: Organizations are the top-level resource that all other resources reside in
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-projects-api
+  name: Mandiant Projects API
+  description: >-
+    Projects are the most foundational unit of organization in the ASM platform. Collections exist within
+    one and only one project.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-proxy-rules-api
+  name: Mandiant Proxy Rules API
+  description: Proxy Rules specify proxies to use for MSV traffic.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Proxy Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-proxy-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-report-builder-api
+  name: Mandiant Report Builder API
+  description: A collection of API endpoints to help automate report creation
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Report Builder
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-report-builder-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-reports-api
+  name: Mandiant Reports API
+  description: >-
+    Reports are the finished product of system interactions.
+
+    Behaviors are the possibly-nested umbrella for job actions.
+
+    Zones are the pseudological encapsulation of areas of influence in the system.
+
+    SecTech are the types of security technologies implemented by the system.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-search-api
+  name: Mandiant Search API
+  description: The Search API from Mandiant — 1 operation(s) for search.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-security-technologies-api
+  name: Mandiant Security technologies API
+  description: The Security technologies API from Mandiant — 4 operation(s) for security technologies.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Security technologies
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-security-technologies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-security-zone-attributes-api
+  name: Mandiant Security zone attributes API
+  description: >-
+    Security Zone attributes are descriptors added to Security Zones.  Attributes determine whether a
+    zone's location is internal or external and influence Source and Destination recommendations for Actions.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Security zone attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-security-zone-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-security-zones-api
+  name: Mandiant Security zones API
+  description: >-
+    Security Zones are regions within the network that contain actors and can be considered as being Internal
+    or External.  Each actor must belong to exactly one Security Zone.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Security zones
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-security-zones-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-seeds-api
+  name: Mandiant Seeds API
+  description: deletes a user entity / seed
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Seeds
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-seeds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-sequences-and-evaluations-api
+  name: Mandiant Sequences and Evaluations API
+  description: >-
+    Sequences and evaluations can have one or more steps, each containing one or more actions.  Each step
+    of a sequence or evaluation can be run between different actors, but all the actions within a single
+    step must run between the same actors.  Sequences typically represent a complete network attack and
+    Evaluations are often groups of similar actions.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Sequences and Evaluations
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-sequences-and-evaluations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-settings-api
+  name: Mandiant Settings API
+  description: >-
+    The Settings are used for Director-specific alterations to your organizations installation.
+
+
+    <h2>Handling Content Backups</h2>
+
+    Creating and using a data backup involves calling a few Setting endpoints in sequence.  Visit each
+    endpoint for argument and usage details:
+
+
+    | Endpoint | Description |
+
+    |----------|-------------|
+
+    | `/settings/create_backup` | Start the backup process. |
+
+    | `/settings/backup_download` | Download the backup once it has been generated. |
+
+    | `/settings/restore_backup` | Upload and apply a system backup to the Director. |
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-settings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-tags-api
+  name: Mandiant Tags API
+  description: The Tags API from Mandiant — 2 operation(s) for tags.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-technologies-api
+  name: Mandiant Technologies API
+  description: The Technologies API from Mandiant — 1 operation(s) for technologies.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Technologies
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-technologies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-templates-api
+  name: Mandiant Templates API
+  description: The Templates API from Mandiant — 1 operation(s) for templates.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-time-series-api
+  name: Mandiant Time Series API
+  description: The Time Series API from Mandiant — 4 operation(s) for time series.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Time Series
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-time-series-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-topology-api
+  name: Mandiant Topology API
+  description: >-
+    The topology API endpoints provide information about Actors, Security Zones, and the connections between
+    them.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Topology
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-topology-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-user-groups-api
+  name: Mandiant User Groups API
+  description: >-
+    User Groups are collections of Users with similar privileges and that all belong to the same Organization.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - User Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-user-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-users-api
+  name: Mandiant Users API
+  description: >-
+    Users are individuals belonging to an Organization.  Each user belongs to a UserGroup which determines
+    their privileges.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-verified-domains-api
+  name: Mandiant Verified Domains API
+  description: The Verified Domains API from Mandiant — 5 operation(s) for verified domains.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Verified Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-verified-domains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json
+- aid: mandiant:mandiant-vocab-api
+  name: Mandiant Vocab API
+  description: The Vocab API from Mandiant — 1 operation(s) for vocab.
+  humanURL: https://docs.mandiant.com/home/mati-threat-intelligence-api-v3
+  baseURL: https://api.intelligence.mandiant.com
+  tags:
+  - Vocab
+  properties:
+  - type: OpenAPI
+    url: openapi/mandiant-vocab-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mandiant.com/home/digital-threat-monitoring-api
+  - type: JSONSchema
+    url: json-schema/mandiant-alert-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-monitor-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-verified-domain-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-email-setting-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-doc-search-response-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/asm-api
+  - type: Documentation
+    url: https://docs.mandiant.com/home/ma-sv-api
+  - type: JSONSchema
+    url: json-schema/mandiant-run-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-file-library-object-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-integration-type-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-create-bulk-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mandiant-security-zone-schema.json
+  - type: Documentation
+    url: https://docs.mandiant.com/home/msv-41470-api
+  - type: JSONSchema
+    url: json-schema/mandiant-msi-integration-schema.json

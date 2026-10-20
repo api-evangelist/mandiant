@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mandiant/main/json-schema/mandiant-verified-domain-schema.json",
+  "title": "Verifeid Domain",
+  "description": "A verified domain proves ownership of domain and is used for authenticating login credential visibility for Compromised Credential alerts.",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mandiant-dtm-openapi.yml#/components/schemas/VerifiedDomain",
+  "properties": {
+    "challenge": {
+      "description": "The DNS TXT record challenge code that's used to verified domain ownership.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "created_at": {
+      "description": "The time the verified domain was created.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "created_by": {
+      "description": "The user name that created the verified domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "created_by_user_id": {
+      "description": "The user ID that created the verified domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "domain": {
+      "description": "The domain name. Must not be a free email provider domain.",
+      "readOnly": false,
+      "type": "string"
+    },
+    "id": {
+      "description": "The ID of the verified domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "primary_domain": {
+      "description": "The primary domain extracted from the domain name. e.g. the parent domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "status": {
+      "description": "The status of the verified domain with respect to its proven ownership.",
+      "enum": [
+        "unverified",
+        "verified",
+        "pending",
+        "error"
+      ],
+      "readOnly": true,
+      "type": "string"
+    },
+    "updated_at": {
+      "description": "The time the verified domain was last updated.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "updated_by": {
+      "description": "The user name that last updated the verified domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "updated_by_user_id": {
+      "description": "The user ID that last updated the verified domain.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "verification_checked_at": {
+      "description": "The last time the DNS TXT record was checked for verification.",
+      "format": "date-time",
+      "readOnly": true,
+      "type": "string"
+    },
+    "verification_message": {
+      "description": "A explaination pretaining to the last time the TXT record was checked for the verification code.",
+      "readOnly": true,
+      "type": "string"
+    },
+    "verification_type": {
+      "description": "The type of verification used for the domain.",
+      "enum": [
+        "txt_record",
+        "manual"
+      ],
+      "readOnly": true,
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

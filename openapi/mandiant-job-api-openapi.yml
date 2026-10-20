@@ -1,0 +1,94 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Job API
+  version: 5.14.4.0
+  description: 'Operations tagged Job across 2 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-ma-sv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Job
+paths:
+  /job_actions/{id}:
+    put:
+      summary: Update an existing Job Action
+      description: Job Actions are mostly immutable objects. The include_in_reports parameter can be updated. When include_in_reports is set to false the job action will not be included in reports
+      tags:
+      - Job
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the job action to update.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job_action:
+                  type: object
+                  properties:
+                    include_in_reports:
+                      type: boolean
+            example:
+              job_action:
+                include_in_reports: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 1
+                job_step_id: 1
+                sim_action_id: 651
+                status: not run
+                attacker_status: null
+                target_status: null
+                began_at: null
+                ended_at: null
+                created_at: '2020-08-18T20:08:40.209Z'
+                updated_at: '2020-08-19T13:27:22.853Z'
+                blocked: null
+                blocked_desc: null
+                detected: null
+                detected_desc: null
+                organization_id: 1
+                simulation_id: 56
+                step_id: 127
+                plan_id: 1
+                job_id: 1
+                attack_node_id: 3
+                target_node_id: 4
+                action_order: 1
+                conversations: null
+                action_type: null
+                monitor_def_id: null
+                plan_step_id: 1
+                monitor_step_id: null
+                proxy_comm_id: null
+                run_time:
+                  use_monitor_interface: false
+                  use_ip_addresses: false
+                hex_http: true
+                from_email_profile_id: null
+                to_email_profile_id: null
+                email_unique_identifier: null
+                action_user_profile_id: null
+                email_status: null
+                inetsim_log: null
+                unexpected_response: null
+                block_rule_id: null
+                expanded_info: null
+                port_scan_status: null
+                include_in_reports: false
+                cli_pid: null
+                cli_ppid: null
+                run_as_captive_ioc_pcap: false
+                action_variables: {}
+                host_cli_language: null
+      operationId: putJobActionsById
+      x-operation-id-source: derived
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-ma-sv-openapi.yml

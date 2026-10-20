@@ -1,0 +1,188 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Notification profiles API
+  version: '1.0'
+  description: 'Operations tagged Notification profiles across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Notification profiles
+  description: Notification profiles allow you to configure which monitors produce notifications and under what conditions the notification is sent.
+paths:
+  /alert_profiles:
+    get:
+      summary: List alert profiles
+      tags:
+      - Notification profiles
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 4
+                organization_id: 11
+                name: test name
+                action_type: monitor_state_change
+                details: MyString
+                created_at: '2020-02-10T15:11:36.443Z'
+                updated_at: '2020-02-10T15:11:36.443Z'
+                frequency: 1
+                count: 0
+                max_alerts: 120
+                max_alerts_interval: minute
+                disabled: false
+              - id: 5
+                organization_id: 11
+                name: Example Notification Profile
+                action_type: monitor_state_change
+                details: MyString
+                created_at: '2020-02-10T15:11:36.455Z'
+                updated_at: '2020-02-10T15:11:36.455Z'
+                frequency: 1
+                count: 0
+                max_alerts: 1
+                max_alerts_interval: hour
+                disabled: false
+      operationId: getAlertProfiles
+      x-operation-id-source: derived
+    post:
+      summary: Create an alert profile
+      tags:
+      - Notification profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/alert_profile_wrapped'
+            example:
+              alert_profile:
+                name: Example Notification Profile
+                action_type: monitor_state_change
+                max_alerts: 1
+                max_alerts_interval: hour
+                alert_format_ids:
+                - 20
+                monitor_def_ids:
+                - 1
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 2
+                organization_id: 7
+                name: Example Notification Profile
+                action_type: monitor_state_change
+                details: null
+                created_at: '2020-02-10T15:11:10.300Z'
+                updated_at: '2020-02-10T15:11:10.300Z'
+                frequency: null
+                count: 0
+                max_alerts: 1
+                max_alerts_interval: hour
+                disabled: false
+      operationId: postAlertProfiles
+      x-operation-id-source: derived
+  /alert_profiles/{id}:
+    get:
+      summary: Show an alert profile
+      tags:
+      - Notification profiles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 6
+                organization_id: 13
+                name: test name
+                action_type: monitor_state_change
+                details: MyString
+                created_at: '2020-02-10T15:11:49.053Z'
+                updated_at: '2020-02-10T15:11:49.053Z'
+                frequency: 1
+                count: 0
+                max_alerts: 120
+                max_alerts_interval: minute
+                disabled: false
+      operationId: getAlertProfilesById
+      x-operation-id-source: derived
+    delete:
+      summary: Destroy an alert profile
+      tags:
+      - Notification profiles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                result: success
+      operationId: deleteAlertProfilesById
+      x-operation-id-source: derived
+components:
+  schemas:
+    alert_profile_wrapped:
+      type: object
+      properties:
+        alert_profile:
+          $ref: '#/components/schemas/alert_profile'
+    alert_profile:
+      type: object
+      properties:
+        name:
+          type: string
+        action_type:
+          type: string
+          enum:
+          - monitor_run
+          - monitor_fail
+          - monitor_state_change
+          - detection_change
+          - detection_count_change
+          - detection_increase
+          - detection_decrease
+          description: Monitor result that triggers notification
+        alert_format_ids:
+          description: 'IDs of related Notification Format for this Notification Profile.  The list of available Notification Formats can be retrieved from the `GET /alert_formats` endpoint.
+
+            '
+          type: array
+          items:
+            type: integer
+        max_alerts:
+          type: integer
+          minimum: 1
+          description: Maximum number of alerts for time period
+        max_alerts_interval:
+          type: string
+          enum:
+          - minute
+          - hour
+          - day
+          - week
+          description: 'Time period type, used with the max_alerts value to indicate how many notifications can be sent within a given timeframe.  For example, a `max_alerts` value of 30 and a `max_alerts_interval` value of `hour` would mean this notification would be sent not more than 30 times per hour
+
+            '
+        monitor_def_ids:
+          description: 'IDs of related Monitor Defs for this Notification Profile. The list of available Monitor Defs can be retrieved from the `GET /monitor_defs` endpoint.
+
+            '
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

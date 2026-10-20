@@ -1,0 +1,1367 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Jobs API
+  version: '1.0'
+  description: 'Operations tagged Jobs across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Jobs
+  description: Jobs are the results of Actions, Evaluations, or Sequences that have been run. They contain JobSteps and JobActions
+paths:
+  /jobs:
+    get:
+      summary: List jobs
+      tags:
+      - Jobs
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - id: 2
+                plan_id: 2
+                status: completed
+                progress: Completed Group
+                created_at: '2020-02-10T15:14:43.014Z'
+                updated_at: '2020-02-10T15:14:43.014Z'
+                organization_id: 39
+                status_desc: Example job status description
+                user_id: 1
+                simulation_id: 6
+                node_action_queue_id: 10
+                monitor: null
+                scheduled_action_id: 1
+                planner_controlled: null
+                desc: Example job description
+                name: Example Job Name
+                parent_job_id: null
+      operationId: getJobs
+      x-operation-id-source: derived
+  /jobs/{id}/cancel:
+    get:
+      summary: Cancel a running job
+      tags:
+      - Jobs
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the job to cancel.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 6
+                plan_id: 6
+                status: cancelled
+                progress: Cancelled all remaining actions
+                created_at: '2020-02-10T15:15:22.841Z'
+                updated_at: '2020-02-10T15:15:22.886Z'
+                organization_id: 51
+                status_desc: Example job status description
+                user_id: 1
+                simulation_id: 21
+                node_action_queue_id: 10
+                monitor: null
+                scheduled_action_id: 4
+                planner_controlled: null
+                desc: Example job description
+                name: Example Job Name
+                parent_job_id: null
+      operationId: getJobsByIdCancel
+      x-operation-id-source: derived
+  /jobs/{id}/run_again:
+    post:
+      summary: Run a job again
+      description: This endpoint doesn't require a request body.
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of Job to run again
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 5
+                plan_id: 5
+                status: waiting
+                progress: Preparing Job
+                created_at: '2020-02-10T15:15:09.630Z'
+                updated_at: '2020-02-10T15:15:09.630Z'
+                organization_id: 47
+                status_desc: null
+                user_id: 25
+                simulation_id: 16
+                node_action_queue_id: null
+                monitor: null
+                scheduled_action_id: null
+                planner_controlled: null
+                desc: null
+                name: null
+                parent_job_id: null
+      operationId: postJobsByIdRunAgain
+      x-operation-id-source: derived
+  /jobs/run_now:
+    post:
+      summary: Run a job from a sequence or evaluation
+      description: The ID of the sequence or evaluation should be passed as the sim_id parameter; to get a list of available IDs, use the GET /simulations API endpoint. To run a single action instead of a sequence or evaluation, use the POST /manage_sims/actions/{id}/run API endpoint.
+      tags:
+      - Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/run_job'
+            example:
+              sim_id: 29
+              schedule_run_now_selector: run_now
+              attack_node_id_1: '2'
+              target_node_id_1: '3'
+              attack_node_id_2: '2'
+              target_node_id_2: '3'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 8
+                plan_id: 8
+                status: waiting
+                progress: Preparing Job
+                created_at: '2020-02-10T15:15:36.839Z'
+                updated_at: '2020-02-10T15:15:36.839Z'
+                organization_id: 55
+                status_desc: null
+                user_id: 27
+                simulation_id: 29
+                node_action_queue_id: null
+                monitor: null
+                scheduled_action_id: null
+                planner_controlled: null
+                desc: null
+                name: null
+                parent_job_id: null
+                job_actions: []
+      operationId: postJobsRunNow
+      x-operation-id-source: derived
+  /v1/jobs/{id}:
+    get:
+      summary: Show a job (old API)
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 3
+                plan_id: 3
+                status: completed
+                progress: Completed Group
+                created_at: '2020-02-10T15:14:56.310Z'
+                updated_at: '2020-02-10T15:14:56.310Z'
+                organization_id: 43
+                status_desc: Example job status description
+                user_id: 1
+                simulation_id: 11
+                node_action_queue_id: 10
+                monitor: null
+                scheduled_action_id: 2
+                planner_controlled: null
+                desc: Example job description
+                name: Example Job Name
+                parent_job_id: null
+                monitor_id: null
+                monitor_name: null
+                job_actions:
+                - id: 3
+                  job_step_id: 5
+                  sim_action_id: 4
+                  status: ran
+                  attacker_status: blocked:connection_refused_error:0
+                  target_status: blocked:socket_timeout:0:2015-07-02 20:21:29.420159...
+                  began_at: '2015-07-02T20:21:29.000Z'
+                  ended_at: '2015-07-02T20:21:39.000Z'
+                  created_at: '2020-02-10T15:14:56.303Z'
+                  updated_at: '2020-02-10T15:14:56.307Z'
+                  blocked: true
+                  blocked_desc: conn_setup
+                  detected: false
+                  detected_desc: null
+                  organization_id: 43
+                  simulation_id: 1
+                  step_id: 1
+                  plan_id: 1
+                  job_id: 1
+                  attack_node_id: 1
+                  target_node_id: 2
+                  action_order: 1
+                  conversations: '{"attacker":null,"target":null}'
+                  action_type: streamer
+                  monitor_def_id: null
+                  plan_step_id: 1
+                  monitor_step_id: null
+                  proxy_comm_id: null
+                  run_time: {}
+                  hex_http: true
+                  from_email_profile_id: null
+                  to_email_profile_id: null
+                  email_unique_identifier: null
+                  action_user_profile_id: null
+                  email_status: null
+                  inetsim_log: null
+                  unexpected_response: null
+                  block_rule_id: null
+                  expanded_info: null
+                  port_scan_status: null
+                  include_in_reports: true
+                  cli_pid: null
+                  cli_ppid: null
+                  run_as_captive_ioc_pcap: false
+                  action_variables: {}
+                  alerted: false
+                  sim_action:
+                    id: 4
+                    organization_id: 43
+                    name: Example Action
+                    desc: for API documentation
+                    action_type: pcap
+                    timeout_ms: 10000
+                    created_at: '2020-02-10T15:14:56.253Z'
+                    updated_at: '2020-02-10T15:14:56.253Z'
+                    vid: A231-351
+                    disabled: false
+                    ver: 1
+                    uuid: 4faa0e6b-cc2d-40af-8e35-f8804b186138
+                    metadata_version: 1
+                    require_endpoint: false
+                    approved_version: 1
+                    sectech_logo_id: null
+                    brt_version: 0.0.1
+                    created: '2020-02-10T15:14:56.250Z'
+                    required_license: null
+                    runtime: null
+                    notes: null
+                    hex_http: false
+                    min_version: null
+                    sectech_url: null
+                    status: null
+                    decommissioned: false
+                  ja_events: []
+                  ja_host_events: []
+                - id: 4
+                  job_step_id: 6
+                  sim_action_id: 4
+                  status: ran
+                  attacker_status: blocked:connection_refused_error:0
+                  target_status: blocked:socket_timeout:0:2015-07-02 20:21:29.420159...
+                  began_at: '2015-07-02T20:21:29.000Z'
+                  ended_at: '2015-07-02T20:21:39.000Z'
+                  created_at: '2020-02-10T15:14:56.318Z'
+                  updated_at: '2020-02-10T15:14:56.408Z'
+                  blocked: true
+                  blocked_desc: conn_setup
+                  detected: true
+                  detected_desc: null
+                  organization_id: 43
+                  simulation_id: 1
+                  step_id: 1
+                  plan_id: 1
+                  job_id: 3
+                  attack_node_id: 1
+                  target_node_id: 2
+                  action_order: 1
+                  conversations: '{"attacker":null,"target":null}'
+                  action_type: streamer
+                  monitor_def_id: null
+                  plan_step_id: 1
+                  monitor_step_id: null
+                  proxy_comm_id: null
+                  run_time: {}
+                  hex_http: true
+                  from_email_profile_id: null
+                  to_email_profile_id: null
+                  email_unique_identifier: null
+                  action_user_profile_id: null
+                  email_status: null
+                  inetsim_log: null
+                  unexpected_response: null
+                  block_rule_id: null
+                  expanded_info: null
+                  port_scan_status: null
+                  include_in_reports: true
+                  cli_pid: null
+                  cli_ppid: null
+                  run_as_captive_ioc_pcap: false
+                  action_variables: {}
+                  alerted: false
+                  sim_action:
+                    id: 4
+                    organization_id: 43
+                    name: Example Action
+                    desc: for API documentation
+                    action_type: pcap
+                    timeout_ms: 10000
+                    created_at: '2020-02-10T15:14:56.253Z'
+                    updated_at: '2020-02-10T15:14:56.253Z'
+                    vid: A231-351
+                    disabled: false
+                    ver: 1
+                    uuid: 4faa0e6b-cc2d-40af-8e35-f8804b186138
+                    metadata_version: 1
+                    require_endpoint: false
+                    approved_version: 1
+                    sectech_logo_id: null
+                    brt_version: 0.0.1
+                    created: '2020-02-10T15:14:56.250Z'
+                    required_license: null
+                    runtime: null
+                    notes: null
+                    hex_http: false
+                    min_version: null
+                    sectech_url: null
+                    status: null
+                    decommissioned: false
+                  ja_events:
+                  - id: 1
+                    job_action_id: 4
+                    sim_action_id: null
+                    event_source_id: null
+                    raw_event: null
+                    created_at: '2020-02-10T15:14:56.439Z'
+                    updated_at: '2020-02-10T15:14:56.439Z'
+                    organization_id: null
+                    event_object: "---\nid: 1\nsrc_ip: 134.42.209.242\ndest_ip: 187.101.156.247\nstart_time: 2016-10-06 21:28:55.000000000 Z\nend_time: \nhost: 45.68.175.165\nuid: zjwtlneumfkyahdibrxsogpqcv\ndescription: ET INFO Executable Download from dotted-quad Host\nevent_count: \nsrc_port: 45137\ndest_port: 46786\nemail_subject: \nurl: \nsid: \nintegration_type: \nintegration_id: 3\nraw_event: \nbase_event_uids: []\naggregated_event_uids: []\nmatched_rule: \ncreated_at: 2020-02-10 15:14:56.403810144 Z\nupdated_at: 2020-02-10 15:14:56.403810144 Z\nevent_source: \nemail_sender: \nemail_recipient: \nuser: \ncomputer: \nold_integration_id: \nuntranslated:\n  source_ip: 134.42.209.242\n  destination_ip: 187.101.156.247\n  source_port: 45137\n  destination_port: 46786\n  device_ip: 45.68.175.165\naction: \nfilehashes: \n"
+                    source_host: 45.68.175.165
+                    event_uid: zjwtlneumfkyahdibrxsogpqcv
+                    monitor_result_id: null
+                    device_interface_id: null
+                    integration_event_id: 1
+                    match_type: null
+                    node_endpoint_product_id: null
+                    matched_rule: false
+                  ja_host_events: []
+      operationId: getV1JobsById
+      x-operation-id-source: derived
+  /v2/jobs/{id}:
+    get:
+      summary: Show detailed information for a job
+      description: 'This is the API endpoint that backs the job result page in the UI. By default it includes a lot of information about the Job and the actions that ran in it. The exact information included in the response can be limited by using the `only` or `exclude` params. The `integrations` field in the top level of the response is included by default, but can be excluded using the `exclude` param. For admin and power users it includes the full integration information, but for other users it includes a limited subset.
+
+
+        By default, the integration_events field for each job_action in this response will omit the untranslated field and will truncate the raw_event field to a max of 1024 characters. If you need to include the entire raw_event field, pass `integration_events.raw_event` in the include param. If you need to include the untranslated field, pass `integration_events.untranslated` in the `include` param.'
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "This is the ID of the job and must be included in the path at `GET /v2/jobs/{id}.json`.  For example, `GET /v2/jobs/123.json` will return the JSON response for the Job with ID 123.      \n"
+      - name: pretty
+        in: query
+        description: 'If present, return pretty-printed JSON.  This param doesn''t need to be set to any value, just included in the query param string of the request.
+
+
+          For example, `GET /v2/jobs/1.json?pretty` will return the pretty-printed JSON response for Job 1.
+
+
+          If you want to combine this other params, use an `&` like normal for combining query params.  For example, `GET /v2/jobs/1.json?pretty&only=id` or `GET /v2/jobs/1.json?only=id&pretty` would both return the pretty-printed response for Job 1 with only the job action ID keys included in the response.   See the only and exclude params below for more details.
+
+          '
+        schema: {}
+      - name: only
+        in: query
+        description: "If present, specify the set of fields returned in the job_action objects of the response.\nThis can be an array, a comma-separated string, or a single value.\nThe higher-level fields outside of job_actions will still be included.\nFor example `only=id,vid` would include only the id and vid attributes under job_actions, as well as all fields above job_actions in the response structures.\nYou can pass any number of fields here that are included by default in the unfiltered response.\n\nTo get a full up-to-date list of the fields that are available, you can first make a request to this endpoint without any params specified.  Look at the `job_steps[].job_actions[]` objects in the response.  Any key names in those are valid to use in this param.  Currently, specifying nested keys under those objects is not supported.\n\nThis is not a complete list, but here are some of useful fields you may want to put in this param to limit the data returned:\n  * id\n  * sim_action_id\n  * action_name\n  * vid\n  * tags - list of tags from the action, and from the sequence/evaluation if applicable\n  * detected\n  * blocked\n  * alerted\n  * status\n  * attack_node_id\n  * target_node_id\n  * source_actor\n  * source_security_zone\n  * destination_actor\n  * destination_security_zone\n  * user_profile\n  * event_count\n  * blocking_technologies - list of the Security Technologies that blocked the JobAction\n  * security_technologies - list of the Security Technologies that detected the JobAction, including list of event IDs for each\n"
+        schema:
+          oneOf:
+          - type: string
+          - type: integer
+          - type: array
+      - name: include
+        in: query
+        description: 'If present, include extra fields in the job_action objects of the response.  This can be an array, a comma-separated string, or a single value.  Currently all fields are included by default, except for a partial `integration_events.raw_event` field, and the omitted `integration_events.untranslated` field.  You can include both of these fields in the response by comma-separating them like `include=integration_events.raw_event,integration_events.untranslated`.  Be aware that these fields could potentially be large, causing slow performance and/or high memory usage.  If you have problems with them, then try using the `GET /integration_events` endpoint to get full event detail for specific JobActions instead.
+
+          '
+        schema:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+      - name: exclude
+        in: query
+        description: 'If present, restrict the fields returned in the job_action objects of the response.  This can be an array, a comma-separated string, or a single value.  For example `exclude=action` would exclude the action attribute under the job_action objects and include all other fields.  See the details listed in the only param for specific field names that can be used here.
+
+
+          The string "action" in this param has a special meaning.  In addition to the action key, it will also remove these keys from the job_action objects: tags, vid, action_name, annotation, and attachments.  If you want to remove the action key but keep any of those others, you can combine it with an include param.  For example, `?exclude=action&include=action_name,vid,tags` will omit the action key but keep the action_name, vid, and tags keys.
+
+
+          The string "integrations" in this param will affect the top-level integrations key in this response.  Currently it''s the only field name handled that''s outside of the job_action objects.
+
+          '
+        schema:
+          oneOf:
+          - type: string
+          - type: integer
+          - type: array
+      - name: max_attack_version
+        in: query
+        description: 'If the current Director has Mitre Tactic and Technique categories loaded into its system, each response''s Action object will also have a "mitre_attack_techniques" object.  This object will the requested version identifier as well as a list of Mitre Technique information.  This Mitre Technique information will be governed by the provided dot-notated version identifier.  Any Mitre Techniques above the given version will be filtered out of the response, as well as any Mitre Techniques that have been revoked before/within the given version.
+
+
+          When this parameter is not provided, the Director will default to the highest Mitre ATT&CK version present on the Director.
+
+          If no Mitre ATT&CK information is present on the current Director and no max_attack_version is requested, this "mitre_attack_technique" key/value pair will not be available.
+
+          If the request stipulates a max_attack_version that is not supported by the current Director (or if the parameter is provided but no Mitre Tactic or Technique information can be located on the system) then the response will error with a 404 status and an appropriate error message with available Mitre ATT&CK versions.
+
+          '
+        schema:
+          oneOf:
+          - type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Example only param:
+                  description: '`GET /v2/jobs/6404.json?pretty&only=detected,blocked,action_name,vid,id`'
+                  value:
+                    id: 6404
+                    plan_id: 1893
+                    status: completed
+                    progress: Completed Group
+                    created_at: 2021-05-12 13:45:03 UTC
+                    updated_at: 2021-05-12 13:45:24 UTC
+                    organization_id: 1
+                    status_desc: null
+                    user_id: 3
+                    simulation_id: 3029
+                    node_action_queue_id: null
+                    monitor: null
+                    scheduled_action_id: null
+                    planner_controlled: null
+                    desc: null
+                    name: null
+                    parent_job_id: null
+                    monitor_id: null
+                    monitor_name: null
+                    verodin_user:
+                      id: 1
+                      email: admin@verodin.com
+                    job_steps:
+                    - id: 7878
+                      job_id: 6404
+                      plan_step_id: 2746
+                      created_at: 2021-05-12 13:45:03 UTC
+                      updated_at: 2021-05-12 13:45:03 UTC
+                      step_id: 1298535
+                      organization_id: 1
+                      step_order: 1
+                      proxy_comm_id: 17
+                      action_user_profile_id: null
+                      name: null
+                      cloud_profile_id: null
+                      step_name: null
+                      job_actions:
+                      - id: 18346
+                        blocked: false
+                        detected: true
+                        vid: A101-252
+                        action_name: 'Malicious File Transfer - PONY, Download, Variant #3'
+                      annotation: null
+                      attachments: null
+                      suspect_event_counts: {}
+                    in_progress: false
+                    simulation:
+                      '...': null
+                    '...': null
+                Only ID and VID:
+                  description: '`GET /v2/jobs/6404.json?pretty&only=id,vid`'
+                  value:
+                    id: 6404
+                    plan_id: 1893
+                    status: completed
+                    progress: Completed Group
+                    created_at: 2021-05-12 13:45:03 UTC
+                    updated_at: 2021-05-12 13:45:24 UTC
+                    organization_id: 1
+                    status_desc: null
+                    user_id: 3
+                    simulation_id: 3029
+                    node_action_queue_id: null
+                    monitor: null
+                    scheduled_action_id: null
+                    planner_controlled: null
+                    desc: null
+                    name: null
+                    parent_job_id: null
+                    monitor_id: null
+                    monitor_name: null
+                    verodin_user:
+                      id: 1
+                      email: admin@verodin.com
+                    job_steps:
+                    - id: 7878
+                      job_id: 6404
+                      plan_step_id: 2746
+                      created_at: 2021-05-12 13:45:03 UTC
+                      updated_at: 2021-05-12 13:45:03 UTC
+                      step_id: 1298535
+                      organization_id: 1
+                      step_order: 1
+                      proxy_comm_id: 17
+                      action_user_profile_id: null
+                      name: null
+                      cloud_profile_id: null
+                      step_name: null
+                      job_actions:
+                      - id: 18346
+                        vid: A101-252
+                      annotation: null
+                      attachments: null
+                      suspect_event_counts: {}
+                    in_progress: false
+                    simulation:
+                      '...': null
+                    '...': null
+                Default response:
+                  description: Default response without any params specified.  `GET /v2/jobs/3005.json`
+                  value:
+                    id: 3005
+                    plan_id: 1660
+                    status: completed
+                    progress: Completed Group
+                    created_at: 2020-04-03 16:01:09 UTC
+                    updated_at: 2020-04-03 16:01:40 UTC
+                    organization_id: 1
+                    status_desc: null
+                    user_id: 1
+                    simulation_id: 2257
+                    node_action_queue_id: 324750
+                    monitor: null
+                    scheduled_action_id: null
+                    planner_controlled: null
+                    desc: Example action
+                    name: null
+                    parent_job_id: null
+                    monitor_id: null
+                    monitor_name: null
+                    verodin_user:
+                      id: 1
+                      email: admin@verodin.com
+                    job_steps:
+                    - id: 4130
+                      job_id: 3005
+                      plan_step_id: 2428
+                      created_at: 2020-04-03 16:01:09 UTC
+                      updated_at: 2020-04-03 16:01:09 UTC
+                      step_id: 151422
+                      organization_id: 1
+                      step_order: 1
+                      proxy_comm_id: null
+                      action_user_profile_id: null
+                      name: null
+                      step_name: null
+                      job_actions:
+                      - id: 14205
+                        job_step_id: 4130
+                        sim_action_id: 4798
+                        status: ran
+                        attacker_status: success
+                        target_status: blocked:socket_timeout:0
+                        began_at: 2020-04-03 16:01:21 UTC
+                        ended_at: 2020-04-03 16:01:25 UTC
+                        created_at: 2020-04-03 16:01:09 UTC
+                        updated_at: 2020-04-03 16:01:48 UTC
+                        blocked: true
+                        blocked_desc: data_transfer
+                        detected: true
+                        detected_desc: null
+                        organization_id: 1
+                        simulation_id: 2257
+                        step_id: 151422
+                        plan_id: 1660
+                        job_id: 3005
+                        attack_node_id: 2
+                        target_node_id: 29
+                        action_order: 1
+                        conversations: '{"target":"{\"proxy\": \"\", \"conversations\": [], \"attacker_ip\": null, \"target_ip\": null}","attacker":"{\"target_domain\": \"192.168.45.162\", \"attacker_ip\": \"192.168.45.7\", \"conversations\": [\"TCP/37464/3128\"], \"proxy\": \"192.168.45.1:3128\", \"target_ip\": \"192.168.45.1\"}","ports_used":{"target":null,"attacker":"{\"target_domain\": \"192.168.45.162\", \"attacker_ip\": \"192.168.45.7\", \"conversations\": [\"TCP/37464/3128\"], \"proxy\": \"192.168.45.1:3128\", \"target_ip\": \"192.168.45.1\"}"}}'
+                        action_type: streamer
+                        monitor_def_id: null
+                        plan_step_id: 2428
+                        monitor_step_id: null
+                        proxy_comm_id: 17
+                        proxy_used: true
+                        run_time:
+                          host_header_update: 'on'
+                          use_monitor_interface: null
+                          use_ip_addresses: false
+                        hex_http: true
+                        from_email_profile_id: null
+                        to_email_profile_id: null
+                        email_unique_identifier: null
+                        action_user_profile_id: null
+                        email_status: null
+                        inetsim_log: null
+                        unexpected_response: null
+                        block_rule_id: null
+                        expanded_info: null
+                        port_scan_status: null
+                        include_in_reports: true
+                        action_variables: {}
+                        cli_pid: null
+                        cli_ppid: null
+                        run_as_captive_ioc_pcap: false
+                        host_cli_language: null
+                        event_window_expired: true
+                        event_window_expiration_time: 2020-04-03 16:16:48 UTC
+                        port_scan_result: {}
+                        scheduled_sleep_action: null
+                        screenshots: []
+                        job_name: null
+                        job_status: completed
+                        job_step_name: null
+                        job_step_order: 1
+                        vid: A200-261
+                        verodin_user_id: 1
+                        user_profile: null
+                        source_actor:
+                          id: 2
+                          name: centos-pull
+                          ip: 192.168.45.7
+                          hostname: CentosNodeA
+                          fq_hostname: CentosNodeA.lan
+                        source_security_zone:
+                          id: 2
+                          name: Internal Servers
+                        source_actor_ports:
+                        - '37464'
+                        destination_actor:
+                          id: 29
+                          name: vna-dev-push
+                          ip: 192.168.45.162
+                          hostname: actor
+                          fq_hostname: ''
+                        destination_ports:
+                        - 8080
+                        destination_security_zone:
+                          id: 4
+                          name: DMZ
+                        email_status_hash: null
+                        host_events: []
+                        integration_events:
+                        - network_device:
+                            id: 38
+                            name: Suricata
+                            interface_id: 30
+                            interface: 10.0.8.7
+                            security_technology_id: 2
+                            logo_path: /images/logos/1/suricata_logo.png
+                            vendor: Suricata
+                            product: Suricata
+                            version: null
+                            prevention_enabled: Not Blocking
+                          endpoint_product: null
+                          id: 631012
+                          src_ip: 192.168.45.7
+                          dest_ip: 192.168.45.1
+                          start_time: 2020-04-03 16:01:25 UTC
+                          end_time: null
+                          host: 10.0.8.7
+                          uid: 195:21027
+                          description: SURICATA HTTP Host header ambiguous
+                          event_count: null
+                          src_port: 37464
+                          dest_port: 3128
+                          email_subject: null
+                          url: null
+                          sid: 1:2221015:1
+                          integration_id: 97
+                          raw_event: 'Apr  3 16:01:25  [1:2221015:1] SURICATA HTTP Host   header ambiguous [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP}   192.168.45.7:37464 -> 192.168.45.1:3128'
+                          base_event_uids: []
+                          aggregated_event_uids: []
+                          matched_rule: null
+                          created_at: 2020-04-03 16:01:48 UTC
+                          updated_at: 2020-04-03 16:01:48 UTC
+                          event_source: suricata
+                          email_sender: null
+                          email_recipient: null
+                          user: null
+                          computer: null
+                          untranslated:
+                            '...': null
+                          action: null
+                          filehashes: null
+                          ja_event_id: 29067
+                          match_type: address/port/time
+                        - '...'
+                        alerts:
+                        - < same structure as items in integration_events array >
+                        blocking_technologies: []
+                        tags: []
+                        action:
+                          id: 4798
+                          organization_id: 1
+                          name: Example action
+                          desc: Test
+                          action_type: pcap
+                          timeout_ms: 10000
+                          created_at: 2020-04-03 15:56:56 UTC
+                          updated_at: 2020-04-03 15:56:56 UTC
+                          vid: A200-261
+                          disabled: false
+                          ver: 1
+                          uuid: a151ac83-e327-439f-94e8-1563409c3a94
+                          metadata_version: 1
+                          require_endpoint: false
+                          approved_version: 0
+                          sectech_logo_id: null
+                          hex_http: true
+                          brt_version: 0.0.2
+                          created: 2020-04-03 15:56:56 UTC
+                          required_license: null
+                          runtime: null
+                          notes: null
+                          min_version: null
+                          sectech_url: null
+                          status: null
+                          decommissioned: false
+                          common_detection_alerts: []
+                          verodin_tags:
+                          - ATT&CK:T1003
+                          user_tags: []
+                          os_tags: []
+                          control_tags: []
+                          run_as_tags: []
+                          src_destination_tags: []
+                          user_os_tags: []
+                          user_control_tags: []
+                          user_run_as_tags: []
+                          user_src_destination_tags: []
+                          mitre_attack_techniques:
+                            version: '9.0'
+                            techniques:
+                            - guid: attack-pattern--0a3ead4e-1111-4ccb-854c-a6a4f9d96b22
+                              id: T1003
+                              name: OS Credential Dumping
+                              tactics:
+                              - tactic_id: TA0007
+                                tactic_name: Discovery
+                          valid_http_streamer_action: HTTP Traffic
+                          trees:
+                          - id: 2
+                            name: General-Behavior
+                            ancestry: '1'
+                            created_at: 2017-03-13 23:25:17 UTC
+                            updated_at: 2017-03-13 23:25:17 UTC
+                            organization_id: 1
+                            sort_order: null
+                            parent_id: 1
+                            lft: 2
+                            rgt: 3
+                            depth: 1
+                            children_count: null
+                            root_name: Behavior Type
+                          - id: 101
+                            name: Execution
+                            ancestry: '97'
+                            created_at: 2017-03-13 23:25:22 UTC
+                            updated_at: 2017-03-13 23:25:22 UTC
+                            organization_id: 1
+                            sort_order: null
+                            parent_id: 97
+                            lft: 200
+                            rgt: 201
+                            depth: 1
+                            children_count: null
+                            root_name: Stage of Attack
+                          - '...'
+                          pcap_action:
+                            id: 2152
+                            sim_action_id: 4798
+                            pcap_library_id: 1809
+                            organization_id: 1
+                            start_packet: 1
+                            end_packet: null
+                            attacker_ip: 10.0.0.68
+                            attacker_ports: '["TCP/49709"]'
+                            target_ports: '["TCP/8080"]'
+                            protos: '["TCP"]'
+                            created_at: 2020-04-03 15:56:56 UTC
+                            updated_at: 2020-04-03 15:56:56 UTC
+                            replicate_tcp: null
+                            replicate_tcp_timeouts: null
+                        action_name: Example action
+                        security_technology:
+                        - type: network
+                          name: Suricata
+                          action: not blocked
+                          interface: 10.0.8.7
+                          id: 38
+                          security_technology_id: 2
+                          integration_event_ids:
+                          - 631012
+                          - 631011
+                          - 631013
+                          - 631014
+                        suspect_event_count: 0
+                    in_progress: false
+                    simulation:
+                      id: 2257
+                      organization_id: 1
+                      name: Example action @ 2020-04-03 16:01:09 UTC
+                      desc: Ran directly from Action
+                      created_at: 2020-04-03 16:01:09 UTC
+                      updated_at: 2020-04-03 16:01:09 UTC
+                      stop_on_error: null
+                      simulation_type: run_once
+                      disabled: false
+                      vid: null
+                      ver: 1
+                      uuid: d6ac6f2c-aac9-4c0b-80bb-26ffed7dc435
+                      protected_endpoint_rollback: 'no'
+                      metadata_version: 1
+                      sectech_logo_id: null
+                      run_all_content_marker: null
+                      verodin_tags: []
+                      user_tags: []
+                      tip_aliases: []
+                      user_tip_aliases: []
+                      sim_actions: Example action
+                      group_names:
+                      - null
+                      step_fields:
+                      - id: 151422
+                        name: null
+                      action_ids:
+                      - - 4798
+                      action_vids:
+                      - - A200-261
+                    security_technologies:
+                    - created_at: '2020-11-06T21:46:02.841Z'
+                      discovery_enabled: null
+                      filename: default_logo.svg
+                      id: 3
+                      job_action_ids:
+                      - 14205
+                      name: privoxy
+                      priority: null
+                      product: privoxy
+                      product_type: Proxy
+                      sectech_logo_id: 20
+                      sectech_type: network
+                      updated_at: '2020-11-06T21:46:02.841Z'
+                      vendor: privoxy
+                      version: null
+                    integrations:
+                    - id: 97
+                      type: SplunkServer
+                      '...': null
+                    - '...'
+                Response with max_attack_version:
+                  description: Response with max_attack_version specified.  `GET /v2/jobs/3005.json?max_attack_version=7.0`
+                  value:
+                    id: 3005
+                    plan_id: 1660
+                    status: completed
+                    progress: Completed Group
+                    created_at: 2020-04-03 16:01:09 UTC
+                    updated_at: 2020-04-03 16:01:40 UTC
+                    organization_id: 1
+                    status_desc: null
+                    user_id: 1
+                    simulation_id: 2257
+                    node_action_queue_id: 324750
+                    monitor: null
+                    scheduled_action_id: null
+                    planner_controlled: null
+                    desc: Example action
+                    name: null
+                    parent_job_id: null
+                    monitor_id: null
+                    monitor_name: null
+                    verodin_user:
+                      id: 1
+                      email: admin@verodin.com
+                    job_steps:
+                    - id: 4130
+                      job_id: 3005
+                      plan_step_id: 2428
+                      created_at: 2020-04-03 16:01:09 UTC
+                      updated_at: 2020-04-03 16:01:09 UTC
+                      step_id: 151422
+                      organization_id: 1
+                      step_order: 1
+                      proxy_comm_id: null
+                      action_user_profile_id: null
+                      name: null
+                      step_name: null
+                      job_actions:
+                      - id: 14205
+                        job_step_id: 4130
+                        sim_action_id: 4798
+                        status: ran
+                        attacker_status: success
+                        target_status: blocked:socket_timeout:0
+                        began_at: 2020-04-03 16:01:21 UTC
+                        ended_at: 2020-04-03 16:01:25 UTC
+                        created_at: 2020-04-03 16:01:09 UTC
+                        updated_at: 2020-04-03 16:01:48 UTC
+                        blocked: true
+                        blocked_desc: data_transfer
+                        detected: true
+                        detected_desc: null
+                        organization_id: 1
+                        simulation_id: 2257
+                        step_id: 151422
+                        plan_id: 1660
+                        job_id: 3005
+                        attack_node_id: 2
+                        target_node_id: 29
+                        action_order: 1
+                        conversations: '{"target":"{\"proxy\": \"\", \"conversations\": [], \"attacker_ip\": null, \"target_ip\": null}","attacker":"{\"target_domain\": \"192.168.45.162\", \"attacker_ip\": \"192.168.45.7\", \"conversations\": [\"TCP/37464/3128\"], \"proxy\": \"192.168.45.1:3128\", \"target_ip\": \"192.168.45.1\"}","ports_used":{"target":null,"attacker":"{\"target_domain\": \"192.168.45.162\", \"attacker_ip\": \"192.168.45.7\", \"conversations\": [\"TCP/37464/3128\"], \"proxy\": \"192.168.45.1:3128\", \"target_ip\": \"192.168.45.1\"}"}}'
+                        action_type: streamer
+                        monitor_def_id: null
+                        plan_step_id: 2428
+                        monitor_step_id: null
+                        proxy_comm_id: 17
+                        proxy_used: true
+                        run_time:
+                          host_header_update: 'on'
+                          use_monitor_interface: null
+                          use_ip_addresses: false
+                        hex_http: true
+                        from_email_profile_id: null
+                        to_email_profile_id: null
+                        email_unique_identifier: null
+                        action_user_profile_id: null
+                        email_status: null
+                        inetsim_log: null
+                        unexpected_response: null
+                        block_rule_id: null
+                        expanded_info: null
+                        port_scan_status: null
+                        include_in_reports: true
+                        action_variables: {}
+                        cli_pid: null
+                        cli_ppid: null
+                        run_as_captive_ioc_pcap: false
+                        host_cli_language: null
+                        event_window_expired: true
+                        event_window_expiration_time: 2020-04-03 16:16:48 UTC
+                        port_scan_result: {}
+                        scheduled_sleep_action: null
+                        screenshots: []
+                        job_name: null
+                        job_status: completed
+                        job_step_name: null
+                        job_step_order: 1
+                        vid: A200-261
+                        verodin_user_id: 1
+                        user_profile: null
+                        source_actor:
+                          id: 2
+                          name: centos-pull
+                          ip: 192.168.45.7
+                          hostname: CentosNodeA
+                          fq_hostname: CentosNodeA.lan
+                        source_security_zone:
+                          id: 2
+                          name: Internal Servers
+                        source_actor_ports:
+                        - '37464'
+                        destination_actor:
+                          id: 29
+                          name: vna-dev-push
+                          ip: 192.168.45.162
+                          hostname: actor
+                          fq_hostname: ''
+                        destination_ports:
+                        - 8080
+                        destination_security_zone:
+                          id: 4
+                          name: DMZ
+                        email_status_hash: null
+                        host_events: []
+                        integration_events:
+                        - network_device:
+                            id: 38
+                            name: Suricata
+                            interface_id: 30
+                            interface: 10.0.8.7
+                            security_technology_id: 2
+                            logo_path: /images/logos/1/suricata_logo.png
+                            vendor: Suricata
+                            product: Suricata
+                            version: null
+                            prevention_enabled: Not Blocking
+                          endpoint_product: null
+                          id: 631012
+                          src_ip: 192.168.45.7
+                          dest_ip: 192.168.45.1
+                          start_time: 2020-04-03 16:01:25 UTC
+                          end_time: null
+                          host: 10.0.8.7
+                          uid: 195:21027
+                          description: SURICATA HTTP Host header ambiguous
+                          event_count: null
+                          src_port: 37464
+                          dest_port: 3128
+                          email_subject: null
+                          url: null
+                          sid: 1:2221015:1
+                          integration_id: 97
+                          raw_event: 'Apr  3 16:01:25  [1:2221015:1] SURICATA HTTP Host   header ambiguous [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP}   192.168.45.7:37464 -> 192.168.45.1:3128'
+                          base_event_uids: []
+                          aggregated_event_uids: []
+                          matched_rule: null
+                          created_at: 2020-04-03 16:01:48 UTC
+                          updated_at: 2020-04-03 16:01:48 UTC
+                          event_source: suricata
+                          email_sender: null
+                          email_recipient: null
+                          user: null
+                          computer: null
+                          untranslated:
+                            '...': null
+                          action: null
+                          filehashes: null
+                          ja_event_id: 29067
+                          match_type: address/port/time
+                        - '...'
+                        alerts:
+                        - < same structure as items in integration_events array >
+                        blocking_technologies: []
+                        tags: []
+                        action:
+                          id: 4798
+                          organization_id: 1
+                          name: Example action
+                          desc: Test
+                          action_type: pcap
+                          timeout_ms: 10000
+                          created_at: 2020-04-03 15:56:56 UTC
+                          updated_at: 2020-04-03 15:56:56 UTC
+                          vid: A200-261
+                          disabled: false
+                          ver: 1
+                          uuid: a151ac83-e327-439f-94e8-1563409c3a94
+                          metadata_version: 1
+                          require_endpoint: false
+                          approved_version: 0
+                          sectech_logo_id: null
+                          hex_http: true
+                          brt_version: 0.0.2
+                          created: 2020-04-03 15:56:56 UTC
+                          required_license: null
+                          runtime: null
+                          notes: null
+                          min_version: null
+                          sectech_url: null
+                          status: null
+                          decommissioned: false
+                          common_detection_alerts: []
+                          verodin_tags:
+                          - ATT&CK:T1003
+                          user_tags: []
+                          os_tags: []
+                          control_tags: []
+                          run_as_tags: []
+                          src_destination_tags: []
+                          user_os_tags: []
+                          user_control_tags: []
+                          user_run_as_tags: []
+                          user_src_destination_tags: []
+                          mitre_attack_techniques:
+                            version: '7.0'
+                            techniques:
+                            - guid: attack-pattern--0a3ead4e-1111-4ccb-854c-a6a4f9d96b22
+                              id: T1003
+                              name: OS Credential Dumping
+                              tactics:
+                              - tactic_id: TA0007
+                                tactic_name: Discovery
+                          valid_http_streamer_action: HTTP Traffic
+                          trees:
+                          - id: 2
+                            name: General-Behavior
+                            ancestry: '1'
+                            created_at: 2017-03-13 23:25:17 UTC
+                            updated_at: 2017-03-13 23:25:17 UTC
+                            organization_id: 1
+                            sort_order: null
+                            parent_id: 1
+                            lft: 2
+                            rgt: 3
+                            depth: 1
+                            children_count: null
+                            root_name: Behavior Type
+                          - id: 101
+                            name: Execution
+                            ancestry: '97'
+                            created_at: 2017-03-13 23:25:22 UTC
+                            updated_at: 2017-03-13 23:25:22 UTC
+                            organization_id: 1
+                            sort_order: null
+                            parent_id: 97
+                            lft: 200
+                            rgt: 201
+                            depth: 1
+                            children_count: null
+                            root_name: Stage of Attack
+                          - '...'
+                          pcap_action:
+                            id: 2152
+                            sim_action_id: 4798
+                            pcap_library_id: 1809
+                            organization_id: 1
+                            start_packet: 1
+                            end_packet: null
+                            attacker_ip: 10.0.0.68
+                            attacker_ports: '["TCP/49709"]'
+                            target_ports: '["TCP/8080"]'
+                            protos: '["TCP"]'
+                            created_at: 2020-04-03 15:56:56 UTC
+                            updated_at: 2020-04-03 15:56:56 UTC
+                            replicate_tcp: null
+                            replicate_tcp_timeouts: null
+                        action_name: Example action
+                        security_technology:
+                        - type: network
+                          name: Suricata
+                          action: not blocked
+                          interface: 10.0.8.7
+                          id: 38
+                          security_technology_id: 2
+                          integration_event_ids:
+                          - 631012
+                          - 631011
+                          - 631013
+                          - 631014
+                        suspect_event_count: 0
+                    in_progress: false
+                    simulation:
+                      id: 2257
+                      organization_id: 1
+                      name: Example action @ 2020-04-03 16:01:09 UTC
+                      desc: Ran directly from Action
+                      created_at: 2020-04-03 16:01:09 UTC
+                      updated_at: 2020-04-03 16:01:09 UTC
+                      stop_on_error: null
+                      simulation_type: run_once
+                      disabled: false
+                      vid: null
+                      ver: 1
+                      uuid: d6ac6f2c-aac9-4c0b-80bb-26ffed7dc435
+                      protected_endpoint_rollback: 'no'
+                      metadata_version: 1
+                      sectech_logo_id: null
+                      run_all_content_marker: null
+                      verodin_tags: []
+                      user_tags: []
+                      tip_aliases: []
+                      user_tip_aliases: []
+                      sim_actions: Example action
+                      group_names:
+                      - null
+                      step_fields:
+                      - id: 151422
+                        name: null
+                      action_ids:
+                      - - 4798
+                      action_vids:
+                      - - A200-261
+                    security_technologies:
+                    - created_at: '2020-11-06T21:46:02.841Z'
+                      discovery_enabled: null
+                      filename: default_logo.svg
+                      id: 3
+                      job_action_ids:
+                      - 14205
+                      name: privoxy
+                      priority: null
+                      product: privoxy
+                      product_type: Proxy
+                      sectech_logo_id: 20
+                      sectech_type: network
+                      updated_at: '2020-11-06T21:46:02.841Z'
+                      vendor: privoxy
+                      version: null
+                    integrations:
+                    - id: 97
+                      type: SplunkServer
+                      '...': null
+                    - '...'
+      operationId: getV2JobsById
+      x-operation-id-source: derived
+  /jobs/{id}:
+    get:
+      summary: Show a job
+      description: Show a job. Currently this returns the v2 structure. For a detailed example response, see the `/v2/jobs/{id}` endpoint
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+      operationId: getJobsById
+      x-operation-id-source: derived
+  /jobs/{id}/sim_actions:
+    get:
+      summary: Summary of action results for a job
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - label: Pass
+                value: 2
+              - label: Fail
+                value: 4
+              - label: Errored
+                value: 0
+              - label: Unknown
+                value: 0
+      operationId: getJobsByIdSimActions
+      x-operation-id-source: derived
+components:
+  schemas:
+    run_job:
+      type: object
+      properties:
+        sim_id:
+          type: integer
+          description: ID of the Sequence or Evaulation to execute
+        schedule_run_now_selector:
+          type: string
+          enum:
+          - run_now
+          - schedule
+          description: Selects whether the job should be run immediately or scheduled
+        schedule_job_datetime:
+          type: string
+          description: 'If the job is scheduled, this indicates what time it should start.  Must be a string of format `YYYY/MM/DD HH:MM UTC`
+
+            '
+        job_name:
+          type: string
+          description: Optional name for this job
+        repeat_job_selector:
+          type: string
+          enum:
+          - 'on'
+          description: 'Optional.  If this job should be repeating then this param should a string equal to "on"
+
+            '
+        repeat_job_period_number:
+          type: integer
+          minimum: 1
+          description: 'This param is ignored if the job is not repeating but it''s required if repeat_job_selector == "on".  It indicates the time interval to repeat the job.
+
+            '
+        repeat_job_period_type:
+          type: string
+          enum:
+          - seconds
+          - minutes
+          - hours
+          - days
+          description: 'This param is ignored if the job is not repeating but it''s required if repeat_job_selector == "on".  It indicates how the repeat_job_period_number should be interpreted as a time.  For example if repeat_job_period_number is 5 and repeat_job_period_type is "minutes", the job created will repeat every 5 minutes.
+
+            '
+        repeat_job_times_selector:
+          type: string
+          enum:
+          - number
+          - indefinitely
+          description: 'This param is ignored if the job is not repeating.  If the job is repeating, it indicates whether it should repeat a fixed number of times, or indefinitely
+
+            '
+        repeat_job_count:
+          type: integer
+          minimum: 1
+          description: 'If the job is repeating and repeat_job_times_selector is "number", then this param indicates how many times the job should repeat. For example, if this param is 3 then the job will run 4 times total - once for the initial run and then 3 repeats.
+
+            '
+        attack_node_id_1:
+          type: string
+          description: 'ID of the attack actor for the first step in the sequence/eval.  If the sequence/eval specified by the sim_id param has more than one step, then the attack and target actors would be selected with attack_node_id_X and target_node_X params, where X is the order of the step in the sequence/eval, starting from 1.
+
+            '
+        target_node_id_1:
+          type: string
+          description: 'ID of the target actor for the first step in the sequence/eval.  For sequences/evals with more than on step, the subsequent steps follow the same pattern of target_node_id_X as the attack_node_id_X
+
+            '
+        repeat_job_period_number_1:
+          type: integer
+          minimum: 1
+          description: 'If the this job step should not repeat, then omit this param or leave it blank.  Otherwise, it works like the repeat_job_period_type param but for the specific step in the simulation.  Just like with the attack_node_X and target_node_X params, if a simulation has more than a single step then you can set the repeating attributes for each step by substituting the step order for X in the param name.
+
+            '
+        repeat_job_period_type_1:
+          type: string
+          enum:
+          - seconds
+          - minutes
+          - hours
+          - days
+          description: 'Works like the repeat_job_period_type param, but for the specific step in the simulation.
+
+            '
+        repeat_job_times_selector_1:
+          type: string
+          enum:
+          - number
+          - indefinitely
+          description: 'Works like the repeat_job_times_selector param, but for the specific step in the simulation.
+
+            '
+        repeat_job_count_1:
+          type: integer
+          minimum: 1
+          description: 'Works like the repeat_job_count param, but for the specific step in the simulation.
+
+            '
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

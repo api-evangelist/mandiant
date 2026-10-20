@@ -1,0 +1,38 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Vocab API
+  version: '1.0'
+  contact: {}
+  description: 'Operations tagged Vocab across 2 of this provider''s published API definitions: mandiant-dtm-openapi.yml, mandiant-dtm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.intelligence.mandiant.com/v4/dtm
+security:
+- My_API_Key: []
+tags:
+- name: Vocab
+paths:
+  /vocab/openapi:
+    get:
+      description: Returns the Open API spec for this REST API.
+      operationId: get-vocab-openapi
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              description: text/yaml
+              schema:
+                type: string
+      summary: Get the Open API spec
+      tags:
+      - Vocab
+    servers:
+    - url: https://api.intelligence.mandiant.com/v4/dtm
+components:
+  securitySchemes:
+    My_API_Key:
+      scheme: bearer
+      type: http
+x-refined-from:
+- mandiant-dtm-openapi.yml
+- mandiant-dtm-openapi.yml

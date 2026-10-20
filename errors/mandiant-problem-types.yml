@@ -1,0 +1,58 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/mandiant-asm-openapi.yml
+- openapi/mandiant-dtm-openapi.yml
+- openapi/mandiant-ma-sv-openapi.yml
+- openapi/mandiant-msv-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: Response-message
+coverage:
+  operations: 397
+  statuses_declared: 6
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 46
+  media_types:
+  - application/json
+  schema: Response-message
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 49
+  media_types:
+  - application/json
+  schema: Response-message
+- status: 403
+  title: Forbidden
+  description: Forbidden. Not permitted to perform action
+  operations: 22
+  media_types:
+  - application/json
+  schema: Response-message
+- status: 404
+  title: Not Found
+  description: Not Found
+  operations: 32
+  media_types:
+  - application/json
+  schema: Response-message
+- status: 422
+  title: Unprocessable Content
+  description: Unprocessable Entity
+  operations: 10
+  media_types:
+  - application/json
+  schema: null
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error
+  operations: 45
+  media_types:
+  - application/json
+  schema: Response-message

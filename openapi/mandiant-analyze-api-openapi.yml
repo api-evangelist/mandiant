@@ -1,0 +1,103 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Analyze API
+  version: '1.0'
+  description: 'Operations tagged Analyze across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Analyze
+paths:
+  /analyze/pivot_data:
+    get:
+      summary: Heatmap data
+      description: This is the data used to populate the heatmap
+      tags:
+      - Analyze
+      parameters:
+      - name: cols
+        in: query
+        schema:
+          $ref: '#/components/schemas/pivot_table_dimension'
+      - name: rows
+        in: query
+        schema:
+          $ref: '#/components/schemas/pivot_table_dimension'
+      - name: show_all_headers
+        in: query
+        schema:
+          type: string
+          enum:
+          - true
+          - false
+      - name: analysis_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - last_run
+          - all_runs
+      - name: dateRange
+        in: query
+        schema:
+          type: string
+          description: 'Formatted as `START to END`, for example `2019-11-12 06:29:19 PM UTC to 2019-11-18 06:29:19 PM UTC`
+
+            '
+      - name: nodes
+        in: query
+        description: 'Optional array of Actor names or Security Zone names to include results for.
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+            description: Name of Actor or Security Zone to include results for
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+              - ids: []
+                pos:
+                - 0
+                - 0
+                cells: 1
+                value: ''
+                type: col_header
+              - ids: []
+                pos:
+                - 2
+                - 0
+                cells: 6
+                value: PT1
+                type: row_header
+              - ids: []
+                pos:
+                - 2
+                - 2
+                cells: 1
+                value: 0
+                type: data_cell
+      operationId: getAnalyzePivotData
+      x-operation-id-source: derived
+components:
+  schemas:
+    pivot_table_dimension:
+      type: array
+      description: 'Array of columns to use when building data for response.  Can be one of the listed options, or dimension_X where X is the ID of the root dimension to measure by.  These dimensions are available from the `GET /manage_sims/actions/get_dimensions.json` endpoint.
+
+        '
+      items:
+        type: string
+        enum:
+        - target_node_name
+        - attacker_node_name
+        - attacker_node_zone
+        - target_node_zone
+        - dimension_X
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml

@@ -1,0 +1,345 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Tags API
+  version: 1.0.6
+  description: 'Operations tagged Tags across 2 of this provider''s published API definitions: mandiant-asm-openapi.yml, mandiant-asm-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://{{base_url}}
+tags:
+- name: Tags
+paths:
+  /api/v1/tags/{item_type}/{item_uid}:
+    get:
+      tags:
+      - Tags
+      summary: Index
+      description: Lists all tags on an entity or issue.
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: issue
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:53:04 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2BzqSiEYXA0ClzqPQPwwAAvNcyK5LMJDrpcF3hpdNcxhWw3BLBdmy%2B%2FQQVpFYE1ffgwH%2B4BvzacFRM%2BKC12jUK%2FEOJdngq0wvEl5yjY%2FWR84%2FjpJ24JhfbQVKl4YYxBoeXw%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 7481701ede0186fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Tags for entity a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result:
+                - test Tag
+      operationId: getApiV1TagsByItemTypeByItemUid
+      x-operation-id-source: derived
+    post:
+      tags:
+      - Tags
+      summary: Create
+      description: Creates a tag on an entity or issue.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tag_name: test Tag
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: entity
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:52:56 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=hSHZgQuoS%2FRsADhNivzzT2mHOCu6J8fnoLV59MvY%2B0QX0wmRFsSSG5yiv9rz%2Fl6PCAat65rppz%2BcI91QLnw0cuFD7FdEL6rrSsHqm%2BLqDJacJ9i0NyjR%2BO60MDU6QFimFA%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 74816fe9dc5886fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: Tag add queued for entity a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result: true
+      operationId: postApiV1TagsByItemTypeByItemUid
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+  /api/v1/tags/{item_type}/{item_uid}/{tag_name}:
+    delete:
+      tags:
+      - Tags
+      summary: Delete
+      description: Deletes a tag on an issue
+      parameters:
+      - name: INTRIGUE_ACCESS_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_access_key}}'
+      - name: INTRIGUE_SECRET_KEY
+        in: header
+        schema:
+          type: string
+        example: '{{intrigue_secret_key}}'
+      - name: PROJECT_ID
+        in: header
+        schema:
+          type: string
+        description: 'Required: id from {{base_url}}/api/v1/projects'
+        example: '{{project_id}}'
+      - name: item_type
+        in: path
+        schema:
+          type: string
+        required: true
+        description: issue or entity
+        example: entity
+      - name: item_uid
+        in: path
+        schema:
+          type: string
+        required: true
+        description: id from {{base_url}}/api/v1/search/issues/collection:CollectionName or {{base_url}}/api/v1/search/entities/collection:CollectionName
+        example: a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+      - name: tag_name
+        in: path
+        schema:
+          type: string
+        required: true
+        description: tage name to delete
+        example: test Tag
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Fri, 09 Sep 2022 16:53:16 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            Vary:
+              schema:
+                type: string
+                example: Origin
+            Via:
+              schema:
+                type: string
+                example: 1.1 vegur
+            CF-Cache-Status:
+              schema:
+                type: string
+                example: DYNAMIC
+            Report-To:
+              schema:
+                type: string
+                example: '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=xBLtmBD%2F2oGWQ%2BaECEYETZQxSLgt%2FywkSiCWHNqH2DxLseOwpu4aFVlieJf%2Beb%2FpjsYOHQJla1DbK9iD1r%2BcEqbxrKBgtseHz4Tvw3xwKffPIDIiw5MekVEc5NXq0FtBBQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+            NEL:
+              schema:
+                type: string
+                example: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+            Server:
+              schema:
+                type: string
+                example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+                example: 748170691eed86fc-ORD
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: tag remove queued for entity a4cfa1fddf10ea18959c863c7864d343f8b9568248ad75504005980ca6253a01
+                result: true
+      operationId: deleteApiV1TagsByItemTypeByItemUidByTagName
+      x-operation-id-source: derived
+    servers:
+    - url: http://{{base_url}}
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+x-refined-from:
+- mandiant-asm-openapi.yml
+- mandiant-asm-openapi.yml

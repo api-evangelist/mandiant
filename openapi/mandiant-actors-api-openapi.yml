@@ -1,0 +1,348 @@
+openapi: 3.2.0
+info:
+  title: Mandiant Actors API
+  version: '1.0'
+  description: 'Operations tagged Actors across 4 of this provider''s published API definitions: mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml, mandiant-ma-sv-openapi.yml, mandiant-msv-openapi.yml. Each path carries the servers of the definition it was published in.'
+tags:
+- name: Actors
+paths:
+  /nodes:
+    post:
+      summary: Create a new Actor
+      description: After being created it will need to be registered with Director. The ID attribute in the response is the value to use for pending_node_id in the request to connect_result in order to register the new Actor.
+      tags:
+      - Actors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pending_node_wrapped'
+            example:
+              node:
+                security_zone_id: 295
+                name: ExampleNetworkActor
+                comm_mode: Push
+                node_type: network
+                location: local
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              example:
+                id: 1
+                name: ExampleNetworkActor
+                desc: null
+                code: GQSM-AFFQ-W9VH
+                created_at: '2020-02-10T15:22:09.978Z'
+                updated_at: '2020-02-10T15:22:09.978Z'
+                organization_id: 93
+                comm_mode: Push
+                pull_interval: null
+                security_zone_id: 295
+                location: Local
+                dns_server_id: null
+                keepalive: false
+                status: Unregistered
+                status_details: null
+                node_type: network
+                sandbox_node_id: null
+                proxy_node_id: null
+                bulk_token_id: null
+                verodin_controlled: false
+                verodin_tags: []
+                user_tags: []
+                security_zone_name: test
+      operationId: postNodes
+      x-operation-id-source: derived
+  /nodes/{id}:
+    put:
+      summary: Update an Actor
+      tags:
+      - Actors
+      parameters:
+      - name: id
+        in: path
+        description: The unique ID.
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/node_wrapped'
+            example:
+              ntpradio: system
+              node:
+                name: test-actor
+                comm_mode: Pull
+                pull_interval: 10
+                location: AWS
+                keepalive: false
+                desc: Actor description updated over the API
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              example: ''
+      operationId: putNodesById
+      x-operation-id-source: derived
+    delete:
+      summary: Delete an Actor
+      description: Only registered actors can be deleted. Actors in the pending state will not be deleted.
+      tags:
+      - Actors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              example: ''
+        '404':
+          description: Not Found
+      operationId: deleteNodesById
+      x-operation-id-source: derived
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: The ID of the node to lookup.
+  /nodes/{id}/regen_token:
+    get:
+      summary: Regenerate a token to register a pending actor
+      description: 'The new token generated for the actor is available in the response under the "code"
+
+        key. Use this on the Actor when running vregister.'
+      tags:
+      - Actors
+      parameters:
+      - name: id
+        in: path
+        description: The unique ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                id: 26
+                name: Test actor
+                desc: null
+                code: JJ1V-45S7-2B8T
+                created_at: '2020-05-28T13:50:03.685Z'
+                updated_at: '2020-05-28T13:50:03.685Z'
+                organization_id: 1
+                comm_mode: Push
+                pull_interval: null
+                security_zone_id: 2
+                location: Local
+                dns_server_id: null
+                keepalive: false
+                status: Unregistered
+                status_details: null
+                node_type: network
+                sandbox_node_id: null
+                proxy_node_id: null
+                bulk_token_id: null
+                verodin_controlled: false
+                verodin_tags: []
+                user_tags: []
+                security_zone_name: Internal Servers
+      operationId: getNodesByIdRegenToken
+      x-operation-id-source: derived
+  /nodes/connect_result:
+    post:
+      summary: Register a pending actor
+      tags:
+      - Actors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pending_node_id:
+                  type: integer
+                  description: 'The pending node ID returned in the response from POST /nodes
+
+                    '
+                node:
+                  type: object
+                  properties:
+                    mgmt_ip:
+                      type: string
+                      description: 'IP address or FQDN for the Actor you''re registering
+
+                        '
+            example:
+              pending_node_id: 2
+              node:
+                mgmt_ip: 10.0.1.71
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                result: processing
+      operationId: postNodesConnectResult
+      x-operation-id-source: derived
+  /nodes/vrestart:
+    post:
+      summary: Restart services on an Actor
+      tags:
+      - Actors
+      responses:
+        '200':
+          description: Success
+      operationId: postNodesVrestart
+      x-operation-id-source: derived
+components:
+  schemas:
+    node:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Must be unique among active Actors on the Director
+        desc:
+          type: string
+          description: Description of the Actor
+        comm_mode:
+          type: string
+          description: How the Actor will communicate with Director
+          enum:
+          - Push
+          - Pull
+        mgmt_ip:
+          type: string
+          description: 'Management interface address for actor.  Must be a string and valid IP address.
+
+            '
+        sim_ip:
+          type: string
+          description: 'Simulation interface address for actor.  Must be a string and valid IP address or blank
+
+            '
+        monitor_ip:
+          type: string
+          description: 'Monitor interface address for actor.  Must be a string and valid IP address or blank.
+
+            '
+        location:
+          type: string
+          enum:
+          - Local
+          - AWS
+          description: Location of this actor (whether a local machine/VM or in the cloud).
+        disabled:
+          type: boolean
+          readOnly: true
+          description: Indicates whether actor is disabled.
+        node_version:
+          type: string
+          readOnly: true
+          description: Current MSV software version for this actor.
+        organization_id:
+          readOnly: true
+          type: integer
+          description: ID of organization to which this actor belongs.
+        password:
+          type: string
+          readOnly: true
+          description: Authentication token used in communications between Director and this actor.
+        keepalive:
+          type: boolean
+          description: 'Indicates whether actor needs to periodically send out requests to keep its network
+
+            connection alive.
+
+            '
+        dhcp_enabled:
+          type: boolean
+          readOnly: true
+          description: Indicates whether actor management IP address is DHCP or static.
+        gateway:
+          type: string
+          readOnly: true
+          description: 'Default gateway used by this actor.  Must be a string and valid IP address.  Only
+
+            relevant if dhcp_enabled is true.
+
+            '
+        netmask:
+          type: string
+          readOnly: true
+          description: Must be a string and valid netmask.  Only relevant if dhcp_enabled is true.
+        last_comms:
+          type: string
+          readOnly: true
+          description: 'Date & time indicating when last communications occurred between this actor and Director
+
+            '
+    node_wrapped:
+      type: object
+      properties:
+        node:
+          $ref: '#/components/schemas/node'
+    pending_node:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        security_zone_id:
+          type: integer
+          description: 'This must be the ID of a valid existing Security Zone.  You can get the list of existing
+
+            Security Zones on the Director from a request to GET /security_zones
+
+            '
+        name:
+          type: string
+          description: "Name for the Actor.  Must be unique among Active actors on the Director.          \n"
+        comm_mode:
+          type: string
+          description: 'How the Actor will communicate with Director
+
+            '
+          enum:
+          - Push
+          - Pull
+        node_type:
+          type: string
+          enum:
+          - network
+          - endpoint
+          - protected
+          - sandbox
+        pull_interval:
+          type: integer
+          description: 'Time in seconds for the interval Actor checks in with Director.  Required for Pull Actors,
+
+            not needed otherwise.
+
+            '
+    pending_node_wrapped:
+      type: object
+      properties:
+        pending_node:
+          $ref: '#/components/schemas/pending_node'
+x-refined-from:
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
+- mandiant-ma-sv-openapi.yml
+- mandiant-msv-openapi.yml
