@@ -85,6 +85,9 @@ x-enrichment:
   pass: local-v5
 
 common:
+- type: CapabilityMap
+  url: capabilities/mandiant-capability-edges.yml
+  name: Mandiant Business Capability Map
 - type: AgenticAccess
   url: agentic-access/mandiant-agentic-access.yml
 - type: RateLimits
